@@ -1,0 +1,3 @@
+{
+  "*.{ts,tsx}": ["prettier . --write --config .prettierrc.mjs", "eslint ."]
+}
