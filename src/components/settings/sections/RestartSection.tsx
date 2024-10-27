@@ -39,24 +39,28 @@ export default function RestartSection() {
         animate={{ opacity: 1, y: 0, transition: { duration: 0.4 } }}
         className="flex items-center flex-row justify-between">
         <p>Delete Quick Links</p>
-        <Button
-          onClick={handleDeleteQuickLinks}
-          borderRadius="1.75rem"
-          className="bg-slate-900 text-white border-slate-800 hover:bg-slate-700">
-          Delete
-        </Button>
+        <div className="flex z-2 flex-row gap-2 min-w-32 justify-center cursor-default items-center">
+          <Button
+            onClick={handleDeleteQuickLinks}
+            borderRadius="1.75rem"
+            className="bg-slate-900 text-white border-slate-800 hover:bg-slate-700">
+            Delete
+          </Button>
+        </div>
       </motion.div>
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0, transition: { duration: 0.4 } }}
         className="flex items-center flex-row justify-between">
         <p>Restore to default settings</p>
-        <Button
-          onClick={handleResetClick}
-          borderRadius="1.75rem"
-          className="bg-slate-900 text-white border-slate-800 hover:bg-slate-700">
-          Reset
-        </Button>
+        <div className="flex z-2 flex-row gap-2 min-w-32 justify-center cursor-default items-center">
+          <Button
+            onClick={handleResetClick}
+            borderRadius="1.75rem"
+            className="bg-slate-900 text-white border-slate-800 hover:bg-slate-700">
+            Reset
+          </Button>
+        </div>
       </motion.div>
     </SettingsSection>
   )

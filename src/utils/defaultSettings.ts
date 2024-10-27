@@ -24,6 +24,7 @@ export const setDefaultVanishAnimation = async (storage: BaseStorage) => {
 
 export const setDefaultQuickLink = async (storage: BaseStorage) => {
   await storage.set("quickLink", {
-    bigQuickLinks: false
+    bigQuickLinks: false,
+    type: "gradient"
   })
 }

@@ -2,19 +2,20 @@ import { motion } from "framer-motion"
 import React, { useEffect, useRef, useState } from "react"
 
 import { db } from "~indexdb"
+import type { QuickLinkSettings } from "~types"
 
 import "./quickLink.css"
 
 import { cn } from "~utils/cn"
 
-import BackgroundGradient from "./QuickLinkBackground"
+import QuickLinkBackground from "./QuickLinkBackground"
 
 interface QuickLinkProps {
   pageName: string
   url: string
   favicon?: string
   id: number
-  bigQuickLink: boolean
+  quickLinkSettings: QuickLinkSettings
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>
   setEditingLink: React.Dispatch<
     React.SetStateAction<{
@@ -27,7 +28,7 @@ interface QuickLinkProps {
 }
 
 interface AddQuickLink {
-  bigQuickLink: boolean
+  quickLinkSettings: QuickLinkSettings
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>
   setEditingLink: React.Dispatch<
     React.SetStateAction<{ name: string; url: string }>
@@ -40,7 +41,7 @@ export function QuickLink(props: QuickLinkProps) {
     url,
     favicon,
     id,
-    bigQuickLink,
+    quickLinkSettings,
     setShowModal,
     setEditingLink
   } = props
@@ -86,11 +87,15 @@ export function QuickLink(props: QuickLinkProps) {
       className="relative group z-10 flex flex-col justify-center items-center"
       draggable="true">
       <a draggable="false" href={url}>
-        <BackgroundGradient
+        <QuickLinkBackground
+          type={quickLinkSettings.type}
           className={cn(
             "w-[144px] h-[88px] flex items-center justify-center",
-            bigQuickLink ? "w-[166px] h-28" : "w-[144px] h-[88px]"
+            quickLinkSettings?.bigQuickLinks
+              ? "w-[166px] h-28"
+              : "w-[144px] h-[88px]"
           )}>
+          <div className="triangle gradient-background transition-opacity opacity-0 group-hover:opacity-100 w-4 h-4 absolute right-[-4px] top-[-4px] rotate-[270deg]" />
           <div className="triangle gradient-background transition-opacity opacity-0 group-hover:opacity-100 w-4 h-4 absolute left-[-4px] top-[-4px] rotate-180" />
           <div
             ref={menuRef}
@@ -125,7 +130,8 @@ export function QuickLink(props: QuickLinkProps) {
             </div>
           )}
           <div className="triangle gradient-background transition-opacity opacity-0 group-hover:opacity-100 w-4 h-4 absolute right-[-4px] bottom-[-4px]" />
-        </BackgroundGradient>
+          <div className="triangle gradient-background transition-opacity opacity-0 group-hover:opacity-100 w-4 h-4 absolute left-[-4px] bottom-[-4px] rotate-90" />
+        </QuickLinkBackground>
       </a>
       <p className="text-white">{pageName}</p>
     </motion.div>
@@ -133,7 +139,7 @@ export function QuickLink(props: QuickLinkProps) {
 }
 
 export function AddQuickLinkButton(props: AddQuickLink) {
-  const { setShowModal, setEditingLink, bigQuickLink } = props
+  const { setShowModal, setEditingLink, quickLinkSettings } = props
 
   return (
     <button
@@ -143,13 +149,18 @@ export function AddQuickLinkButton(props: AddQuickLink) {
         setEditingLink({ name: "", url: "" })
       }}
       className="relative flex justify-center items-start">
-      <BackgroundGradient
-        className={bigQuickLink ? "w-[166px] h-28" : "w-[144px] h-[88px]"}
+      <QuickLinkBackground
+        type={quickLinkSettings.type}
+        className={
+          quickLinkSettings?.bigQuickLinks
+            ? "w-[166px] h-28"
+            : "w-[144px] h-[88px]"
+        }
         draggable={false}>
         <div className="z-10 flex items-center justify-center h-full">
           <AddButton />
         </div>
-      </BackgroundGradient>
+      </QuickLinkBackground>
     </button>
   )
 }
@@ -194,13 +205,17 @@ function EditDots() {
 
 export function QuickLinkPreview({
   favicon,
+  quickLinkSettings,
   pageName
 }: {
   favicon: string
+  quickLinkSettings: QuickLinkSettings
   pageName: string
 }) {
   return (
-    <BackgroundGradient className="w-[166px] h-28 flex items-center justify-center">
+    <QuickLinkBackground
+      type={quickLinkSettings.type}
+      className="w-[166px] h-28 flex items-center justify-center">
       {favicon ? (
         <img src={favicon} alt={pageName} width={48} height={48} />
       ) : (
@@ -210,6 +225,6 @@ export function QuickLinkPreview({
           </span>
         </div>
       )}
-    </BackgroundGradient>
+    </QuickLinkBackground>
   )
 }

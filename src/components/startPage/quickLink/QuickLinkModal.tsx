@@ -4,12 +4,14 @@ import React, { useState } from "react"
 
 import { Button } from "~components/Button"
 import { db } from "~indexdb/index"
+import type { QuickLinkSettings } from "~types"
 import isValidUrl from "~utils/valudUrl"
 
 import { Input, Label, LabelInputContainer } from "./Form"
 import { QuickLinkPreview } from "./QuickLink"
 
 interface ModalProps {
+  quickLinkSettings: QuickLinkSettings
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>
   dialName?: string
   dialUrl?: string
@@ -18,7 +20,8 @@ interface ModalProps {
 }
 
 const QuickLinkModal = (props: ModalProps) => {
-  const { setShowModal, dialName, dialUrl, id, favicon } = props
+  const { setShowModal, dialName, dialUrl, id, favicon, quickLinkSettings } =
+    props
 
   const [name, setName] = useState<string>(dialName ?? "")
   const [url, setUrl] = useState<string>(dialUrl ?? "")
@@ -76,7 +79,11 @@ const QuickLinkModal = (props: ModalProps) => {
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.8, opacity: 0 }}
           transition={{ duration: 0.3 }}>
-          <QuickLinkPreview pageName={dialName} favicon={favicon} />
+          <QuickLinkPreview
+            quickLinkSettings={quickLinkSettings}
+            pageName={dialName}
+            favicon={favicon}
+          />
           <LabelInputContainer>
             <Label htmlFor="name">Name</Label>
             <Input

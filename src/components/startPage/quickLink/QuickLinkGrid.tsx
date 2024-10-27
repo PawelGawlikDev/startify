@@ -13,8 +13,12 @@ import QuickLinkModal from "./QuickLinkModal"
 
 export default function QuickLinkGrid() {
   const [quickLink] = useStorage<QuickLinkSettings>("quickLink", {
-    bigQuickLinks: false
+    bigQuickLinks: false,
+    type: "gradient"
   })
+
+  console.log(quickLink)
+
   const [showModal, setShowModal] = useState(false)
   const [quickLinkOrder, setQuickLinkOrder] = useState<number[]>([])
   const [editingLink, setEditingLink] = useState<{
@@ -48,6 +52,7 @@ export default function QuickLinkGrid() {
       )}>
       {showModal && (
         <QuickLinkModal
+          quickLinkSettings={quickLink}
           setShowModal={setShowModal}
           id={editingLink?.id}
           favicon={editingLink?.favicon}
@@ -69,7 +74,7 @@ export default function QuickLinkGrid() {
             onDragEnd={onDragEnd}
             onDrop={onDrop}>
             <QuickLink
-              bigQuickLink={quickLink?.bigQuickLinks}
+              quickLinkSettings={quickLink}
               setEditingLink={setEditingLink}
               setShowModal={setShowModal}
               id={dial.id}
@@ -80,7 +85,7 @@ export default function QuickLinkGrid() {
           </div>
         ))}
       <AddQuickLinkButton
-        bigQuickLink={quickLink?.bigQuickLinks}
+        quickLinkSettings={quickLink}
         setShowModal={setShowModal}
         setEditingLink={setEditingLink}
       />
