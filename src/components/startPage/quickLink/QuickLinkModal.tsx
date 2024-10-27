@@ -59,8 +59,8 @@ const QuickLinkModal = (props: ModalProps) => {
         })
       }
       setShowModal(false)
-    } catch (error) {
-      console.error("Error adding speed dial:", error)
+    } catch {
+      return
     }
   }
 

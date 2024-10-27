@@ -43,7 +43,6 @@ export default function SeatchBox() {
       const res = await fetch(suggestionsURL)
 
       if (!res.ok) {
-        console.error(`Error fetching suggestions: ${res.status}`)
         return
       }
 
@@ -59,8 +58,8 @@ export default function SeatchBox() {
       } else {
         setSuggestions(data[1] || data)
       }
-    } catch (error) {
-      console.error("Error fetching suggestions:", error)
+    } catch {
+      return
     }
   }
 

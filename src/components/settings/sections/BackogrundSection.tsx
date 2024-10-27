@@ -29,8 +29,8 @@ export default function BackgroundSection() {
       try {
         const wallpapers = await db.wallpaper.toArray()
         setStoredFiles(wallpapers)
-      } catch (error) {
-        console.error("Failed to retrieve wallpapers:", error)
+      } catch {
+        return
       }
     }
 
@@ -51,8 +51,8 @@ export default function BackgroundSection() {
           imageBlob: blob
         })
         setStoredFiles(await db.wallpaper.toArray())
-      } catch (error) {
-        console.error("Failed to save file:", error)
+      } catch {
+        return
       }
     }
   }

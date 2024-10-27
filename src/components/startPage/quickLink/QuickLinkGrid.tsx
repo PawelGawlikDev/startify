@@ -17,8 +17,6 @@ export default function QuickLinkGrid() {
     type: "gradient"
   })
 
-  console.log(quickLink)
-
   const [showModal, setShowModal] = useState(false)
   const [quickLinkOrder, setQuickLinkOrder] = useState<number[]>([])
   const [editingLink, setEditingLink] = useState<{
