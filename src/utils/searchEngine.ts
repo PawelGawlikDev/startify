@@ -12,8 +12,8 @@ export enum SearchEngineEnum {
 export const searchEngines = {
   [SearchEngineEnum.DuckDuckGo]: {
     name: "DuckDuckGo",
-    searchURL: "https://duckduckgo.com/?q=%s&t=min",
-    suggestionsURL: "https://ac.duckduckgo.com/ac/?q=%s&type=list&t=min",
+    searchURL: "https://duckduckgo.com/?q=%s&t=startify",
+    suggestionsURL: "https://ac.duckduckgo.com/ac/?q=%s&type=list&t=startify",
     queryParam: "q",
     favicon: "https://duckduckgo.com/favicon.ico"
   },
@@ -21,7 +21,7 @@ export const searchEngines = {
     name: "Google",
     searchURL: "https://www.google.com/search?q=%s",
     suggestionsURL:
-      "https://suggestqueries.google.com/complete/search?client=firefox&q=%s&hl=en",
+      "https://suggestqueries.google.com/complete/search?client=chrome&q=%s&hl=en",
     queryParam: "q",
     favicon: "https://www.google.com/favicon.ico"
   },
