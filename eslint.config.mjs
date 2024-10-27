@@ -26,6 +26,7 @@ export default [
   pluginReact.configs.flat.recommended,
   {
     rules: {
+      "no-console": "error",
       "padding-line-between-statements": [
         "error",
         {
