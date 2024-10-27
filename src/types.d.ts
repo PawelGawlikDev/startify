@@ -35,8 +35,11 @@ export type Backgrounds =
   | "boxes"
   | "snakes"
 
+export type QuickLinkTypes = "gradient" | "transparent"
+
 export type QuickLinkSettings = {
   bigQuickLinks: boolean
+  type: QuickLinkTypes
 }
 
 export interface Point {

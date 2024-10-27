@@ -27,19 +27,21 @@ export default function SearchBoxSection() {
           animate={{ opacity: 1, y: 0, transition: { duration: 0.4 } }}
           className="flex items-center flex-row justify-between">
           <p>Vanish Animation</p>
-          <Button
-            onClick={async () => {
-              await setVanish(!vanish)
-            }}
-            borderClassName={
-              vanish
-                ? "bg-[radial-gradient(var(--red-500)_40%,transparent_60%)]"
-                : ""
-            }
-            borderRadius="1.75rem"
-            className="bg-slate-900 text-white border-slate-800 hover:bg-slate-700">
-            {vanish ? "Disable" : "Enable"}
-          </Button>
+          <div className="flex z-2 flex-row gap-2 min-w-32 justify-center cursor-default items-center">
+            <Button
+              onClick={async () => {
+                await setVanish(!vanish)
+              }}
+              borderClassName={
+                vanish
+                  ? "bg-[radial-gradient(var(--red-500)_40%,transparent_60%)]"
+                  : ""
+              }
+              borderRadius="1.75rem"
+              className="bg-slate-900 text-white border-slate-800 hover:bg-slate-700">
+              {vanish ? "Disable" : "Enable"}
+            </Button>
+          </div>
         </motion.div>
       )}
     </SettingsSection>
