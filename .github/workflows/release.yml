@@ -111,7 +111,7 @@ jobs:
           pnpm build:plasmo --zip
           pnpm build:plasmo --zip --target=firefox-mv3
           pnpm build:plasmo --zip --target=firefox-mv2
-      - name: release
+      - name: release on Github
         uses: softprops/action-gh-release@v2
         with:
           draft: true
@@ -119,3 +119,10 @@ jobs:
             build/*.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Release on Mozzila addons
+        uses: wdzeng/firefox-addon@v1
+        with:
+          addon-guid: "{d5e5fe42-da08-4573-8ffd-6075ae68c834}"
+          xpi-path: build/firefox-mv3-prod.zip
+          jwt-issuer: ${{ secrets.FIREFOX_API_KEY }}
+          jwt-secret: ${{ secrets.FIREFOX_API_SECRET }}
