@@ -9,7 +9,7 @@ export default function App() {
   return (
     <>
       <a
-        href={`chrome-extension://${chrome.runtime.id}/options.html`}
+        href={chrome.runtime.getURL("/options.html")}
         target="_blank"
         rel="noreferrer"
         className="text-white w-4 h-4 relative inline-flex left-2 top-2 cursor-pointer">
