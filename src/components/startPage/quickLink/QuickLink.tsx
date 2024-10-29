@@ -106,7 +106,7 @@ export function QuickLink(props: QuickLinkProps) {
             }}>
             <EditDots />
             {showMenu && (
-              <div className="absolute bg-neutral-950 text-white flex flex-col items-center rounded-xl">
+              <div className="absolute bg-neutral-950 text-white flex flex-col items-center rounded-xl z-[1]">
                 <span
                   className="hover:bg-neutral-600 p-3 w-full flex items-center justify-center rounded-t-xl"
                   onClick={handleEditClick}>
