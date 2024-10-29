@@ -119,7 +119,16 @@ jobs:
             build/*.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Release on Mozzila addons
+      - name: Upload to Chrome Web Store
+        uses: mobilefirstllc/cws-publish@latest
+        with:
+          action: "publish"
+          client_id: ${{ secrets.CHROME_CLIENT_ID }}
+          client_secret: ${{ secrets.CHROME_CLIENT_SECTER }}
+          refresh_token: ${{ secrets.CHROME_REFRESH_TOKEN }}
+          extension_id: "fjjipcmebaelmnkkbdjnhhjbgenecgbd"
+          zip_file: "build/chrome-mv3-prod.zip"
+      - name: Upload to Mozzila addons
         uses: wdzeng/firefox-addon@v1
         with:
           addon-guid: "{d5e5fe42-da08-4573-8ffd-6075ae68c834}"
