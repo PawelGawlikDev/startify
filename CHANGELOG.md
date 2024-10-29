@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.5](https://github.com/PawelGawlikDev/startify/compare/v0.0.4...v0.0.5) (2024-10-29)
+
+
+### Features
+
+* add chrome github action ([62526f2](https://github.com/PawelGawlikDev/startify/commit/62526f2fc36e9d0d36705b8fa7c1ec5f8b0cf229))
+
+
+### Bug Fixes
+
+* fix options url ([1ecf505](https://github.com/PawelGawlikDev/startify/commit/1ecf50563e4ee72e8d90506efa0d7c9f715c4ddf))
+* fix quick link menu when link is hovered ([1c7cbe5](https://github.com/PawelGawlikDev/startify/commit/1c7cbe5367af99587af992e7c7bdcec0edca15e7))
+
 ### [0.0.4](https://github.com/PawelGawlikDev/startify/compare/v0.0.3...v0.0.4) (2024-10-28)
 
 ### [0.0.3](https://github.com/PawelGawlikDev/startify/compare/v0.0.2...v0.0.3) (2024-10-28)
