@@ -34,6 +34,7 @@ export function BackgroundDropdown() {
     if (background === newBackground) {
       return
     }
+
     setBackground(newBackground)
   }
 
@@ -95,6 +96,7 @@ export function EngineDropdown() {
     if (engine?.name === newEngine.name) {
       return
     }
+
     setEngine(newEngine)
   }
 
@@ -115,6 +117,7 @@ export function EngineDropdown() {
       }
     }
   }
+
   return (
     <motion.div
       className="relative"
@@ -162,6 +165,7 @@ export function QuickLinkTypeDropdown() {
     if (quickLink?.type === newQuickLink) {
       return
     }
+
     setQuickLink({ ...quickLink, type: newQuickLink })
   }
 

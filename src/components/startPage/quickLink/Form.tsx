@@ -31,6 +31,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       mouseX.set(clientX - left)
       mouseY.set(clientY - top)
     }
+
     return (
       <motion.div
         style={{
@@ -65,6 +66,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     )
   }
 )
+
 Input.displayName = "Input"
 
 /* eslint-disable react/prop-types */
@@ -81,6 +83,7 @@ const Label = React.forwardRef<
     {...props}
   />
 ))
+
 /* eslint-enable react/prop-types */
 Label.displayName = LabelPrimitive.Root.displayName
 

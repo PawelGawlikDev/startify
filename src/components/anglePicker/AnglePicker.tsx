@@ -65,6 +65,7 @@ const AnglePicker: React.FC<PickerProps> = ({
     e: MouseEvent | React.MouseEvent
   ): number | null => {
     const wrapperEl = wrapperRef.current
+
     if (e && wrapperEl) {
       const center = getCenterPosition()
       const { clientX, clientY } = e
@@ -74,13 +75,16 @@ const AnglePicker: React.FC<PickerProps> = ({
       const nx = clientX - centerP.x
       const ny = clientY - centerP.y
       const radian = Math.atan2(ny, nx)
+
       return radianToAngle(radian)
     }
+
     return null
   }
 
   const mousedown = (e: React.MouseEvent<HTMLDivElement>) => {
     const newAngle = getNewAngleByEvent(e)
+
     if (newAngle !== null) {
       setAngle(newAngle)
       onChange?.(newAngle)
@@ -92,7 +96,9 @@ const AnglePicker: React.FC<PickerProps> = ({
     if (preventDefault) {
       e.preventDefault()
     }
+
     const newAngle = getNewAngleByEvent(e)
+
     if (newAngle !== null) {
       setAngle(newAngle)
       onChange?.(newAngle)
@@ -103,8 +109,11 @@ const AnglePicker: React.FC<PickerProps> = ({
     if (preventDefault) {
       e.preventDefault()
     }
+
     removeMouseListeners()
+
     const newAngle = getNewAngleByEvent(e)
+
     if (newAngle !== null) {
       setAngle(newAngle)
       onAfterChange?.(newAngle)

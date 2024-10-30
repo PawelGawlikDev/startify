@@ -15,6 +15,7 @@ export async function checkUserSettings() {
   const backgroundColorSettings = await storage.get("bg-color")
   const bacground = await storage.get("background")
   const quickLinksSize = await storage.get("quickLink")
+
   if (!userEngineSettings) {
     await setDefaultEngine(storage)
   }

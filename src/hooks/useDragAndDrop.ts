@@ -36,15 +36,18 @@ export const useDragAndDrop = (
 
     const updatedOrder = [...quickLinkOrder]
     const [movedItem] = updatedOrder.splice(draggingIndex, 1)
+
     updatedOrder.splice(targetIndex, 0, movedItem)
 
     updateLocalStorage(updatedOrder)
     setDraggingIndex(targetIndex)
 
     setIsThrottleActive(true)
+
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current)
     }
+
     timeoutRef.current = setTimeout(() => {
       setIsThrottleActive(false)
     }, 250)

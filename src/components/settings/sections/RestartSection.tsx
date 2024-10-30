@@ -22,6 +22,7 @@ export default function RestartSection() {
 
   const handleResetClick = async () => {
     const storage = new Storage()
+
     await storage.clear()
     await setDefaultEngine(storage)
     await setDefaultColors(storage)
@@ -30,6 +31,7 @@ export default function RestartSection() {
     await setDefaultVanishAnimation(storage)
     await db.wallpaper.clear()
   }
+
   return (
     <SettingsSection
       className="relative w-full flex flex-col gap-4"

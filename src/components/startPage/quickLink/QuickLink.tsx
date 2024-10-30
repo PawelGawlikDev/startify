@@ -56,6 +56,7 @@ export function QuickLink(props: QuickLinkProps) {
     }
 
     document.addEventListener("mousedown", handleClickOutside)
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside)
     }
@@ -63,6 +64,7 @@ export function QuickLink(props: QuickLinkProps) {
 
   const handleEditClick = async () => {
     const dialInfo = await db.quickLinks.get(id)
+
     if (dialInfo) {
       setEditingLink({
         name: dialInfo.name,
@@ -98,6 +100,7 @@ export function QuickLink(props: QuickLinkProps) {
           <div className="triangle gradient-background transition-opacity opacity-0 group-hover:opacity-100 w-4 h-4 absolute right-[-4px] top-[-4px] rotate-[270deg]" />
           <div className="triangle gradient-background transition-opacity opacity-0 group-hover:opacity-100 w-4 h-4 absolute left-[-4px] top-[-4px] rotate-180" />
           <div
+            data-testid="QuickLinkSettingsButton"
             ref={menuRef}
             className={`absolute w-4 h-4 top-1 ${showMenu ? "opacity-100" : "opacity-0"} group-hover:opacity-100 right-2 transition-opacity`}
             onClick={(e) => {
@@ -106,13 +109,17 @@ export function QuickLink(props: QuickLinkProps) {
             }}>
             <EditDots />
             {showMenu && (
-              <div className="absolute bg-neutral-950 text-white flex flex-col items-center rounded-xl z-[1]">
+              <div
+                data-testid="QuickLinkMenu"
+                className="absolute bg-neutral-950 text-white flex flex-col items-center rounded-xl z-[1]">
                 <span
+                  data-testid="EditQuickLink"
                   className="hover:bg-neutral-600 p-3 w-full flex items-center justify-center rounded-t-xl"
                   onClick={handleEditClick}>
                   Edit
                 </span>
                 <span
+                  data-testid="DeleteQuickLink"
                   className="hover:bg-neutral-600 p-3 w-full flex items-center justify-center rounded-b-xl"
                   onClick={handleDeleteClick}>
                   Delete

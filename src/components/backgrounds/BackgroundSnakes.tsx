@@ -85,6 +85,7 @@ const SVG = ({
     "#6A286F",
     "#604483"
   ]
+
   return (
     <motion.svg
       viewBox="0 0 1440 900"

@@ -29,13 +29,16 @@ export default function ColorPickerButton(props: ColorPickerButtonProps) {
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const newColor = e.target.value
+
     setTempColor((prevTempColor) => ({
       ...prevTempColor,
       [value]: newColor
     }))
+
     if (debounceTimeout.current) {
       clearTimeout(debounceTimeout.current)
     }
+
     debounceTimeout.current = window.setTimeout(() => {
       setColor((prevState) => ({
         ...prevState,

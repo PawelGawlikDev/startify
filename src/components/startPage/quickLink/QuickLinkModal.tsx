@@ -29,6 +29,7 @@ const QuickLinkModal = (props: ModalProps) => {
   async function addQuickLink() {
     if (!name || !url) {
       alert("Both Name and URL are required!")
+
       return
     }
 
@@ -41,6 +42,7 @@ const QuickLinkModal = (props: ModalProps) => {
             uri: url
           })
         }
+
         await db.quickLinks.update(id, {
           name,
           url,
@@ -52,12 +54,14 @@ const QuickLinkModal = (props: ModalProps) => {
             uri: url
           })
         }
+
         await db.quickLinks.add({
           name,
           url,
           favicon
         })
       }
+
       setShowModal(false)
     } catch {
       return
