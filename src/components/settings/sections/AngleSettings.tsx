@@ -19,9 +19,11 @@ export default function AgnleSettings(props: AngleSettingsProps) {
   const [tempDeg, setTempDeg] = useState<number>(deg)
   const handleDegChange = (newDeg: number) => {
     setTempDeg(newDeg)
+
     if (debounceTimeout.current) {
       clearTimeout(debounceTimeout.current)
     }
+
     debounceTimeout.current = window.setTimeout(() => {
       setColors((prevColors) => ({
         ...prevColors,
@@ -37,6 +39,7 @@ export default function AgnleSettings(props: AngleSettingsProps) {
       }
     }
   }, [])
+
   return (
     <div>
       <p>{tempDeg}°</p>

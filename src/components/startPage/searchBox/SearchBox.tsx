@@ -21,6 +21,7 @@ export default function SeatchBox() {
   ]
 
   const storage = new Storage()
+
   storage.watch({
     engine: () => {
       setSuggestions([])
@@ -29,9 +30,12 @@ export default function SeatchBox() {
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value
+
     setQuery(query)
+
     if (!query) {
       setSuggestions([])
+
       return
     }
 
@@ -65,9 +69,12 @@ export default function SeatchBox() {
 
   const onSubmit = () => {
     if (!query) return
+
     const searchUrl = engine?.searchURL.replace("%s", encodeURIComponent(query))
+
     window.location.href = searchUrl
   }
+
   return (
     <SearchInput
       placeholders={placeholders}

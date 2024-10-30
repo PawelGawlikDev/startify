@@ -8,6 +8,7 @@ export default function GradientBackground() {
     primary: string
     secondary: string
   }>("bg-colors", { deg: 0, primary: "#ffffff", secondary: "#ffffff" })
+
   return (
     <div
       className="inset-0 absolute"

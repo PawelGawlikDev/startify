@@ -62,6 +62,7 @@ export default function SearchInput({
       if (intervalRef.current) {
         clearInterval(intervalRef.current)
       }
+
       document.removeEventListener("visibilitychange", handleVisibilityChange)
     }
   }, [placeholders])
@@ -74,17 +75,23 @@ export default function SearchInput({
 
   const draw = useCallback(() => {
     if (!inputRef.current) return
+
     const canvas = canvasRef.current
+
     if (!canvas) return
+
     const ctx = canvas.getContext("2d", { willReadFrequently: true })
+
     if (!ctx) return
 
     canvas.width = 800
     canvas.height = 800
     ctx.clearRect(0, 0, 800, 800)
+
     const computedStyles = getComputedStyle(inputRef.current)
 
     const fontSize = parseFloat(computedStyles.getPropertyValue("font-size"))
+
     ctx.font = `${fontSize * 2}px ${computedStyles.fontFamily}`
     ctx.fillStyle = "#FFF"
     ctx.fillText(value, 16, 40)
@@ -95,8 +102,10 @@ export default function SearchInput({
 
     for (let t = 0; t < 800; t++) {
       const i = 4 * t * 800
+
       for (let n = 0; n < 800; n++) {
         const e = i + 4 * n
+
         if (
           pixelData[e] !== 0 &&
           pixelData[e + 1] !== 0 &&
@@ -132,8 +141,10 @@ export default function SearchInput({
     const animateFrame = (pos: number = 0) => {
       requestAnimationFrame(() => {
         const newArr = []
+
         for (let i = 0; i < newDataRef.current.length; i++) {
           const current = newDataRef.current[i]
+
           if (current.x < pos) {
             newArr.push(current)
           } else {
@@ -141,6 +152,7 @@ export default function SearchInput({
               current.r = 0
               continue
             }
+
             current.x += Math.random() > 0.5 ? 1 : -1
             current.y += Math.random() > 0.5 ? 1 : -1
             current.r -= 0.05 * Math.random()
@@ -148,11 +160,14 @@ export default function SearchInput({
           }
         }
         newDataRef.current = newArr
+
         const ctx = canvasRef.current?.getContext("2d")
+
         if (ctx) {
           ctx.clearRect(pos, 0, 800, 800)
           newDataRef.current.forEach((t) => {
             const { x: n, y: i, r: s, color: color } = t
+
             if (n > pos) {
               ctx.beginPath()
               ctx.rect(n, i, s, s)
@@ -171,6 +186,7 @@ export default function SearchInput({
         }
       })
     }
+
     animateFrame(start)
   }
 
@@ -187,6 +203,7 @@ export default function SearchInput({
     draw()
 
     const value = inputRef.current?.value || ""
+
     if (value && inputRef.current) {
       maxX = newDataRef.current.reduce(
         (prev, current) => (current.x > prev ? current.x : prev),
@@ -198,9 +215,11 @@ export default function SearchInput({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
     if (!skipAnimation) {
       vanishAndSubmit()
     }
+
     setTimeout(
       () => {
         if (onSubmit) {
@@ -210,6 +229,7 @@ export default function SearchInput({
       calculateAnimationDuration(skipAnimation ? 0 : maxX)
     )
   }
+
   return (
     <div className="w-full" data-testid="SearchInput">
       <form
@@ -243,6 +263,7 @@ export default function SearchInput({
           onChange={(e) => {
             if (!animating) {
               setValue(e.target.value)
+
               if (onChange) {
                 onChange(e)
               }
@@ -251,6 +272,7 @@ export default function SearchInput({
           onKeyDown={handleKeyDown}
           ref={inputRef}
           value={value}
+          id="SearchBox"
           type="text"
           className={cn(
             "w-full relative text-sm sm:text-base z-50 border-none  bg-transparent text-black h-full rounded-full focus:outline-none focus:ring-0 pl-6 sm:pl-12 pr-20",

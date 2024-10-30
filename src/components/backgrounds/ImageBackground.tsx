@@ -14,9 +14,11 @@ export default function ImageBackground() {
   useEffect(() => {
     const fetchBackgroundImage = async () => {
       const storedFiles = await db.wallpaper.toArray()
+
       if (storedFiles.length > 0) {
         const imageBlob = storedFiles[0].imageBlob
         const url = URL.createObjectURL(imageBlob)
+
         setBackgroundImageUrl(url)
       }
     }

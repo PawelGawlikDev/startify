@@ -19,6 +19,7 @@ describe("Search engines", () => {
   test("should have correct properties for each search engine", () => {
     for (const engineKey in searchEngines) {
       const engine = searchEngines[engineKey]
+
       expect(engine).toHaveProperty("name")
       expect(engine).toHaveProperty("searchURL")
       expect(engine).toHaveProperty("suggestionsURL")
@@ -29,11 +30,13 @@ describe("Search engines", () => {
 
   test("should have correct search URL format for Google", () => {
     const google = searchEngines[SearchEngineEnum.Google]
+
     expect(google.searchURL).toBe("https://www.google.com/search?q=%s")
   })
 
   test("should have correct favicon for DuckDuckGo", () => {
     const duckDuckGo = searchEngines[SearchEngineEnum.DuckDuckGo]
+
     expect(duckDuckGo.favicon).toBe("https://duckduckgo.com/favicon.ico")
   })
 })

@@ -5,5 +5,6 @@ export const calculateAnimationDuration = (
 ): number => {
   const frames = maxX / speed
   const duration = (frames / fps) * 1000
+
   return duration
 }

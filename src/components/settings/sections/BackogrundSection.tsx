@@ -28,6 +28,7 @@ export default function BackgroundSection() {
     const fetchStoredWallpapers = async () => {
       try {
         const wallpapers = await db.wallpaper.toArray()
+
         setStoredFiles(wallpapers)
       } catch {
         return
@@ -42,10 +43,12 @@ export default function BackgroundSection() {
 
     for (const file of files) {
       const blob = new Blob([file], { type: file.type })
+
       try {
         if ((await db.wallpaper.toArray()).length > 0) {
           await db.wallpaper.clear()
         }
+
         await db.wallpaper.add({
           name: file.name,
           imageBlob: blob

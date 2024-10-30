@@ -16,8 +16,10 @@ export const getCenter = (width: number, borderWidth: number) => ({
 
 export const radianToAngle = (radian: number): number => {
   const angle = Math.round((radian * 180) / Math.PI)
+
   if (angle < 0) {
     return 360 + angle
   }
+
   return angle
 }

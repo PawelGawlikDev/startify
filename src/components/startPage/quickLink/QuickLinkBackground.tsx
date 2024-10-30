@@ -28,6 +28,7 @@ export default function QuickLinkBackground({
       backgroundPosition: ["0, 50%", "100% 50%", "0 50%"]
     }
   }
+
   return (
     <div
       draggable={draggable}

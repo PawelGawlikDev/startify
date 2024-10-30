@@ -10,6 +10,7 @@ vi.mock("@plasmohq/storage", () => {
     get: vi.fn(),
     set: vi.fn()
   }
+
   return { Storage: vi.fn(() => storageMock) }
 })
 

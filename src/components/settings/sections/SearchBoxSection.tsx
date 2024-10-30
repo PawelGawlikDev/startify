@@ -10,6 +10,7 @@ import SettingsSection from "./SettingsSection"
 
 export default function SearchBoxSection() {
   const [vanish, setVanish] = useStorage<boolean>("vanish")
+
   return (
     <SettingsSection
       className="relative z-50 w-full flex flex-col gap-4"

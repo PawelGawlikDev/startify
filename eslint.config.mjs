@@ -29,11 +29,26 @@ export default [
       "no-console": "error",
       "padding-line-between-statements": [
         "error",
+        { blankLine: "always", prev: "import", next: "*" },
+        { blankLine: "any", prev: "import", next: "import" },
+        { blankLine: "always", prev: "*", next: ["const", "let", "var"] },
+        { blankLine: "always", prev: ["const", "let", "var"], next: "*" },
+        {
+          blankLine: "any",
+          prev: ["const", "let", "var"],
+          next: ["const", "let", "var"]
+        },
         {
           blankLine: "always",
-          prev: "multiline-expression",
-          next: "multiline-expression"
-        }
+          prev: "*",
+          next: ["class", "if", "while", "switch", "try"]
+        },
+        {
+          blankLine: "always",
+          prev: ["class", "if", "while", "switch", "try"],
+          next: "*"
+        },
+        { blankLine: "always", prev: "*", next: "return" }
       ]
     }
   },
@@ -58,27 +73,57 @@ export default [
       ...vitest.configs.recommended.rules,
       "padding-line-between-statements": [
         "error",
+        { blankLine: "always", prev: "import", next: "*" },
+        { blankLine: "any", prev: "import", next: "import" },
+        { blankLine: "always", prev: "*", next: ["const", "let", "var"] },
+        { blankLine: "always", prev: ["const", "let", "var"], next: "*" },
+        {
+          blankLine: "any",
+          prev: ["const", "let", "var"],
+          next: ["const", "let", "var"]
+        },
         {
           blankLine: "always",
-          prev: "multiline-expression",
-          next: "multiline-expression"
-        }
+          prev: "*",
+          next: ["class", "if", "while", "switch", "try"]
+        },
+        {
+          blankLine: "always",
+          prev: ["class", "if", "while", "switch", "try"],
+          next: "*"
+        },
+        { blankLine: "always", prev: "*", next: "return" }
       ]
     },
     ...vitest.configs.recommended
   },
   {
     ...playwright.configs["flat/recommended"],
-    files: ["tests/**"],
+    files: ["tests/**/*.ts"],
     rules: {
       ...playwright.configs["flat/recommended"].rules,
       "padding-line-between-statements": [
         "error",
+        { blankLine: "always", prev: "import", next: "*" },
+        { blankLine: "any", prev: "import", next: "import" },
+        { blankLine: "always", prev: "*", next: ["const", "let", "var"] },
+        { blankLine: "always", prev: ["const", "let", "var"], next: "*" },
+        {
+          blankLine: "any",
+          prev: ["const", "let", "var"],
+          next: ["const", "let", "var"]
+        },
         {
           blankLine: "always",
-          prev: "multiline-expression",
-          next: "multiline-expression"
-        }
+          prev: "*",
+          next: ["class", "if", "while", "switch", "try"]
+        },
+        {
+          blankLine: "always",
+          prev: ["class", "if", "while", "switch", "try"],
+          next: "*"
+        },
+        { blankLine: "always", prev: "*", next: "return" }
       ]
     }
   }

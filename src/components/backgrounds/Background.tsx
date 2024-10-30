@@ -16,6 +16,7 @@ export default function Background({
 
   useEffect(() => {
     const component = resolveBgType(background)
+
     if (component) {
       component().then((module) => {
         setBackgroundComponent(() => module.default)

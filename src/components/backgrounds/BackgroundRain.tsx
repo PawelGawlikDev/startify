@@ -167,6 +167,7 @@ const CollisionMechanism = React.forwardRef<
         key={beamKey}
         ref={(el) => {
           beamRef.current = el
+
           if (ref) {
             if (typeof ref === "function") {
               ref(el)

@@ -14,6 +14,7 @@ export default function QuickLinkSection() {
     bigQuickLinks: false,
     type: "gradient"
   })
+
   return (
     <SettingsSection
       className="relative w-full flex flex-col gap-4"

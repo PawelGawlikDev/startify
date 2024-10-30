@@ -29,10 +29,12 @@ export default function QuickLinkGrid() {
 
   useEffect(() => {
     const savedOrder = localStorage.getItem("speedLinkOrder")
+
     if (savedOrder) {
       setQuickLinkOrder(JSON.parse(savedOrder))
     } else if (quickLinks && quickLinks.length > 0) {
       const currentOrderIds = quickLinks.map((dial) => dial.id)
+
       if (JSON.stringify(currentOrderIds) !== JSON.stringify(quickLinkOrder)) {
         setQuickLinkOrder(currentOrderIds)
       }
@@ -41,6 +43,7 @@ export default function QuickLinkGrid() {
 
   const { onDragEnter, onDragStart, onDragEnd, onDragOver, onDrop } =
     useDragAndDrop(quickLinkOrder, setQuickLinkOrder)
+
   return (
     <div
       data-testid="QuickLinkGrid"
