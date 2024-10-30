@@ -1,32 +1,116 @@
 import { expect, test } from "./fixtures/fixtures"
 
 test.describe("Main Page tests", () => {
-  test("Main test", async ({ page, extensionId }) => {
-    await page.goto(`chrome-extension://${extensionId}/newtab.html`)
-    await expect(page.locator("main")).toBeVisible()
-  })
+  test("Digital timer visible", async ({ page, extensionId, startPage }) => {
+    await startPage.goToExtensionPage(extensionId, startPage.newTab)
 
-  test("Digital timer visible", async ({ page, extensionId }) => {
-    await page.goto(`chrome-extension://${extensionId}/newtab.html`)
     const digitalTime = page.getByTestId("DigitalTime")
+
     await expect(digitalTime).toBeVisible()
   })
 
-  test("Search Input visible", async ({ page, extensionId }) => {
-    await page.goto(`chrome-extension://${extensionId}/newtab.html`)
+  test("Search Input visible", async ({ page, extensionId, startPage }) => {
+    await startPage.goToExtensionPage(extensionId, startPage.newTab)
+
     const digitalTime = page.getByTestId("SearchInput")
+
     await expect(digitalTime).toBeVisible()
   })
 
-  test("Add Quick Link button visible", async ({ page, extensionId }) => {
-    await page.goto(`chrome-extension://${extensionId}/newtab.html`)
+  test("Add Quick Link button visible", async ({
+    page,
+    extensionId,
+    startPage
+  }) => {
+    await startPage.goToExtensionPage(extensionId, startPage.newTab)
+
     const digitalTime = page.getByTestId("AddQuickLink")
+
     await expect(digitalTime).toBeVisible()
   })
 
-  test("Quick Link grid visible", async ({ page, extensionId }) => {
-    await page.goto(`chrome-extension://${extensionId}/newtab.html`)
+  test("Quick Link grid visible", async ({ page, extensionId, startPage }) => {
+    await startPage.goToExtensionPage(extensionId, startPage.newTab)
+
     const digitalTime = page.getByTestId("QuickLinkGrid")
+
     await expect(digitalTime).toBeVisible()
+  })
+
+  test("Add quick link test", async ({ page, extensionId, startPage }) => {
+    await startPage.goToExtensionPage(extensionId, startPage.newTab)
+
+    let quickLinks = await page.getByTestId("QuickLink").all()
+
+    expect(quickLinks.length).toBe(0)
+
+    await startPage.addQuickLink("example", "https://example.com")
+
+    quickLinks = await page.getByTestId("QuickLink").all()
+
+    expect(quickLinks.length, {
+      message: "After add quick link one should be visible"
+    }).toBe(1)
+  })
+
+  test("Add and delete quick link test", async ({
+    page,
+    extensionId,
+    startPage
+  }) => {
+    await startPage.goToExtensionPage(extensionId, startPage.newTab)
+
+    let quickLinks = await page.getByTestId("QuickLink").all()
+
+    expect(quickLinks.length).toBe(0)
+
+    await startPage.addQuickLink("example", "https://example.com")
+
+    quickLinks = await page.getByTestId("QuickLink").all()
+
+    expect(quickLinks.length, {
+      message: "One Quick Link should be added"
+    }).toBe(1)
+
+    await quickLinks[0].hover()
+    await expect(quickLinks[0].getByTestId("QuickLinkSettingsButton"), {
+      message: "Settings button should be visible after hover quick link"
+    }).toBeVisible()
+
+    await quickLinks[0].getByTestId("QuickLinkSettingsButton").click()
+    await expect(page.getByTestId("QuickLinkMenu")).toBeVisible()
+    await page
+      .getByTestId("QuickLinkMenu")
+      .getByTestId("DeleteQuickLink")
+      .click()
+    quickLinks = await page.getByTestId("QuickLink").all()
+
+    expect(quickLinks.length, { message: "Quick link should be deleted" }).toBe(
+      0
+    )
+  })
+
+  test("Search 'example' in search box", async ({
+    page,
+    extensionId,
+    startPage
+  }) => {
+    await startPage.goToExtensionPage(extensionId, startPage.newTab)
+
+    const searchBox = page.locator("#SearchBox")
+
+    await expect(searchBox, {
+      message: "Search box should be visible"
+    }).toBeVisible()
+    await searchBox.focus()
+    await page.keyboard.insertText("example")
+    await page.keyboard.press("Enter")
+    await page.waitForURL("https://www.google.com/search?q=example")
+
+    const currentUrl = await page.evaluate(() => {
+      return document.URL
+    })
+
+    expect(currentUrl).toBe("https://www.google.com/search?q=example")
   })
 })
