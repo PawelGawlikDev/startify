@@ -140,7 +140,9 @@ export function QuickLink(props: QuickLinkProps) {
           <div className="triangle gradient-background transition-opacity opacity-0 group-hover:opacity-100 w-4 h-4 absolute left-[-4px] bottom-[-4px] rotate-90" />
         </QuickLinkBackground>
       </a>
-      <p className="text-white">{pageName}</p>
+      <p data-testid="QuickLinkName" className="text-white">
+        {pageName}
+      </p>
     </motion.div>
   )
 }

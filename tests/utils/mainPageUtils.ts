@@ -50,4 +50,45 @@ export class StartifyStartPage {
 
     await this.page.waitForLoadState("domcontentloaded")
   }
+
+  async manualDragAndDropReorder(dragged: Locator, target: Locator) {
+    await expect(dragged, {
+      message: "Dragged need to be in vievport"
+    }).toBeInViewport()
+    await expect(target, {
+      message: "Target nedd to be in vievport"
+    }).toBeInViewport()
+
+    await dragged.hover({ position: { x: 40, y: 40 } })
+    await this.page.mouse.down()
+
+    const targetPosition = await target.evaluate((element) => {
+      return element.getBoundingClientRect()
+    })
+
+    await this.page.mouse.move(targetPosition.x, targetPosition.y, {
+      steps: 200
+    })
+
+    await this.page.mouse.up()
+  }
+
+  async manualDragAndDropWithNoReorder(dragged: Locator) {
+    await expect(dragged, {
+      message: "Dragged need to be in vievport"
+    }).toBeInViewport()
+
+    await dragged.hover({ position: { x: 40, y: 40 } })
+    await this.page.mouse.down()
+
+    const targetPosition = await dragged.evaluate((element) => {
+      return element.getBoundingClientRect()
+    })
+
+    await this.page.mouse.move(targetPosition.x, targetPosition.y + 200, {
+      steps: 200
+    })
+
+    await this.page.mouse.up()
+  }
 }
