@@ -19,7 +19,7 @@ export const setDefaultWallpaper = async (storage: BaseStorage) => {
 }
 
 export const setDefaultVanishAnimation = async (storage: BaseStorage) => {
-  await storage.set("vanish", false)
+  await storage.set("vanish", true)
 }
 
 export const setDefaultQuickLink = async (storage: BaseStorage) => {
