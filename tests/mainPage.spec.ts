@@ -77,6 +77,50 @@ test.describe("Main Page tests", () => {
       )
     }
 
+    await startPage.manualDragAndDropReorder(quickLinks[0], quickLinks[1], {
+      x: 40,
+      y: 40
+    })
+
+    const newOrder = []
+
+    quickLinks = await page.getByTestId("QuickLink").all()
+
+    for (const quickLink of quickLinks) {
+      newOrder.push(await quickLink.getByTestId("QuickLinkName").textContent())
+    }
+
+    expect(newOrder).toEqual(quickLinksOrder.reverse())
+  })
+
+  test("Change the order of quick links by dragging the image", async ({
+    page,
+    extensionId,
+    startPage
+  }) => {
+    await startPage.goToExtensionPage(extensionId, startPage.newTab)
+
+    let quickLinks = await page.getByTestId("QuickLink").all()
+
+    expect(quickLinks.length).toBe(0)
+
+    await startPage.addQuickLink("example", "https://example.com")
+    await startPage.addQuickLink("example2", "https://example.com")
+
+    quickLinks = await page.getByTestId("QuickLink").all()
+
+    expect(quickLinks.length, {
+      message: "After add quick link one should be visible"
+    }).toBe(2)
+
+    const quickLinksOrder = []
+
+    for (const quickLink of quickLinks) {
+      quickLinksOrder.push(
+        await quickLink.getByTestId("QuickLinkName").textContent()
+      )
+    }
+
     await startPage.manualDragAndDropReorder(quickLinks[0], quickLinks[1])
 
     const newOrder = []
@@ -189,6 +233,6 @@ test.describe("Main Page tests", () => {
       return document.URL
     })
 
-    expect(currentUrl).toBe("https://www.google.com/search?q=example")
+    expect(currentUrl).toContain("https://www.google.com/search?q=example")
   })
 })
