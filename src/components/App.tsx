@@ -1,9 +1,9 @@
-import React from "react"
+import React from "react";
 
-import SettingsGear from "./SettingsGear"
-import DigitalTime from "./startPage/DigitalTime"
-import QuickLinkGrid from "./startPage/quickLink/QuickLinkGrid"
-import SeatchBox from "./startPage/searchBox/SearchBox"
+import SettingsGear from "./SettingsGear";
+import DigitalTime from "./startPage/DigitalTime";
+import QuickLinkGrid from "./startPage/quickLink/QuickLinkGrid";
+import SeatchBox from "./startPage/searchBox/SearchBox";
 
 export default function App() {
   return (
@@ -21,5 +21,5 @@ export default function App() {
         <QuickLinkGrid />
       </div>
     </>
-  )
+  );
 }

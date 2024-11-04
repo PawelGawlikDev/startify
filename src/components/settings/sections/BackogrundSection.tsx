@@ -1,64 +1,64 @@
-import { motion } from "framer-motion"
-import React, { useEffect, useState } from "react"
+import { motion } from "framer-motion";
+import React, { useEffect, useState } from "react";
 
-import { useStorage } from "@plasmohq/storage/hook"
+import { useStorage } from "@plasmohq/storage/hook";
 
-import { db } from "~indexdb"
-import type { Backgrounds, UserWallpaper } from "~types"
-import { cn } from "~utils/cn"
+import { db } from "~indexdb";
+import type { Backgrounds, UserWallpaper } from "~types";
+import { cn } from "~utils/cn";
 
-import ColorPickerButton from "../ColorPickerButtons"
-import { BackgroundDropdown } from "../Dropdown"
-import { FileUpload } from "../FileUpload"
-import AgnleSettings from "./AngleSettings"
-import SettingsSection from "./SettingsSection"
+import ColorPickerButton from "../ColorPickerButtons";
+import { BackgroundDropdown } from "../Dropdown";
+import { FileUpload } from "../FileUpload";
+import AgnleSettings from "./AngleSettings";
+import SettingsSection from "./SettingsSection";
 
 export default function BackgroundSection() {
   const [colors, setColors] = useStorage<{
-    deg: number
-    primary: string
-    secondary: string
-  }>("bg-colors")
-  const [, setFiles] = useState<File[]>([])
-  const [storedFiles, setStoredFiles] = useState<UserWallpaper[]>([])
-  const [background] = useStorage<Backgrounds>("background")
-  const [preview, setPreview] = useState<boolean>(true)
+    deg: number;
+    primary: string;
+    secondary: string;
+  }>("bg-colors");
+  const [, setFiles] = useState<File[]>([]);
+  const [storedFiles, setStoredFiles] = useState<UserWallpaper[]>([]);
+  const [background] = useStorage<Backgrounds>("background");
+  const [preview, setPreview] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchStoredWallpapers = async () => {
       try {
-        const wallpapers = await db.wallpaper.toArray()
+        const wallpapers = await db.wallpaper.toArray();
 
-        setStoredFiles(wallpapers)
+        setStoredFiles(wallpapers);
       } catch {
-        return
+        return;
       }
-    }
+    };
 
-    fetchStoredWallpapers()
-  }, [])
+    fetchStoredWallpapers();
+  }, []);
 
   const handleFileUpload = async (files: File[]) => {
-    setFiles(files)
+    setFiles(files);
 
     for (const file of files) {
-      const blob = new Blob([file], { type: file.type })
+      const blob = new Blob([file], { type: file.type });
 
       try {
         if ((await db.wallpaper.toArray()).length > 0) {
-          await db.wallpaper.clear()
+          await db.wallpaper.clear();
         }
 
         await db.wallpaper.add({
           name: file.name,
           imageBlob: blob
-        })
-        setStoredFiles(await db.wallpaper.toArray())
+        });
+        setStoredFiles(await db.wallpaper.toArray());
       } catch {
-        return
+        return;
       }
     }
-  }
+  };
 
   return (
     <SettingsSection
@@ -109,7 +109,7 @@ export default function BackgroundSection() {
             <div className="grid grid-cols-1 gap-4 mt-4">
               <button
                 onClick={() => {
-                  setPreview(!preview)
+                  setPreview(!preview);
                 }}>
                 Image preview
               </button>
@@ -135,8 +135,8 @@ export default function BackgroundSection() {
                               animate={{ opacity: 1 }}
                               className="text-sm text-neutral-100"
                               onClick={async () => {
-                                await db.wallpaper.delete(file.id)
-                                setStoredFiles([])
+                                await db.wallpaper.delete(file.id);
+                                setStoredFiles([]);
                               }}>
                               Delete
                             </motion.button>
@@ -163,5 +163,5 @@ export default function BackgroundSection() {
         </>
       )}
     </SettingsSection>
-  )
+  );
 }

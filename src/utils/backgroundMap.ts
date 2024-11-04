@@ -6,12 +6,12 @@ const BgTypes = {
   aurora: () => import("~components/backgrounds/AuroraBackground"),
   boxes: () => import("~components/backgrounds/BackgroundBoxes"),
   snakes: () => import("~components/backgrounds/BackgroundSnakes")
-}
+};
 
 export const resolveBgType = (type?: string) => {
   if (!type || !BgTypes[type]) {
-    return null
+    return null;
   }
 
-  return BgTypes[type]
-}
+  return BgTypes[type];
+};

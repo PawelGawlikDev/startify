@@ -1,18 +1,18 @@
-import path from "path"
-import { test as base, chromium, type BrowserContext } from "@playwright/test"
-import { StartifyStartPage } from "tests/utils/mainPageUtils"
+import path from "path";
+import { test as base, chromium, type BrowserContext } from "@playwright/test";
+import { StartifyStartPage } from "tests/utils/mainPageUtils";
 
 type ExtensionFixtures = {
-  context: BrowserContext
-  extensionId: string
-  startPage: StartifyStartPage
-}
+  context: BrowserContext;
+  extensionId: string;
+  startPage: StartifyStartPage;
+};
 
-const isDebug = process.env.DEBUG === "true"
+const isDebug = process.env.DEBUG === "true";
 
 export const test = base.extend<ExtensionFixtures>({
   context: async ({}, use) => {
-    const pathToExtension = path.join(__dirname, "../../build/chrome-mv3-prod")
+    const pathToExtension = path.join(__dirname, "../../build/chrome-mv3-prod");
 
     const context = await chromium.launchPersistentContext("", {
       headless: false,
@@ -21,24 +21,24 @@ export const test = base.extend<ExtensionFixtures>({
         `--disable-extensions-except=${pathToExtension}`,
         `--load-extension=${pathToExtension}`
       ]
-    })
+    });
 
-    await use(context)
+    await use(context);
 
-    await context.close()
+    await context.close();
   },
   extensionId: async ({ context }, use) => {
-    let [background] = context.serviceWorkers()
+    let [background] = context.serviceWorkers();
 
-    if (!background) background = await context.waitForEvent("serviceworker")
+    if (!background) background = await context.waitForEvent("serviceworker");
 
-    const extensionId = background.url().split("/")[2]
+    const extensionId = background.url().split("/")[2];
 
-    await use(extensionId)
+    await use(extensionId);
   },
   startPage: async ({ page }, use) => {
-    await use(new StartifyStartPage(page))
+    await use(new StartifyStartPage(page));
   }
-})
+});
 
-export const expect = test.expect
+export const expect = test.expect;

@@ -1,15 +1,15 @@
-import { motion } from "framer-motion"
-import React from "react"
+import { motion } from "framer-motion";
+import React from "react";
 
-import { useStorage } from "@plasmohq/storage/hook"
+import { useStorage } from "@plasmohq/storage/hook";
 
-import { Button } from "~components/Button"
+import { Button } from "~components/Button";
 
-import { EngineDropdown } from "../Dropdown"
-import SettingsSection from "./SettingsSection"
+import { EngineDropdown } from "../Dropdown";
+import SettingsSection from "./SettingsSection";
 
 export default function SearchBoxSection() {
-  const [vanish, setVanish] = useStorage<boolean>("vanish")
+  const [vanish, setVanish] = useStorage<boolean>("vanish");
 
   return (
     <SettingsSection
@@ -31,7 +31,7 @@ export default function SearchBoxSection() {
           <div className="flex z-2 flex-row gap-2 min-w-32 justify-center cursor-default items-center">
             <Button
               onClick={async () => {
-                await setVanish(!vanish)
+                await setVanish(!vanish);
               }}
               borderClassName={
                 vanish
@@ -46,5 +46,5 @@ export default function SearchBoxSection() {
         </motion.div>
       )}
     </SettingsSection>
-  )
+  );
 }

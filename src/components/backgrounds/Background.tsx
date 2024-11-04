@@ -1,35 +1,35 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react";
 
-import { useStorage } from "@plasmohq/storage/hook"
+import { useStorage } from "@plasmohq/storage/hook";
 
-import type { Backgrounds } from "~types"
-import { resolveBgType } from "~utils/backgroundMap"
+import type { Backgrounds } from "~types";
+import { resolveBgType } from "~utils/backgroundMap";
 
 export default function Background({
   children
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
-  const [background] = useStorage<Backgrounds>("background")
+  const [background] = useStorage<Backgrounds>("background");
   const [BackgroundComponent, setBackgroundComponent] =
-    useState<React.ComponentType | null>(null)
+    useState<React.ComponentType | null>(null);
 
   useEffect(() => {
-    const component = resolveBgType(background)
+    const component = resolveBgType(background);
 
     if (component) {
       component().then((module) => {
-        setBackgroundComponent(() => module.default)
-      })
+        setBackgroundComponent(() => module.default);
+      });
     } else {
-      setBackgroundComponent(null)
+      setBackgroundComponent(null);
     }
-  }, [background])
+  }, [background]);
 
   return (
     <div>
       {BackgroundComponent && <BackgroundComponent />}
       <div className="relative z-10">{children}</div>
     </div>
-  )
+  );
 }

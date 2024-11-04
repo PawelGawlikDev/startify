@@ -1,7 +1,9 @@
-import { defineConfig, devices } from "@playwright/test"
+import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
   testDir: "./tests",
+  testIgnore: "./tests/components",
+  timeout: 10 * 1000,
   testMatch: [/.*\.spec\.(ts)/],
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
@@ -19,4 +21,4 @@ export default defineConfig({
       }
     }
   ]
-})
+});

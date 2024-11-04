@@ -1,24 +1,24 @@
-import { motion } from "framer-motion"
-import React, { useEffect, useState } from "react"
+import { motion } from "framer-motion";
+import React, { useEffect, useState } from "react";
 
 export default function DigitalTime() {
-  const [time, setTime] = useState(new Date())
+  const [time, setTime] = useState(new Date());
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTime(new Date())
-    }, 1000)
+      setTime(new Date());
+    }, 1000);
 
-    return () => clearInterval(interval)
-  }, [])
+    return () => clearInterval(interval);
+  }, []);
 
   const formatTime = (date: Date) => {
-    const hours = String(date.getHours()).padStart(2, "0")
-    const minutes = String(date.getMinutes()).padStart(2, "0")
-    const seconds = String(date.getSeconds()).padStart(2, "0")
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = String(date.getSeconds()).padStart(2, "0");
 
-    return `${hours}:${minutes}:${seconds}`
-  }
+    return `${hours}:${minutes}:${seconds}`;
+  };
 
   return (
     <motion.div
@@ -29,5 +29,5 @@ export default function DigitalTime() {
       transition={{ duration: 0.5 }}>
       {formatTime(time)}
     </motion.div>
-  )
+  );
 }

@@ -1,19 +1,19 @@
-import { motion } from "framer-motion"
-import React from "react"
+import { motion } from "framer-motion";
+import React from "react";
 
-import { useStorage } from "@plasmohq/storage/hook"
+import { useStorage } from "@plasmohq/storage/hook";
 
-import { Button } from "~components/Button"
-import { QuickLinkTypeDropdown } from "~components/settings/Dropdown"
-import type { QuickLinkSettings } from "~types"
+import { Button } from "~components/Button";
+import { QuickLinkTypeDropdown } from "~components/settings/Dropdown";
+import type { QuickLinkSettings } from "~types";
 
-import SettingsSection from "./SettingsSection"
+import SettingsSection from "./SettingsSection";
 
 export default function QuickLinkSection() {
   const [quickLink, setQuickLink] = useStorage<QuickLinkSettings>("quickLink", {
     bigQuickLinks: false,
     type: "gradient"
-  })
+  });
 
   return (
     <SettingsSection
@@ -30,7 +30,7 @@ export default function QuickLinkSection() {
               await setQuickLink({
                 ...quickLink,
                 bigQuickLinks: !quickLink.bigQuickLinks
-              })
+              });
             }}
             borderClassName={
               quickLink.bigQuickLinks
@@ -51,5 +51,5 @@ export default function QuickLinkSection() {
         <QuickLinkTypeDropdown />
       </motion.div>
     </SettingsSection>
-  )
+  );
 }

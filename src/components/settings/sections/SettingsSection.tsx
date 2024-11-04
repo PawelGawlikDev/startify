@@ -1,9 +1,9 @@
-import React, { type ReactNode } from "react"
+import React, { type ReactNode } from "react";
 
 interface SettingsSectionProps {
-  children: ReactNode
-  sectionTitle: string
-  className?: string
+  children: ReactNode;
+  sectionTitle: string;
+  className?: string;
 }
 
 export default function SettingsSection({
@@ -18,5 +18,5 @@ export default function SettingsSection({
       </div>
       <div className="flex flex-col gap-6 bg-neutral-800 p-5">{children}</div>
     </div>
-  )
+  );
 }

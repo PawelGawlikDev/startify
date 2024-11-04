@@ -1,10 +1,10 @@
-import pluginJs from "@eslint/js"
-import nextPlugin from "@next/eslint-plugin-next"
-import vitest from "@vitest/eslint-plugin"
-import playwright from "eslint-plugin-playwright"
-import pluginReact from "eslint-plugin-react"
-import globals from "globals"
-import tseslint from "typescript-eslint"
+import pluginJs from "@eslint/js";
+import nextPlugin from "@next/eslint-plugin-next";
+import vitest from "@vitest/eslint-plugin";
+import playwright from "eslint-plugin-playwright";
+import pluginReact from "eslint-plugin-react";
+import globals from "globals";
+import tseslint from "typescript-eslint";
 
 export default [
   {
@@ -16,8 +16,8 @@ export default [
       "pnpm-lock.yaml",
       "storybook/",
       "coverage/",
-      "playwright-report/"
-    ]
+      "playwright-report/",
+    ],
   },
   { files: ["**/*.{ts,tsx}"] },
   { languageOptions: { globals: globals.browser } },
@@ -36,38 +36,38 @@ export default [
         {
           blankLine: "any",
           prev: ["const", "let", "var"],
-          next: ["const", "let", "var"]
+          next: ["const", "let", "var"],
         },
         {
           blankLine: "always",
           prev: "*",
-          next: ["class", "if", "while", "switch", "try"]
+          next: ["class", "if", "while", "switch", "try"],
         },
         {
           blankLine: "always",
           prev: ["class", "if", "while", "switch", "try"],
-          next: "*"
+          next: "*",
         },
-        { blankLine: "always", prev: "*", next: "return" }
-      ]
-    }
+        { blankLine: "always", prev: "*", next: "return" },
+      ],
+    },
   },
   {
     plugins: {
-      "@next/next": nextPlugin
-    }
+      "@next/next": nextPlugin,
+    },
   },
   {
     settings: {
       react: {
-        version: "detect"
-      }
-    }
+        version: "detect",
+      },
+    },
   },
   {
     files: ["**/*.test.ts"],
     plugins: {
-      vitest
+      vitest,
     },
     rules: {
       ...vitest.configs.recommended.rules,
@@ -80,22 +80,22 @@ export default [
         {
           blankLine: "any",
           prev: ["const", "let", "var"],
-          next: ["const", "let", "var"]
+          next: ["const", "let", "var"],
         },
         {
           blankLine: "always",
           prev: "*",
-          next: ["class", "if", "while", "switch", "try"]
+          next: ["class", "if", "while", "switch", "try"],
         },
         {
           blankLine: "always",
           prev: ["class", "if", "while", "switch", "try"],
-          next: "*"
+          next: "*",
         },
-        { blankLine: "always", prev: "*", next: "return" }
-      ]
+        { blankLine: "always", prev: "*", next: "return" },
+      ],
     },
-    ...vitest.configs.recommended
+    ...vitest.configs.recommended,
   },
   {
     ...playwright.configs["flat/recommended"],
@@ -111,20 +111,20 @@ export default [
         {
           blankLine: "any",
           prev: ["const", "let", "var"],
-          next: ["const", "let", "var"]
+          next: ["const", "let", "var"],
         },
         {
           blankLine: "always",
           prev: "*",
-          next: ["class", "if", "while", "switch", "try"]
+          next: ["class", "if", "while", "switch", "try"],
         },
         {
           blankLine: "always",
           prev: ["class", "if", "while", "switch", "try"],
-          next: "*"
+          next: "*",
         },
-        { blankLine: "always", prev: "*", next: "return" }
-      ]
-    }
-  }
-]
+        { blankLine: "always", prev: "*", next: "return" },
+      ],
+    },
+  },
+];

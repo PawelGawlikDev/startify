@@ -1,12 +1,12 @@
-import React, { forwardRef } from "react"
+import React, { forwardRef } from "react";
 
 interface BorderProps {
-  width?: number
-  borderColor?: string
-  borderStyle?: string
-  borderWidth?: number
-  onMouseDown?: React.MouseEventHandler<HTMLDivElement>
-  children: React.ReactNode
+  width?: number;
+  borderColor?: string;
+  borderStyle?: string;
+  borderWidth?: number;
+  onMouseDown?: React.MouseEventHandler<HTMLDivElement>;
+  children: React.ReactNode;
 }
 
 const Border = forwardRef<HTMLDivElement, BorderProps>((props, ref) => {
@@ -17,7 +17,7 @@ const Border = forwardRef<HTMLDivElement, BorderProps>((props, ref) => {
     borderWidth = 1,
     onMouseDown,
     children
-  } = props
+  } = props;
 
   return (
     <div
@@ -31,9 +31,9 @@ const Border = forwardRef<HTMLDivElement, BorderProps>((props, ref) => {
       }}>
       {children}
     </div>
-  )
-})
+  );
+});
 
-Border.displayName = "Border"
+Border.displayName = "Border";
 
-export default Border
+export default Border;

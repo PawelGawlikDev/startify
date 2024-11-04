@@ -1,7 +1,7 @@
-import { checkUserSettings } from "~utils/checkUserSettings"
+import { checkUserSettings } from "~utils/checkUserSettings";
 
 const main = async () => {
-  await checkUserSettings()
-}
+  await checkUserSettings();
+};
 
-main()
+main();

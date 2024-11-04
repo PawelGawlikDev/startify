@@ -1,9 +1,9 @@
-import React from "react"
+import React from "react";
 
-import { cn } from "~utils/cn"
+import { cn } from "~utils/cn";
 
 interface AuroraBackgroundProps extends React.HTMLProps<HTMLDivElement> {
-  showRadialGradient?: boolean
+  showRadialGradient?: boolean;
 }
 
 const AuroraBackground = ({
@@ -31,7 +31,7 @@ const AuroraBackground = ({
             `[mask-image:radial-gradient(ellipse_at_100%_0%,black_10%,var(--transparent)_70%)]`
         )}></div>
     </div>
-  )
-}
+  );
+};
 
-export default AuroraBackground
+export default AuroraBackground;

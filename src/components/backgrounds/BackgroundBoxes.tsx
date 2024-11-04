@@ -1,11 +1,11 @@
-import { motion } from "framer-motion"
-import React from "react"
+import { motion } from "framer-motion";
+import React from "react";
 
-import { cn } from "~utils/cn"
+import { cn } from "~utils/cn";
 
 const BoxesCore = ({ className, ...rest }: { className?: string }) => {
-  const rows = new Array(150).fill(1)
-  const cols = new Array(100).fill(1)
+  const rows = new Array(150).fill(1);
+  const cols = new Array(100).fill(1);
   const colors = [
     "--sky-300",
     "--pink-300",
@@ -16,10 +16,10 @@ const BoxesCore = ({ className, ...rest }: { className?: string }) => {
     "--blue-300",
     "--indigo-300",
     "--violet-300"
-  ]
+  ];
   const getRandomColor = () => {
-    return colors[Math.floor(Math.random() * colors.length)]
-  }
+    return colors[Math.floor(Math.random() * colors.length)];
+  };
 
   return (
     <div className="absolute inset-0 bg-neutral-900">
@@ -68,9 +68,9 @@ const BoxesCore = ({ className, ...rest }: { className?: string }) => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-const Boxes = React.memo(BoxesCore)
+const Boxes = React.memo(BoxesCore);
 
-export default Boxes
+export default Boxes;

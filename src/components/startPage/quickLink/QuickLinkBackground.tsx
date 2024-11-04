@@ -1,9 +1,9 @@
-import { motion } from "framer-motion"
-import React from "react"
+import { motion } from "framer-motion";
+import React from "react";
 
-import "./quickLink.css"
+import "./quickLink.css";
 
-import { cn } from "~utils/cn"
+import { cn } from "~utils/cn";
 
 export default function QuickLinkBackground({
   children,
@@ -13,12 +13,12 @@ export default function QuickLinkBackground({
   animate = true,
   type = "gradient"
 }: {
-  children?: React.ReactNode
-  className?: string
-  draggable?: boolean
-  containerClassName?: string
-  animate?: boolean
-  type: "gradient" | "transparent"
+  children?: React.ReactNode;
+  className?: string;
+  draggable?: boolean;
+  containerClassName?: string;
+  animate?: boolean;
+  type: "gradient" | "transparent";
 }) {
   const variants = {
     initial: {
@@ -27,7 +27,7 @@ export default function QuickLinkBackground({
     animate: {
       backgroundPosition: ["0, 50%", "100% 50%", "0 50%"]
     }
-  }
+  };
 
   return (
     <div
@@ -84,5 +84,5 @@ export default function QuickLinkBackground({
 
       <div className={cn("relative z-10", className)}>{children}</div>
     </div>
-  )
+  );
 }
