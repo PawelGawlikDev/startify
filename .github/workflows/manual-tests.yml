@@ -8,7 +8,6 @@ permissions:
 
 jobs:
   vitest:
-    needs: lint
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
