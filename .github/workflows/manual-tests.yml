@@ -31,7 +31,6 @@ jobs:
         run: pnpm vitest
 
   playwright:
-    needs: lint
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
