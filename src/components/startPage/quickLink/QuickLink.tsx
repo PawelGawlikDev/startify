@@ -128,7 +128,13 @@ export function QuickLink(props: QuickLinkProps) {
             )}
           </div>
           {favicon ? (
-            <img src={favicon} alt={pageName} width={48} height={48} />
+            <img
+              draggable="false"
+              src={favicon}
+              alt={pageName}
+              width={48}
+              height={48}
+            />
           ) : (
             <div className="flex items-center justify-center w-[48px] h-[48px] rounded">
               <span className="text-xl font-bold text-white">
