@@ -1,87 +1,87 @@
-import { describe, expect, test } from "vitest"
+import { describe, expect, test } from "vitest";
 
-import { resolveBgType } from "~utils/backgroundMap"
+import { resolveBgType } from "~utils/backgroundMap";
 
 describe("Resolve background types", () => {
   test("should return a function for a valid background type 'beams'", async () => {
-    const beamsBg = resolveBgType("beams")
+    const beamsBg = resolveBgType("beams");
 
-    expect(beamsBg).toBeInstanceOf(Function)
+    expect(beamsBg).toBeInstanceOf(Function);
 
-    const module = await beamsBg()
+    const module = await beamsBg();
 
-    expect(module).toHaveProperty("default")
-  })
+    expect(module).toHaveProperty("default");
+  });
 
   test("should return a function for a valid background type 'lines'", async () => {
-    const linesBg = resolveBgType("lines")
+    const linesBg = resolveBgType("lines");
 
-    expect(linesBg).toBeInstanceOf(Function)
+    expect(linesBg).toBeInstanceOf(Function);
 
-    const module = await linesBg()
+    const module = await linesBg();
 
-    expect(module).toHaveProperty("default")
-  })
+    expect(module).toHaveProperty("default");
+  });
 
   test("should return a function for a valid background type 'gradient'", async () => {
-    const gradientBg = resolveBgType("gradient")
+    const gradientBg = resolveBgType("gradient");
 
-    expect(gradientBg).toBeInstanceOf(Function)
+    expect(gradientBg).toBeInstanceOf(Function);
 
-    const module = await gradientBg()
+    const module = await gradientBg();
 
-    expect(module).toHaveProperty("default")
-  })
+    expect(module).toHaveProperty("default");
+  });
 
   test("should return a function for a valid background type 'image'", async () => {
-    const imageBg = resolveBgType("image")
+    const imageBg = resolveBgType("image");
 
-    expect(imageBg).toBeInstanceOf(Function)
+    expect(imageBg).toBeInstanceOf(Function);
 
-    const module = await imageBg()
+    const module = await imageBg();
 
-    expect(module).toHaveProperty("default")
-  })
+    expect(module).toHaveProperty("default");
+  });
 
   test("should return a function for a valid background type 'aurora'", async () => {
-    const imageBg = resolveBgType("aurora")
+    const imageBg = resolveBgType("aurora");
 
-    expect(imageBg).toBeInstanceOf(Function)
+    expect(imageBg).toBeInstanceOf(Function);
 
-    const module = await imageBg()
+    const module = await imageBg();
 
-    expect(module).toHaveProperty("default")
-  })
+    expect(module).toHaveProperty("default");
+  });
 
   test("should return a function for a valid background type 'boxes'", async () => {
-    const imageBg = resolveBgType("boxes")
+    const imageBg = resolveBgType("boxes");
 
-    expect(imageBg).toBeInstanceOf(Function)
+    expect(imageBg).toBeInstanceOf(Function);
 
-    const module = await imageBg()
+    const module = await imageBg();
 
-    expect(module).toHaveProperty("default")
-  })
+    expect(module).toHaveProperty("default");
+  });
 
   test("should return a function for a valid background type 'snakes'", async () => {
-    const imageBg = resolveBgType("snakes")
+    const imageBg = resolveBgType("snakes");
 
-    expect(imageBg).toBeInstanceOf(Function)
+    expect(imageBg).toBeInstanceOf(Function);
 
-    const module = await imageBg()
+    const module = await imageBg();
 
-    expect(module).toHaveProperty("default")
-  })
+    expect(module).toHaveProperty("default");
+  });
 
   test("should return null for an invalid background type", () => {
-    const invalidBg = resolveBgType("invalidType")
+    const invalidBg = resolveBgType("invalidType");
 
-    expect(invalidBg).toBeNull()
-  })
+    expect(invalidBg).toBeNull();
+  });
 
   test("should return null when type is not provided", () => {
-    const noTypeBg = resolveBgType()
+    const noTypeBg = resolveBgType();
 
-    expect(noTypeBg).toBeNull()
-  })
-})
+    expect(noTypeBg).toBeNull();
+  });
+});

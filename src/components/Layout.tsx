@@ -1,9 +1,9 @@
-import React, { type ReactNode } from "react"
+import React, { type ReactNode } from "react";
 
-import Background from "./backgrounds/Background"
+import Background from "./backgrounds/Background";
 
 interface LayoutProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 export default function Layout({ children }: LayoutProps): React.JSX.Element {
@@ -11,5 +11,5 @@ export default function Layout({ children }: LayoutProps): React.JSX.Element {
     <Background>
       <main>{children}</main>
     </Background>
-  )
+  );
 }

@@ -67,4 +67,4 @@ export const searchEngines = {
     queryParam: "q",
     favicon: "https://brave.com/static-assets/images/brave-favicon.png"
   }
-}
+};

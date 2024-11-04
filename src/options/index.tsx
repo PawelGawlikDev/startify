@@ -1,8 +1,8 @@
-import React from "react"
+import React from "react";
 
-import "../style.css"
+import "../style.css";
 
-import Settings from "~components/settings/Settings"
+import Settings from "~components/settings/Settings";
 
 function Options() {
   return (
@@ -10,7 +10,7 @@ function Options() {
       <div className="absolute inset-0 bg-neutral-900" />
       <Settings />
     </>
-  )
+  );
 }
 
-export default Options
+export default Options;

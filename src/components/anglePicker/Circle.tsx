@@ -1,10 +1,10 @@
-import React from "react"
+import React from "react";
 
 interface CircleProps {
-  x: number
-  y: number
-  color?: string
-  width?: number
+  x: number;
+  y: number;
+  color?: string;
+  width?: number;
 }
 
 const Circle: React.FC<CircleProps> = ({
@@ -24,7 +24,7 @@ const Circle: React.FC<CircleProps> = ({
         backgroundColor: color
       }}
     />
-  )
-}
+  );
+};
 
-export default Circle
+export default Circle;

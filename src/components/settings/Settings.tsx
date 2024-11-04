@@ -1,15 +1,15 @@
-import { motion } from "framer-motion"
-import React from "react"
+import { motion } from "framer-motion";
+import React from "react";
 
-import BackgroundSection from "./sections/BackogrundSection"
-import QuickLinkSection from "./sections/QuickLinksSection"
-import RestartSection from "./sections/RestartSection"
-import SearchBoxSection from "./sections/SearchBoxSection"
+import BackgroundSection from "./sections/BackogrundSection";
+import QuickLinkSection from "./sections/QuickLinksSection";
+import RestartSection from "./sections/RestartSection";
+import SearchBoxSection from "./sections/SearchBoxSection";
 
 const containerVariants = {
   hidden: { opacity: 0, scale: 0.9 },
   visible: { opacity: 1, scale: 1, transition: { duration: 0.5 } }
-}
+};
 
 export default function Settings() {
   return (
@@ -31,5 +31,5 @@ export default function Settings() {
         <RestartSection />
       </motion.div>
     </div>
-  )
+  );
 }

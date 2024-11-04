@@ -1,38 +1,38 @@
-import { motion } from "framer-motion"
-import React, { useEffect, useRef, useState } from "react"
+import { motion } from "framer-motion";
+import React, { useEffect, useRef, useState } from "react";
 
-import { db } from "~indexdb"
-import type { QuickLinkSettings } from "~types"
+import { db } from "~indexdb";
+import type { QuickLinkSettings } from "~types";
 
-import "./quickLink.css"
+import "./quickLink.css";
 
-import { cn } from "~utils/cn"
+import { cn } from "~utils/cn";
 
-import QuickLinkBackground from "./QuickLinkBackground"
+import QuickLinkBackground from "./QuickLinkBackground";
 
 interface QuickLinkProps {
-  pageName: string
-  url: string
-  favicon?: string
-  id: number
-  quickLinkSettings: QuickLinkSettings
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>
+  pageName: string;
+  url: string;
+  favicon?: string;
+  id: number;
+  quickLinkSettings: QuickLinkSettings;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   setEditingLink: React.Dispatch<
     React.SetStateAction<{
-      name: string
-      url: string
-      id: number
-      favicon: string
+      name: string;
+      url: string;
+      id: number;
+      favicon: string;
     }>
-  >
+  >;
 }
 
 interface AddQuickLink {
-  quickLinkSettings: QuickLinkSettings
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>
+  quickLinkSettings: QuickLinkSettings;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   setEditingLink: React.Dispatch<
     React.SetStateAction<{ name: string; url: string }>
-  >
+  >;
 }
 
 export function QuickLink(props: QuickLinkProps) {
@@ -44,26 +44,26 @@ export function QuickLink(props: QuickLinkProps) {
     quickLinkSettings,
     setShowModal,
     setEditingLink
-  } = props
-  const [showMenu, setShowMenu] = useState(false)
-  const menuRef = useRef(null)
+  } = props;
+  const [showMenu, setShowMenu] = useState(false);
+  const menuRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event: { target: EventTarget }) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setShowMenu(false)
+        setShowMenu(false);
       }
-    }
+    };
 
-    document.addEventListener("mousedown", handleClickOutside)
+    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
-  }, [])
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleEditClick = async () => {
-    const dialInfo = await db.quickLinks.get(id)
+    const dialInfo = await db.quickLinks.get(id);
 
     if (dialInfo) {
       setEditingLink({
@@ -71,15 +71,15 @@ export function QuickLink(props: QuickLinkProps) {
         favicon: dialInfo?.favicon,
         url: dialInfo.url,
         id: dialInfo.id
-      })
-      setShowMenu(false)
-      setShowModal(true)
+      });
+      setShowMenu(false);
+      setShowModal(true);
     }
-  }
+  };
 
   const handleDeleteClick = async () => {
-    await db.quickLinks.delete(id)
-  }
+    await db.quickLinks.delete(id);
+  };
 
   return (
     <motion.div
@@ -104,8 +104,8 @@ export function QuickLink(props: QuickLinkProps) {
             ref={menuRef}
             className={`absolute w-4 h-4 top-1 ${showMenu ? "opacity-100" : "opacity-0"} group-hover:opacity-100 right-2 transition-opacity`}
             onClick={(e) => {
-              e.preventDefault()
-              setShowMenu(true)
+              e.preventDefault();
+              setShowMenu(true);
             }}>
             <EditDots />
             {showMenu && (
@@ -150,18 +150,18 @@ export function QuickLink(props: QuickLinkProps) {
         {pageName}
       </p>
     </motion.div>
-  )
+  );
 }
 
 export function AddQuickLinkButton(props: AddQuickLink) {
-  const { setShowModal, setEditingLink, quickLinkSettings } = props
+  const { setShowModal, setEditingLink, quickLinkSettings } = props;
 
   return (
     <button
       data-testid="AddQuickLink"
       onClick={() => {
-        setShowModal(true)
-        setEditingLink({ name: "", url: "" })
+        setShowModal(true);
+        setEditingLink({ name: "", url: "" });
       }}
       className="relative flex justify-center items-start">
       <QuickLinkBackground
@@ -177,7 +177,7 @@ export function AddQuickLinkButton(props: AddQuickLink) {
         </div>
       </QuickLinkBackground>
     </button>
-  )
+  );
 }
 
 function AddButton() {
@@ -203,7 +203,7 @@ function AddButton() {
         strokeLinejoin="round"
       />
     </svg>
-  )
+  );
 }
 
 function EditDots() {
@@ -215,7 +215,7 @@ function EditDots() {
         <circle cx="11.5" cy="6.5" r="1.5" />
       </g>
     </svg>
-  )
+  );
 }
 
 export function QuickLinkPreview({
@@ -223,9 +223,9 @@ export function QuickLinkPreview({
   quickLinkSettings,
   pageName
 }: {
-  favicon: string
-  quickLinkSettings: QuickLinkSettings
-  pageName: string
+  favicon: string;
+  quickLinkSettings: QuickLinkSettings;
+  pageName: string;
 }) {
   return (
     <QuickLinkBackground
@@ -241,5 +241,5 @@ export function QuickLinkPreview({
         </div>
       )}
     </QuickLinkBackground>
-  )
+  );
 }

@@ -1,8 +1,8 @@
-import * as LabelPrimitive from "@radix-ui/react-label"
-import { motion, useMotionTemplate, useMotionValue } from "framer-motion"
-import * as React from "react"
+import * as LabelPrimitive from "@radix-ui/react-label";
+import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
+import * as React from "react";
 
-import { cn } from "~utils/cn"
+import { cn } from "~utils/cn";
 
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 export interface InputProps
@@ -11,25 +11,25 @@ export interface InputProps
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, ...props }, ref) => {
-    const radius = 100
-    const [visible, setVisible] = React.useState(false)
+    const radius = 100;
+    const [visible, setVisible] = React.useState(false);
 
-    const mouseX = useMotionValue(0)
-    const mouseY = useMotionValue(0)
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
 
     function handleMouseMove({
       currentTarget,
       clientX,
       clientY
     }: {
-      currentTarget: HTMLElement
-      clientX: number
-      clientY: number
+      currentTarget: HTMLElement;
+      clientX: number;
+      clientY: number;
     }) {
-      const { left, top } = currentTarget.getBoundingClientRect()
+      const { left, top } = currentTarget.getBoundingClientRect();
 
-      mouseX.set(clientX - left)
-      mouseY.set(clientY - top)
+      mouseX.set(clientX - left);
+      mouseY.set(clientY - top);
     }
 
     return (
@@ -63,11 +63,11 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           {...props}
         />
       </motion.div>
-    )
+    );
   }
-)
+);
 
-Input.displayName = "Input"
+Input.displayName = "Input";
 
 /* eslint-disable react/prop-types */
 const Label = React.forwardRef<
@@ -82,23 +82,23 @@ const Label = React.forwardRef<
     )}
     {...props}
   />
-))
+));
 
 /* eslint-enable react/prop-types */
-Label.displayName = LabelPrimitive.Root.displayName
+Label.displayName = LabelPrimitive.Root.displayName;
 
 const LabelInputContainer = ({
   children,
   className
 }: {
-  children: React.ReactNode
-  className?: string
+  children: React.ReactNode;
+  className?: string;
 }) => {
   return (
     <div className={cn("flex flex-col space-y-2 w-full", className)}>
       {children}
     </div>
-  )
-}
+  );
+};
 
-export { Input, Label, LabelInputContainer }
+export { Input, Label, LabelInputContainer };

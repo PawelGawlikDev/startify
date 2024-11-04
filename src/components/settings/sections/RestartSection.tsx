@@ -1,36 +1,36 @@
-import { motion } from "framer-motion"
-import React from "react"
+import { motion } from "framer-motion";
+import React from "react";
 
-import { Storage } from "@plasmohq/storage"
+import { Storage } from "@plasmohq/storage";
 
-import { Button } from "~components/Button"
-import { db } from "~indexdb"
+import { Button } from "~components/Button";
+import { db } from "~indexdb";
 import {
   setDefaultColors,
   setDefaultEngine,
   setDefaultQuickLink,
   setDefaultVanishAnimation,
   setDefaultWallpaper
-} from "~utils/defaultSettings"
+} from "~utils/defaultSettings";
 
-import SettingsSection from "./SettingsSection"
+import SettingsSection from "./SettingsSection";
 
 export default function RestartSection() {
   const handleDeleteQuickLinks = async () => {
-    await db.quickLinks.clear()
-  }
+    await db.quickLinks.clear();
+  };
 
   const handleResetClick = async () => {
-    const storage = new Storage()
+    const storage = new Storage();
 
-    await storage.clear()
-    await setDefaultEngine(storage)
-    await setDefaultColors(storage)
-    await setDefaultWallpaper(storage)
-    await setDefaultQuickLink(storage)
-    await setDefaultVanishAnimation(storage)
-    await db.wallpaper.clear()
-  }
+    await storage.clear();
+    await setDefaultEngine(storage);
+    await setDefaultColors(storage);
+    await setDefaultWallpaper(storage);
+    await setDefaultQuickLink(storage);
+    await setDefaultVanishAnimation(storage);
+    await db.wallpaper.clear();
+  };
 
   return (
     <SettingsSection
@@ -65,5 +65,5 @@ export default function RestartSection() {
         </div>
       </motion.div>
     </SettingsSection>
-  )
+  );
 }

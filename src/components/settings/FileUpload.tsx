@@ -1,9 +1,9 @@
-import { IconUpload } from "@tabler/icons-react"
-import { motion } from "framer-motion"
-import React, { useRef, useState } from "react"
-import { useDropzone } from "react-dropzone"
+import { IconUpload } from "@tabler/icons-react";
+import { motion } from "framer-motion";
+import React, { useRef, useState } from "react";
+import { useDropzone } from "react-dropzone";
 
-import { cn } from "~utils/cn"
+import { cn } from "~utils/cn";
 
 const mainVariant = {
   initial: {
@@ -15,7 +15,7 @@ const mainVariant = {
     y: -20,
     opacity: 0.9
   }
-}
+};
 
 const secondaryVariant = {
   initial: {
@@ -24,31 +24,31 @@ const secondaryVariant = {
   animate: {
     opacity: 1
   }
-}
+};
 
 export const FileUpload = ({
   onChange
 }: {
-  onChange?: (files: File[]) => void
+  onChange?: (files: File[]) => void;
 }) => {
-  const [, setFiles] = useState<File[]>([])
-  const fileInputRef = useRef<HTMLInputElement>(null)
+  const [, setFiles] = useState<File[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (newFiles: File[]) => {
-    setFiles((prevFiles) => [...prevFiles, ...newFiles])
-    onChange(newFiles)
-  }
+    setFiles((prevFiles) => [...prevFiles, ...newFiles]);
+    onChange(newFiles);
+  };
 
   const handleClick = () => {
-    fileInputRef.current?.click()
-  }
+    fileInputRef.current?.click();
+  };
 
   const { getRootProps, isDragActive } = useDropzone({
     multiple: false,
     noClick: true,
     onDrop: handleFileChange,
     onDropRejected: () => {}
-  })
+  });
 
   return (
     <div className="w-full" {...getRootProps()}>
@@ -103,5 +103,5 @@ export const FileUpload = ({
         </div>
       </motion.div>
     </div>
-  )
-}
+  );
+};

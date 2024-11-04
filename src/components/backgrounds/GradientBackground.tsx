@@ -1,13 +1,13 @@
-import React from "react"
+import React from "react";
 
-import { useStorage } from "@plasmohq/storage/hook"
+import { useStorage } from "@plasmohq/storage/hook";
 
 export default function GradientBackground() {
   const [color] = useStorage<{
-    deg: number
-    primary: string
-    secondary: string
-  }>("bg-colors", { deg: 0, primary: "#ffffff", secondary: "#ffffff" })
+    deg: number;
+    primary: string;
+    secondary: string;
+  }>("bg-colors", { deg: 0, primary: "#ffffff", secondary: "#ffffff" });
 
   return (
     <div
@@ -20,5 +20,5 @@ export default function GradientBackground() {
         backgroundPosition: "center"
       }}
     />
-  )
+  );
 }

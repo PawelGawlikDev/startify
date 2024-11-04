@@ -6,4 +6,4 @@ module.exports = {
     "body-max-line-length": [0, "always"],
     "body-max-length": [0, "always"]
   }
-}
+};

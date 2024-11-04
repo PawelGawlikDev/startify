@@ -1,26 +1,26 @@
-import { useRef, useState } from "react"
+import { useRef, useState } from "react";
 
 export const useDragAndDrop = (
   quickLinkOrder: number[],
   updateOrder: (order: number[]) => void
 ) => {
-  const [draggingIndex, setDraggingIndex] = useState<number | null>(null)
-  const [isThrottleActive, setIsThrottleActive] = useState(false)
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const [draggingIndex, setDraggingIndex] = useState<number | null>(null);
+  const [isThrottleActive, setIsThrottleActive] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const updateLocalStorage = (order: number[]) => {
-    updateOrder(order)
-    localStorage.setItem("speedLinkOrder", JSON.stringify(order))
-  }
+    updateOrder(order);
+    localStorage.setItem("speedLinkOrder", JSON.stringify(order));
+  };
 
   const onDragStart = (
     event: React.DragEvent<HTMLDivElement>,
     index: number
   ) => {
-    setDraggingIndex(index)
-    event.dataTransfer.effectAllowed = "move"
-    event.currentTarget.style.opacity = "0"
-  }
+    setDraggingIndex(index);
+    event.dataTransfer.effectAllowed = "move";
+    event.currentTarget.style.opacity = "0";
+  };
 
   const onDragEnter = (
     event: React.DragEvent<HTMLDivElement>,
@@ -31,41 +31,41 @@ export const useDragAndDrop = (
       draggingIndex === targetIndex ||
       isThrottleActive
     ) {
-      return
+      return;
     }
 
-    const updatedOrder = [...quickLinkOrder]
-    const [movedItem] = updatedOrder.splice(draggingIndex, 1)
+    const updatedOrder = [...quickLinkOrder];
+    const [movedItem] = updatedOrder.splice(draggingIndex, 1);
 
-    updatedOrder.splice(targetIndex, 0, movedItem)
+    updatedOrder.splice(targetIndex, 0, movedItem);
 
-    updateLocalStorage(updatedOrder)
-    setDraggingIndex(targetIndex)
+    updateLocalStorage(updatedOrder);
+    setDraggingIndex(targetIndex);
 
-    setIsThrottleActive(true)
+    setIsThrottleActive(true);
 
     if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current)
+      clearTimeout(timeoutRef.current);
     }
 
     timeoutRef.current = setTimeout(() => {
-      setIsThrottleActive(false)
-    }, 250)
-  }
+      setIsThrottleActive(false);
+    }, 250);
+  };
 
   const onDragEnd = (event: React.DragEvent<HTMLDivElement>) => {
-    event.currentTarget.style.opacity = "1"
-    setDraggingIndex(null)
-  }
+    event.currentTarget.style.opacity = "1";
+    setDraggingIndex(null);
+  };
 
   const onDragOver = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault()
-  }
+    event.preventDefault();
+  };
 
   const onDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    event.currentTarget.style.opacity = "1"
-    setDraggingIndex(null)
-  }
+    event.currentTarget.style.opacity = "1";
+    setDraggingIndex(null);
+  };
 
-  return { onDragStart, onDragEnter, onDragEnd, onDragOver, onDrop }
-}
+  return { onDragStart, onDragEnter, onDragEnd, onDragOver, onDrop };
+};

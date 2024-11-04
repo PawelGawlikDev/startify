@@ -1,48 +1,48 @@
-import { useLiveQuery } from "dexie-react-hooks"
-import React, { useEffect, useState } from "react"
+import { useLiveQuery } from "dexie-react-hooks";
+import React, { useEffect, useState } from "react";
 
-import { useStorage } from "@plasmohq/storage/hook"
+import { useStorage } from "@plasmohq/storage/hook";
 
-import { useDragAndDrop } from "~hooks/useDragAndDrop"
-import { db } from "~indexdb"
-import type { QuickLinkSettings } from "~types"
-import { cn } from "~utils/cn"
+import { useDragAndDrop } from "~hooks/useDragAndDrop";
+import { db } from "~indexdb";
+import type { QuickLinkSettings } from "~types";
+import { cn } from "~utils/cn";
 
-import { AddQuickLinkButton, QuickLink } from "./QuickLink"
-import QuickLinkModal from "./QuickLinkModal"
+import { AddQuickLinkButton, QuickLink } from "./QuickLink";
+import QuickLinkModal from "./QuickLinkModal";
 
 export default function QuickLinkGrid() {
   const [quickLink] = useStorage<QuickLinkSettings>("quickLink", {
     bigQuickLinks: false,
     type: "gradient"
-  })
+  });
 
-  const [showModal, setShowModal] = useState(false)
-  const [quickLinkOrder, setQuickLinkOrder] = useState<number[]>([])
+  const [showModal, setShowModal] = useState(false);
+  const [quickLinkOrder, setQuickLinkOrder] = useState<number[]>([]);
   const [editingLink, setEditingLink] = useState<{
-    name: string
-    url: string
-    favicon: string
-    id: number
-  } | null>(null)
-  const quickLinks = useLiveQuery(async () => await db.quickLinks.toArray())
+    name: string;
+    url: string;
+    favicon: string;
+    id: number;
+  } | null>(null);
+  const quickLinks = useLiveQuery(async () => await db.quickLinks.toArray());
 
   useEffect(() => {
-    const savedOrder = localStorage.getItem("speedLinkOrder")
+    const savedOrder = localStorage.getItem("speedLinkOrder");
 
     if (savedOrder) {
-      setQuickLinkOrder(JSON.parse(savedOrder))
+      setQuickLinkOrder(JSON.parse(savedOrder));
     } else if (quickLinks && quickLinks.length > 0) {
-      const currentOrderIds = quickLinks.map((dial) => dial.id)
+      const currentOrderIds = quickLinks.map((dial) => dial.id);
 
       if (JSON.stringify(currentOrderIds) !== JSON.stringify(quickLinkOrder)) {
-        setQuickLinkOrder(currentOrderIds)
+        setQuickLinkOrder(currentOrderIds);
       }
     }
-  }, [quickLinks])
+  }, [quickLinks]);
 
   const { onDragEnter, onDragStart, onDragEnd, onDragOver, onDrop } =
-    useDragAndDrop(quickLinkOrder, setQuickLinkOrder)
+    useDragAndDrop(quickLinkOrder, setQuickLinkOrder);
 
   return (
     <div
@@ -91,5 +91,5 @@ export default function QuickLinkGrid() {
         setEditingLink={setEditingLink}
       />
     </div>
-  )
+  );
 }

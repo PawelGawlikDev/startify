@@ -1,4 +1,4 @@
-import { type Point } from "~types"
+import { type Point } from "~types";
 
 export const getStartPoint = (
   width: number,
@@ -7,19 +7,19 @@ export const getStartPoint = (
 ): Point => ({
   x: width - circleWidth / 2 - borderWidth * 2,
   y: width / 2 - borderWidth
-})
+});
 
 export const getCenter = (width: number, borderWidth: number) => ({
   x: width / 2 - borderWidth,
   y: width / 2 - borderWidth
-})
+});
 
 export const radianToAngle = (radian: number): number => {
-  const angle = Math.round((radian * 180) / Math.PI)
+  const angle = Math.round((radian * 180) / Math.PI);
 
   if (angle < 0) {
-    return 360 + angle
+    return 360 + angle;
   }
 
-  return angle
-}
+  return angle;
+};

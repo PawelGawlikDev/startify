@@ -3,8 +3,8 @@ export const calculateAnimationDuration = (
   speed: number = 8,
   fps: number = 60
 ): number => {
-  const frames = maxX / speed
-  const duration = (frames / fps) * 1000
+  const frames = maxX / speed;
+  const duration = (frames / fps) * 1000;
 
-  return duration
-}
+  return duration;
+};

@@ -1,10 +1,10 @@
-import pluginJs from "@eslint/js"
-import nextPlugin from "@next/eslint-plugin-next"
-import vitest from "@vitest/eslint-plugin"
-import playwright from "eslint-plugin-playwright"
-import pluginReact from "eslint-plugin-react"
-import globals from "globals"
-import tseslint from "typescript-eslint"
+import pluginJs from "@eslint/js";
+import nextPlugin from "@next/eslint-plugin-next";
+import vitest from "@vitest/eslint-plugin";
+import playwright from "eslint-plugin-playwright";
+import pluginReact from "eslint-plugin-react";
+import globals from "globals";
+import tseslint from "typescript-eslint";
 
 export default [
   {
@@ -127,4 +127,4 @@ export default [
       ]
     }
   }
-]
+];

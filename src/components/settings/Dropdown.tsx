@@ -1,15 +1,15 @@
-import { motion } from "framer-motion"
-import React, { useState } from "react"
+import { motion } from "framer-motion";
+import React, { useState } from "react";
 
-import { useStorage } from "@plasmohq/storage/hook"
+import { useStorage } from "@plasmohq/storage/hook";
 
 import type {
   Backgrounds,
   Engine,
   QuickLinkSettings,
   QuickLinkTypes
-} from "~types"
-import { searchEngines } from "~utils/searchEngine"
+} from "~types";
+import { searchEngines } from "~utils/searchEngine";
 
 const backgroundOptions: Record<Backgrounds, { name: string }> = {
   gradient: { name: "gradient" },
@@ -19,24 +19,24 @@ const backgroundOptions: Record<Backgrounds, { name: string }> = {
   aurora: { name: "aurora" },
   boxes: { name: "boxes" },
   snakes: { name: "snakes" }
-}
+};
 
 const quickLinkTypes: Record<QuickLinkTypes, string> = {
   gradient: "gradient",
   transparent: "transparent"
-}
+};
 
 export function BackgroundDropdown() {
-  const [background, setBackground] = useStorage<Backgrounds>("background")
-  const [shown, setShown] = useState(false)
+  const [background, setBackground] = useStorage<Backgrounds>("background");
+  const [shown, setShown] = useState(false);
 
   const handleBackgroundClick = (newBackground: Backgrounds) => {
     if (background === newBackground) {
-      return
+      return;
     }
 
-    setBackground(newBackground)
-  }
+    setBackground(newBackground);
+  };
 
   const showMenu = {
     enter: {
@@ -54,7 +54,7 @@ export function BackgroundDropdown() {
         display: "none"
       }
     }
-  }
+  };
 
   return (
     <motion.div
@@ -84,21 +84,21 @@ export function BackgroundDropdown() {
         ))}
       </motion.ul>
     </motion.div>
-  )
+  );
 }
 
 export function EngineDropdown() {
-  const [engine, setEngine] = useStorage<Engine>("engine")
+  const [engine, setEngine] = useStorage<Engine>("engine");
 
-  const [shown, setShown] = useState(false)
+  const [shown, setShown] = useState(false);
 
   const handleEngineClick = (newEngine: Engine) => {
     if (engine?.name === newEngine.name) {
-      return
+      return;
     }
 
-    setEngine(newEngine)
-  }
+    setEngine(newEngine);
+  };
 
   const showMenu = {
     enter: {
@@ -116,7 +116,7 @@ export function EngineDropdown() {
         display: "none"
       }
     }
-  }
+  };
 
   return (
     <motion.div
@@ -136,7 +136,7 @@ export function EngineDropdown() {
           <div key={key}>
             <motion.li
               onClick={() => {
-                handleEngineClick(engine)
+                handleEngineClick(engine);
               }}
               whileHover={{
                 color: "#FFB703",
@@ -154,20 +154,20 @@ export function EngineDropdown() {
         ))}
       </motion.ul>
     </motion.div>
-  )
+  );
 }
 
 export function QuickLinkTypeDropdown() {
-  const [quickLink, setQuickLink] = useStorage<QuickLinkSettings>("quickLink")
-  const [shown, setShown] = useState(false)
+  const [quickLink, setQuickLink] = useStorage<QuickLinkSettings>("quickLink");
+  const [shown, setShown] = useState(false);
 
   const handleBackgroundClick = (newQuickLink: QuickLinkTypes) => {
     if (quickLink?.type === newQuickLink) {
-      return
+      return;
     }
 
-    setQuickLink({ ...quickLink, type: newQuickLink })
-  }
+    setQuickLink({ ...quickLink, type: newQuickLink });
+  };
 
   const showMenu = {
     enter: {
@@ -185,7 +185,7 @@ export function QuickLinkTypeDropdown() {
         display: "none"
       }
     }
-  }
+  };
 
   return (
     <motion.div
@@ -215,5 +215,5 @@ export function QuickLinkTypeDropdown() {
         ))}
       </motion.ul>
     </motion.div>
-  )
+  );
 }

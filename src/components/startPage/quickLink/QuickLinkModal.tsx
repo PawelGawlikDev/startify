@@ -1,70 +1,70 @@
-import faviconFetch from "favicon-fetch"
-import { AnimatePresence, motion } from "framer-motion"
-import React, { useState } from "react"
+import faviconFetch from "favicon-fetch";
+import { AnimatePresence, motion } from "framer-motion";
+import React, { useState } from "react";
 
-import { Button } from "~components/Button"
-import { db } from "~indexdb/index"
-import type { QuickLinkSettings } from "~types"
-import isValidUrl from "~utils/valudUrl"
+import { Button } from "~components/Button";
+import { db } from "~indexdb/index";
+import type { QuickLinkSettings } from "~types";
+import isValidUrl from "~utils/valudUrl";
 
-import { Input, Label, LabelInputContainer } from "./Form"
-import { QuickLinkPreview } from "./QuickLink"
+import { Input, Label, LabelInputContainer } from "./Form";
+import { QuickLinkPreview } from "./QuickLink";
 
 interface ModalProps {
-  quickLinkSettings: QuickLinkSettings
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>
-  dialName?: string
-  dialUrl?: string
-  favicon?: string
-  id?: number
+  quickLinkSettings: QuickLinkSettings;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  dialName?: string;
+  dialUrl?: string;
+  favicon?: string;
+  id?: number;
 }
 
 const QuickLinkModal = (props: ModalProps) => {
   const { setShowModal, dialName, dialUrl, id, favicon, quickLinkSettings } =
-    props
+    props;
 
-  const [name, setName] = useState<string>(dialName ?? "")
-  const [url, setUrl] = useState<string>(dialUrl ?? "")
+  const [name, setName] = useState<string>(dialName ?? "");
+  const [url, setUrl] = useState<string>(dialUrl ?? "");
 
   async function addQuickLink() {
     if (!name || !url) {
-      alert("Both Name and URL are required!")
+      alert("Both Name and URL are required!");
 
-      return
+      return;
     }
 
     try {
-      let favicon: string | undefined
+      let favicon: string | undefined;
 
       if (id && (await db.quickLinks.get(id))) {
         if (isValidUrl(url)) {
           favicon = await faviconFetch({
             uri: url
-          })
+          });
         }
 
         await db.quickLinks.update(id, {
           name,
           url,
           favicon
-        })
+        });
       } else {
         if (isValidUrl(url)) {
           favicon = await faviconFetch({
             uri: url
-          })
+          });
         }
 
         await db.quickLinks.add({
           name,
           url,
           favicon
-        })
+        });
       }
 
-      setShowModal(false)
+      setShowModal(false);
     } catch {
-      return
+      return;
     }
   }
 
@@ -126,7 +126,7 @@ const QuickLinkModal = (props: ModalProps) => {
         </motion.div>
       </motion.div>
     </AnimatePresence>
-  )
-}
+  );
+};
 
-export default QuickLinkModal
+export default QuickLinkModal;
