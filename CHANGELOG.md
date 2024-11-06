@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.6](https://github.com/PawelGawlikDev/startify/compare/v0.0.5...v0.0.6) (2024-11-06)
+
+
+### Features
+
+* add envs ([281400c](https://github.com/PawelGawlikDev/startify/commit/281400c8bdaaaaf6a1892eba7ebf1c0b9b579b7a))
+* cut off usused next ([b93eaf2](https://github.com/PawelGawlikDev/startify/commit/b93eaf20d0cd80e2581e0cede54ed1d0a0ee4fe4))
+
+
+### Bug Fixes
+
+* delete env from package json ([374de1c](https://github.com/PawelGawlikDev/startify/commit/374de1c673c6e077ca5cb15ad61ba67a04b2c7da))
+* fix ([59f68d4](https://github.com/PawelGawlikDev/startify/commit/59f68d42fb77be548fddee6155ef8cacf368b96c))
+* fix draging quick link by image ([8a0d4a7](https://github.com/PawelGawlikDev/startify/commit/8a0d4a7dea0f5a6ffacb8ddcd9ce9a6112001bd8))
+* fix manual automation tests workflow ([fd1495d](https://github.com/PawelGawlikDev/startify/commit/fd1495dd0230fb8150dec0eb1e19da3ad958d0ad))
+* horizontal scroll in settings page ([3922d24](https://github.com/PawelGawlikDev/startify/commit/3922d247642c1c4050330372110618d0354d6033))
+* post fixes ([44cf2f5](https://github.com/PawelGawlikDev/startify/commit/44cf2f52747d21cbf9ada6e657566a6c8783c780))
+* run release_drafter workflow only after merge to master ([fa640bb](https://github.com/PawelGawlikDev/startify/commit/fa640bb74c0de6c349bfdcd3bc753abd2039b995))
+* use eslint fix in lint staged ([23a1fd2](https://github.com/PawelGawlikDev/startify/commit/23a1fd226d39c71101d94a186408a6b2f72818d4))
+* use vanish animation as default option ([5535dab](https://github.com/PawelGawlikDev/startify/commit/5535dab2df9421863756f0ee58a28edd21d261cc))
+
 ### [0.0.5](https://github.com/PawelGawlikDev/startify/compare/v0.0.4...v0.0.5) (2024-10-29)
 
 
