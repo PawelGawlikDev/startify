@@ -80,6 +80,9 @@
         "id": "{d5e5fe42-da08-4573-8ffd-6075ae68c834}"
       }
     },
+    "chrome_settings_overrides": {
+      "homepage": "$HOMEPAGE"
+    },
     "host_permissions": [
       "https://*/*",
       "http://*/*"
