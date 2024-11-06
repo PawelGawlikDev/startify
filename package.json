@@ -10,7 +10,7 @@
     "build:plasmo": "plasmo build",
     "dev": "run-p dev:*",
     "dev:next": "next dev --port 1947",
-    "dev:plasmo": "plasmo dev --target=firefox-mv3 --env=.env.firefox",
+    "dev:plasmo": "plasmo dev",
     "e2e": "playwright test",
     "e2e:debug": "cross-env DEBUG=true playwright test --debug",
     "e2e:ui": "playwright test --ui",
