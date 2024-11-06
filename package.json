@@ -10,7 +10,7 @@
     "build:plasmo": "plasmo build",
     "dev": "run-p dev:*",
     "dev:next": "next dev --port 1947",
-    "dev:plasmo": "plasmo dev",
+    "dev:plasmo": "plasmo dev --target=firefox-mv3 --env=.env.firefox",
     "e2e": "playwright test",
     "e2e:debug": "cross-env DEBUG=true playwright test --debug",
     "e2e:ui": "playwright test --ui",
@@ -79,6 +79,9 @@
       "gecko": {
         "id": "{d5e5fe42-da08-4573-8ffd-6075ae68c834}"
       }
+    },
+    "chrome_settings_overrides": {
+      "homepage": "$HOMEPAGE"
     },
     "host_permissions": [
       "https://*/*",
