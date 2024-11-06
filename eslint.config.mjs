@@ -1,5 +1,4 @@
 import pluginJs from "@eslint/js";
-import nextPlugin from "@next/eslint-plugin-next";
 import vitest from "@vitest/eslint-plugin";
 import playwright from "eslint-plugin-playwright";
 import pluginReact from "eslint-plugin-react";
@@ -50,11 +49,6 @@ export default [
         },
         { blankLine: "always", prev: "*", next: "return" }
       ]
-    }
-  },
-  {
-    plugins: {
-      "@next/next": nextPlugin
     }
   },
   {

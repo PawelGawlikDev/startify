@@ -104,13 +104,11 @@ jobs:
         with:
           node-version: 20.x
           cache: "pnpm"
-      - name: Build Next App
-        run: pnpm build:next
       - name: Build and zip extensions
         run: |
-          pnpm build:plasmo --zip --env=.env.chrome
-          pnpm build:plasmo --zip --target=firefox-mv3 --env=.env.firefox
-          pnpm build:plasmo --zip --target=firefox-mv2 --env=.env.firefox
+          pnpm build --zip --env=.env.chrome
+          pnpm build --zip --target=firefox-mv3 --env=.env.firefox
+          pnpm build --zip --target=firefox-mv2 --env=.env.firefox
       - name: release on Github
         uses: softprops/action-gh-release@v2
         with:
