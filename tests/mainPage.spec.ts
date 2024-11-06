@@ -109,8 +109,12 @@ test.describe("Main Page tests", () => {
 
     quickLinks = await page.getByTestId("QuickLink").all();
 
+    quickLinks.forEach(async (quickLink) => {
+      await quickLink.waitFor();
+    });
+
     expect(quickLinks.length, {
-      message: "After add quick link one should be visible"
+      message: "After add quick links two should be visible"
     }).toBe(2);
 
     const quickLinksOrder = [];
