@@ -1,30 +1,29 @@
 import type { BaseStorage } from "@plasmohq/storage";
 
-import { SearchEngineEnum, searchEngines } from "~utils/searchEngine";
+import {
+  defaultColor,
+  defaultQuickLink,
+  defaultSearchEngine,
+  defaultVanishAnimation,
+  defaultWallpaper
+} from "~constants/defaultSettingsValues";
 
 export const setDefaultEngine = async (storage: BaseStorage) => {
-  await storage.set("engine", searchEngines[SearchEngineEnum.Google]);
+  await storage.set("engine", defaultSearchEngine);
 };
 
 export const setDefaultColors = async (storage: BaseStorage) => {
-  await storage.set("bg-colors", {
-    deg: 0,
-    primary: "#3498db",
-    secondary: "#9b59b6"
-  });
+  await storage.set("bgColors", defaultColor);
 };
 
 export const setDefaultWallpaper = async (storage: BaseStorage) => {
-  await storage.set("background", "beams");
+  await storage.set("background", defaultWallpaper);
 };
 
 export const setDefaultVanishAnimation = async (storage: BaseStorage) => {
-  await storage.set("vanish", true);
+  await storage.set("vanish", defaultVanishAnimation);
 };
 
 export const setDefaultQuickLink = async (storage: BaseStorage) => {
-  await storage.set("quickLink", {
-    bigQuickLinks: false,
-    type: "gradient"
-  });
+  await storage.set("quickLink", defaultQuickLink);
 };

@@ -90,7 +90,7 @@ export function QuickLink(props: QuickLinkProps) {
       draggable="true">
       <a draggable="false" href={url}>
         <QuickLinkBackground
-          type={quickLinkSettings.type}
+          type={quickLinkSettings?.type}
           className={cn(
             "w-[144px] h-[88px] flex items-center justify-center",
             quickLinkSettings?.bigQuickLinks
@@ -165,7 +165,7 @@ export function AddQuickLinkButton(props: AddQuickLink) {
       }}
       className="relative flex justify-center items-start">
       <QuickLinkBackground
-        type={quickLinkSettings.type}
+        type={quickLinkSettings?.type}
         className={
           quickLinkSettings?.bigQuickLinks
             ? "w-[166px] h-28"
@@ -229,7 +229,7 @@ export function QuickLinkPreview({
 }) {
   return (
     <QuickLinkBackground
-      type={quickLinkSettings.type}
+      type={quickLinkSettings?.type}
       className="w-[166px] h-28 flex items-center justify-center">
       {favicon ? (
         <img src={favicon} alt={pageName} width={48} height={48} />

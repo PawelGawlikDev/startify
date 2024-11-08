@@ -46,3 +46,9 @@ export interface Point {
   x: number;
   y: number;
 }
+
+export interface ColorSettings {
+  deg: number;
+  primary: string;
+  secondary: string;
+}

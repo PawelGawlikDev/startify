@@ -2,6 +2,13 @@ import { beforeEach, describe, expect, test, vi } from "vitest";
 
 import { Storage } from "@plasmohq/storage";
 
+import {
+  defaultColor,
+  defaultQuickLink,
+  defaultSearchEngine,
+  defaultVanishAnimation,
+  defaultWallpaper
+} from "~constants/defaultSettingsValues";
 import { checkUserSettings } from "~utils/checkUserSettings";
 import { SearchEngineEnum, searchEngines } from "~utils/searchEngine";
 
@@ -23,90 +30,107 @@ describe("Check user settings", () => {
   });
 
   test("should set default search engine if not set", async () => {
-    storageMock.get.mockResolvedValueOnce(null);
-    storageMock.get.mockResolvedValueOnce(null);
-    storageMock.get.mockResolvedValueOnce(null);
-
     await checkUserSettings();
 
-    expect(storageMock.set).toHaveBeenCalledWith(
-      "engine",
-      searchEngines[SearchEngineEnum.Google]
-    );
+    expect(storageMock.set).toHaveBeenCalledWith("engine", defaultSearchEngine);
   });
 
   test("should not set search engine if already set", async () => {
     storageMock.get.mockResolvedValueOnce(searchEngines[SearchEngineEnum.Bing]);
-    storageMock.get.mockResolvedValueOnce(null);
-    storageMock.get.mockResolvedValueOnce(null);
 
     await checkUserSettings();
 
     expect(storageMock.set).not.toHaveBeenCalledWith(
       "engine",
-      searchEngines[SearchEngineEnum.Google]
+      defaultSearchEngine
     );
   });
 
-  test("should set default background colors if not set", async () => {
-    storageMock.get.mockResolvedValueOnce(null);
-    storageMock.get.mockResolvedValueOnce(null);
-    storageMock.get.mockResolvedValueOnce(null);
-
+  test("should set default vanish animation if not set", async () => {
     await checkUserSettings();
 
-    expect(storageMock.set).toHaveBeenCalledWith("bg-colors", {
-      deg: 0,
-      primary: "#3498db",
-      secondary: "#9b59b6"
-    });
+    expect(storageMock.set).toHaveBeenCalledWith(
+      "vanish",
+      defaultVanishAnimation
+    );
   });
 
-  test("should not set background colors if already set", async () => {
+  test("should not set default vanish animation if already set", async () => {
     storageMock.get.mockResolvedValueOnce(null);
-    storageMock.get.mockResolvedValueOnce({
-      deg: 90,
-      primary: "#ffffff",
-      secondary: "#000000"
-    });
-    storageMock.get.mockResolvedValueOnce(null);
+    storageMock.get.mockResolvedValueOnce(false);
 
     await checkUserSettings();
 
     expect(storageMock.set).not.toHaveBeenCalledWith(
-      "bg-colors",
-      {
-        deg: 0,
-        primary: "#3498db",
-        secondary: "#9b59b6"
-      },
-      "background",
-      "beams"
+      "vanish",
+      defaultVanishAnimation
     );
+  });
+
+  test("should set default background color if not set", async () => {
+    await checkUserSettings();
+
+    expect(storageMock.set).toHaveBeenCalledWith("bgColors", defaultColor);
+  });
+
+  test("should not set default background color if already set", async () => {
+    storageMock.get.mockResolvedValueOnce(null);
+    storageMock.get.mockResolvedValueOnce(null);
+    storageMock.get.mockResolvedValueOnce({
+      deg: 120,
+      primary: "#5428db",
+      secondary: "#9b49b7"
+    });
+
+    await checkUserSettings();
+
+    expect(storageMock.set).not.toHaveBeenCalledWith("bgColors", defaultColor);
   });
 
   test("should set default background if not set", async () => {
-    storageMock.get.mockResolvedValueOnce(null);
-    storageMock.get.mockResolvedValueOnce(null);
-    storageMock.get.mockResolvedValueOnce(null);
-
     await checkUserSettings();
 
-    expect(storageMock.set).toHaveBeenCalledWith("background", "beams");
+    expect(storageMock.set).toHaveBeenCalledWith(
+      "background",
+      defaultWallpaper
+    );
   });
 
-  test("should not set background if already set", async () => {
+  test("should not set default background if already set", async () => {
     storageMock.get.mockResolvedValueOnce(null);
     storageMock.get.mockResolvedValueOnce(null);
-    storageMock.get.mockResolvedValueOnce("gradient");
+    storageMock.get.mockResolvedValueOnce(null);
+    storageMock.get.mockResolvedValueOnce("snakes");
 
     await checkUserSettings();
 
     expect(storageMock.set).not.toHaveBeenCalledWith(
       "background",
-      "beams",
-      "vanish",
-      false
+      defaultWallpaper
+    );
+  });
+
+  test("should set default quickLink if not set", async () => {
+    await checkUserSettings();
+
+    expect(storageMock.set).toHaveBeenCalledWith("quickLink", defaultQuickLink);
+  });
+
+  test("should not set default quickLink if already set", async () => {
+    storageMock.get.mockResolvedValueOnce(null);
+    storageMock.get.mockResolvedValueOnce(null);
+    storageMock.get.mockResolvedValueOnce(null);
+    storageMock.get.mockResolvedValueOnce(null);
+    storageMock.get.mockResolvedValueOnce({
+      bigQuickLinks: true,
+      type: "transparest"
+    });
+
+    await checkUserSettings();
+
+    expect(storageMock.set).not.toHaveBeenCalledWith(
+      "quickLink",
+      defaultQuickLink
     );
   });
 });

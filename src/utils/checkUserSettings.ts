@@ -1,9 +1,14 @@
 import { Storage } from "@plasmohq/storage";
 
 import {
-  setDefaultColors,
+  defaultColor,
+  defaultQuickLink
+} from "~constants/defaultSettingsValues";
+import type { ColorSettings, QuickLinkSettings } from "~types";
+
+import checkAndSetDefaults from "./checkAndSetDefault";
+import {
   setDefaultEngine,
-  setDefaultQuickLink,
   setDefaultVanishAnimation,
   setDefaultWallpaper
 } from "./defaultSettings";
@@ -11,28 +16,42 @@ import {
 export async function checkUserSettings() {
   const storage = new Storage();
   const userEngineSettings = await storage.get("engine");
-  const vanishAnimation = await storage.get("vanish");
-  const backgroundColorSettings = await storage.get("bg-color");
-  const bacground = await storage.get("background");
-  const quickLinksSize = await storage.get("quickLink");
 
-  if (!userEngineSettings) {
+  if (userEngineSettings === undefined) {
     await setDefaultEngine(storage);
   }
 
-  if (!quickLinksSize) {
-    await setDefaultQuickLink(storage);
-  }
+  const vanishAnimation = await storage.get("vanish");
 
-  if (!vanishAnimation) {
+  if (vanishAnimation === undefined) {
     await setDefaultVanishAnimation(storage);
   }
 
-  if (!backgroundColorSettings) {
-    await setDefaultColors(storage);
+  const backgroundColorSettings: ColorSettings = await storage.get("bgColors");
+
+  if (backgroundColorSettings === undefined) {
+    await checkAndSetDefaults(
+      storage,
+      "bgColors",
+      backgroundColorSettings,
+      defaultColor
+    );
   }
 
-  if (!bacground) {
+  const bacground = await storage.get("background");
+
+  if (bacground === undefined) {
     await setDefaultWallpaper(storage);
+  }
+
+  const quickLinksSettings: QuickLinkSettings = await storage.get("quickLink");
+
+  if (quickLinksSettings === undefined) {
+    await checkAndSetDefaults(
+      storage,
+      "quickLink",
+      quickLinksSettings,
+      defaultQuickLink
+    );
   }
 }

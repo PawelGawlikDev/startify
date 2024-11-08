@@ -18,7 +18,7 @@ export default function BackgroundSection() {
     deg: number;
     primary: string;
     secondary: string;
-  }>("bg-colors");
+  }>("bgColors");
   const [, setFiles] = useState<File[]>([]);
   const [storedFiles, setStoredFiles] = useState<UserWallpaper[]>([]);
   const [background] = useStorage<Backgrounds>("background");

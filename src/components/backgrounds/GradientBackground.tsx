@@ -7,7 +7,7 @@ export default function GradientBackground() {
     deg: number;
     primary: string;
     secondary: string;
-  }>("bg-colors", { deg: 0, primary: "#ffffff", secondary: "#ffffff" });
+  }>("bgColors", { deg: 0, primary: "#ffffff", secondary: "#ffffff" });
 
   return (
     <div
