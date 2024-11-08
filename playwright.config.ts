@@ -10,9 +10,7 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
   reporter: process.env.CI ? [["github"], ["list"]] : "html",
-  use: {
-    trace: "on-first-retry"
-  },
+
   projects: [
     {
       name: "chromium",
