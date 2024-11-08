@@ -5,15 +5,16 @@ import { useStorage } from "@plasmohq/storage/hook";
 
 import { Button } from "~components/Button";
 import { QuickLinkTypeDropdown } from "~components/settings/Dropdown";
+import { defaultQuickLink } from "~constants/defaultSettingsValues";
 import type { QuickLinkSettings } from "~types";
 
 import SettingsSection from "./SettingsSection";
 
 export default function QuickLinkSection() {
-  const [quickLink, setQuickLink] = useStorage<QuickLinkSettings>("quickLink", {
-    bigQuickLinks: false,
-    type: "gradient"
-  });
+  const [quickLink, setQuickLink] = useStorage<QuickLinkSettings>(
+    "quickLink",
+    defaultQuickLink
+  );
 
   return (
     <SettingsSection
@@ -33,13 +34,13 @@ export default function QuickLinkSection() {
               });
             }}
             borderClassName={
-              quickLink.bigQuickLinks
+              quickLink?.bigQuickLinks
                 ? "bg-[radial-gradient(var(--red-500)_40%,transparent_60%)]"
                 : ""
             }
             borderRadius="1.75rem"
             className="bg-slate-900 text-white border-slate-800 hover:bg-slate-700">
-            {quickLink.bigQuickLinks ? "Disable" : "Enable"}
+            {quickLink?.bigQuickLinks ? "Disable" : "Enable"}
           </Button>
         </div>
       </motion.div>
