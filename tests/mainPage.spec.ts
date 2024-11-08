@@ -48,6 +48,12 @@ test.describe("Main Page tests", () => {
 
     quickLinks = await page.getByTestId("QuickLink").all();
 
+    await page.waitForLoadState("domcontentloaded");
+
+    quickLinks.forEach(async (quickLink) => {
+      await quickLink.waitFor({ timeout: 2000 });
+    });
+
     expect(quickLinks.length, {
       message: "After add quick link one should be visible"
     }).toBe(1);
@@ -65,8 +71,14 @@ test.describe("Main Page tests", () => {
 
     quickLinks = await page.getByTestId("QuickLink").all();
 
+    await page.waitForLoadState("domcontentloaded");
+
+    quickLinks.forEach(async (quickLink) => {
+      await quickLink.waitFor({ timeout: 2000 });
+    });
+
     expect(quickLinks.length, {
-      message: "After add quick link one should be visible"
+      message: "After add quick link two should be visible"
     }).toBe(2);
 
     const quickLinksOrder = [];
@@ -85,6 +97,12 @@ test.describe("Main Page tests", () => {
     const newOrder = [];
 
     quickLinks = await page.getByTestId("QuickLink").all();
+
+    await page.waitForLoadState("domcontentloaded");
+
+    quickLinks.forEach(async (quickLink) => {
+      await quickLink.waitFor({ timeout: 2000 });
+    });
 
     for (const quickLink of quickLinks) {
       newOrder.push(await quickLink.getByTestId("QuickLinkName").textContent());
@@ -109,8 +127,10 @@ test.describe("Main Page tests", () => {
 
     quickLinks = await page.getByTestId("QuickLink").all();
 
+    await page.waitForLoadState("domcontentloaded");
+
     quickLinks.forEach(async (quickLink) => {
-      await quickLink.waitFor();
+      await quickLink.waitFor({ timeout: 2000 });
     });
 
     expect(quickLinks.length, {
@@ -130,6 +150,12 @@ test.describe("Main Page tests", () => {
     const newOrder = [];
 
     quickLinks = await page.getByTestId("QuickLink").all();
+
+    await page.waitForLoadState("domcontentloaded");
+
+    quickLinks.forEach(async (quickLink) => {
+      await quickLink.waitFor({ timeout: 2000 });
+    });
 
     for (const quickLink of quickLinks) {
       newOrder.push(await quickLink.getByTestId("QuickLinkName").textContent());
@@ -154,6 +180,12 @@ test.describe("Main Page tests", () => {
 
     quickLinks = await page.getByTestId("QuickLink").all();
 
+    await page.waitForLoadState("domcontentloaded");
+
+    quickLinks.forEach(async (quickLink) => {
+      await quickLink.waitFor({ timeout: 2000 });
+    });
+
     expect(quickLinks.length, {
       message: "After add quick link one should be visible"
     }).toBe(2);
@@ -171,6 +203,12 @@ test.describe("Main Page tests", () => {
     const newOrder = [];
 
     quickLinks = await page.getByTestId("QuickLink").all();
+
+    await page.waitForLoadState("domcontentloaded");
+
+    quickLinks.forEach(async (quickLink) => {
+      await quickLink.waitFor({ timeout: 2000 });
+    });
 
     for (const quickLink of quickLinks) {
       newOrder.push(await quickLink.getByTestId("QuickLinkName").textContent());
@@ -194,6 +232,12 @@ test.describe("Main Page tests", () => {
 
     quickLinks = await page.getByTestId("QuickLink").all();
 
+    await page.waitForLoadState("domcontentloaded");
+
+    quickLinks.forEach(async (quickLink) => {
+      await quickLink.waitFor({ timeout: 2000 });
+    });
+
     expect(quickLinks.length, {
       message: "One Quick Link should be added"
     }).toBe(1);
@@ -209,7 +253,14 @@ test.describe("Main Page tests", () => {
       .getByTestId("QuickLinkMenu")
       .getByTestId("DeleteQuickLink")
       .click();
+
     quickLinks = await page.getByTestId("QuickLink").all();
+
+    await page.waitForLoadState("domcontentloaded");
+
+    quickLinks.forEach(async (quickLink) => {
+      await quickLink.waitFor({ timeout: 2000 });
+    });
 
     expect(quickLinks.length, { message: "Quick link should be deleted" }).toBe(
       0
