@@ -35,31 +35,21 @@ const QuickLinkModal = (props: ModalProps) => {
 
     try {
       let favicon: string | undefined;
+      let updatedUrl = url;
+
+      if (!isValidUrl(url)) {
+        updatedUrl = `https://${url}`;
+        setUrl(updatedUrl);
+      }
+
+      if (isValidUrl(updatedUrl)) {
+        favicon = await faviconFetch({ uri: updatedUrl });
+      }
 
       if (id && (await db.quickLinks.get(id))) {
-        if (isValidUrl(url)) {
-          favicon = await faviconFetch({
-            uri: url
-          });
-        }
-
-        await db.quickLinks.update(id, {
-          name,
-          url,
-          favicon
-        });
+        await db.quickLinks.update(id, { name, url: updatedUrl, favicon });
       } else {
-        if (isValidUrl(url)) {
-          favicon = await faviconFetch({
-            uri: url
-          });
-        }
-
-        await db.quickLinks.add({
-          name,
-          url,
-          favicon
-        });
+        await db.quickLinks.add({ name, url: updatedUrl, favicon });
       }
 
       setShowModal(false);
