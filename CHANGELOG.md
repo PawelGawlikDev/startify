@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.7](https://github.com/PawelGawlikDev/startify/compare/v0.0.6...v0.0.7) (2024-11-10)
+
+
+### Features
+
+* new style for edit quick link button ([148fee5](https://github.com/PawelGawlikDev/startify/commit/148fee5391196602a5eeffcb02d9f30dec2ed87f))
+* validate user url and try to fix it if not correct ([303ce42](https://github.com/PawelGawlikDev/startify/commit/303ce42ee2f73ccf3720edb7d533ea621c7b14ee))
+
+
+### Bug Fixes
+
+* disable spell check and autocomplelte for search input ([35ca7cf](https://github.com/PawelGawlikDev/startify/commit/35ca7cf4986de847acdd4f1082e2a2c4bc22d85e))
+* fix background worker ([92ebd73](https://github.com/PawelGawlikDev/startify/commit/92ebd734355eec5b09817370de725c6ae2f87b71))
+* fix main page tests ([ea2d8e6](https://github.com/PawelGawlikDev/startify/commit/ea2d8e6502f890718cf151bf9f8d59db7f7e5448))
+* fixes for settings ([bdcefd3](https://github.com/PawelGawlikDev/startify/commit/bdcefd3484ad8f6e83e865c6ce9052563df41f47))
+
 ### [0.0.6](https://github.com/PawelGawlikDev/startify/compare/v0.0.5...v0.0.6) (2024-11-06)
 
 
