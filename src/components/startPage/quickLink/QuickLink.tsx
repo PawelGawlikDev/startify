@@ -102,10 +102,10 @@ export function QuickLink(props: QuickLinkProps) {
           <div
             data-testid="QuickLinkSettingsButton"
             ref={menuRef}
-            className={`absolute w-4 h-4 top-1 ${showMenu ? "opacity-100" : "opacity-0"} group-hover:opacity-100 right-2 transition-opacity`}
+            className={`absolute w-5 h-5 top-1 ${showMenu ? "opacity-100" : "opacity-0"} group-hover:opacity-100 hover:bg-neutral-800/75 rounded-full p-1 right-2 transition-all`}
             onClick={(e) => {
               e.preventDefault();
-              setShowMenu(true);
+              setShowMenu(!showMenu);
             }}>
             <EditDots />
             {showMenu && (
