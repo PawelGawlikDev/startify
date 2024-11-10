@@ -272,6 +272,8 @@ export default function SearchInput({
           onKeyDown={handleKeyDown}
           ref={inputRef}
           value={value}
+          spellCheck="false"
+          autoComplete="one-time-code"
           id="SearchBox"
           type="text"
           className={cn(
