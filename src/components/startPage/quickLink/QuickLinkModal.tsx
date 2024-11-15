@@ -62,13 +62,13 @@ const QuickLinkModal = (props: ModalProps) => {
     <AnimatePresence>
       <motion.div
         data-testid="QuickLinkModal"
-        className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50"
+        className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.3 }}>
         <motion.div
-          className="bg-neutral-950 flex flex-col items-center justify-center gap-3 p-6 rounded-lg"
+          className="flex flex-col items-center justify-center gap-3 rounded-lg bg-neutral-950 p-6"
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.8, opacity: 0 }}
@@ -98,18 +98,18 @@ const QuickLinkModal = (props: ModalProps) => {
               onChange={(e) => setUrl(e.target.value)}
             />
           </LabelInputContainer>
-          <div className="flex gap-3 mt-4">
+          <div className="mt-4 flex gap-3">
             <Button
               onClick={addQuickLink}
               borderRadius="1.75rem"
-              className="bg-slate-900 text-white border-slate-800 hover:bg-slate-700">
+              className="border-slate-800 bg-slate-900 text-white hover:bg-slate-700">
               Save
             </Button>
             <Button
               onClick={() => setShowModal(false)}
               borderRadius="1.75rem"
               borderClassName="bg-[radial-gradient(var(--red-500)_40%,transparent_60%)]"
-              className="bg-slate-900 text-white border-slate-800 hover:bg-slate-700">
+              className="border-slate-800 bg-slate-900 text-white hover:bg-slate-700">
               Close
             </Button>
           </div>

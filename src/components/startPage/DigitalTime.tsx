@@ -23,7 +23,7 @@ export default function DigitalTime() {
   return (
     <motion.div
       data-testid="DigitalTime"
-      className="inline-block px-5 py-2  text-white text-5xl rounded-lg font-mono"
+      className="inline-block rounded-lg px-5 py-2 font-mono text-5xl text-white"
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}
       transition={{ duration: 0.5 }}>

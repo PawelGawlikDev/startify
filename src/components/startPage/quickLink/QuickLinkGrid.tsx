@@ -48,7 +48,7 @@ export default function QuickLinkGrid() {
     <div
       data-testid="QuickLinkGrid"
       className={cn(
-        "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 w-full p-4 max-w-7xl",
+        "grid w-full max-w-7xl grid-cols-2 gap-6 p-4 sm:grid-cols-3 md:grid-cols-4",
         quickLink?.bigQuickLinks ? "lg:grid-cols-6" : "lg:grid-cols-6"
       )}>
       {showModal && (

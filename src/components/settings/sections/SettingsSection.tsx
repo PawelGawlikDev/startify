@@ -13,7 +13,7 @@ export default function SettingsSection({
 }: SettingsSectionProps): React.JSX.Element {
   return (
     <div className={className}>
-      <div className="flex flex-row text-lg p-2 ">
+      <div className="flex flex-row p-2 text-lg">
         <p>{sectionTitle}</p>
       </div>
       <div className="flex flex-col gap-6 bg-neutral-800 p-5">{children}</div>

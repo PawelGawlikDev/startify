@@ -28,14 +28,14 @@ const BoxesCore = ({ className, ...rest }: { className?: string }) => {
           transform: `translate(-40%,-60%) skewX(-48deg) skewY(14deg) scale(0.675) rotate(0deg) translateZ(0)`
         }}
         className={cn(
-          "absolute p-4 flex -translate-x-1/2 -translate-y-1/2 inset-0 z-0 ",
+          "absolute inset-0 z-0 flex -translate-x-1/2 -translate-y-1/2 p-4",
           className
         )}
         {...rest}>
         {rows.map((_, i) => (
           <motion.div
             key={`row` + i}
-            className="w-16 h-8  border-l  border-slate-700 relative">
+            className="relative h-8 w-16 border-l border-slate-700">
             {cols.map((_, j) => (
               <motion.div
                 whileHover={{
@@ -46,7 +46,7 @@ const BoxesCore = ({ className, ...rest }: { className?: string }) => {
                   transition: { duration: 2 }
                 }}
                 key={`col` + j}
-                className="w-16 h-8  border-r border-t border-slate-700 relative">
+                className="relative h-8 w-16 border-r border-t border-slate-700">
                 {j % 2 === 0 && i % 2 === 0 ? (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -54,7 +54,7 @@ const BoxesCore = ({ className, ...rest }: { className?: string }) => {
                     viewBox="0 0 24 24"
                     strokeWidth="1.5"
                     stroke="currentColor"
-                    className="absolute h-6 w-10 -top-[14px] -left-[22px] text-slate-700 stroke-[1px] pointer-events-none">
+                    className="pointer-events-none absolute -left-[22px] -top-[14px] h-6 w-10 stroke-[1px] text-slate-700">
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"

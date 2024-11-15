@@ -63,12 +63,12 @@ export default function BackgroundSection() {
   return (
     <SettingsSection
       sectionTitle="Background Settings"
-      className="relative z-40 w-full flex flex-col gap-4">
+      className="relative z-40 flex w-full flex-col gap-4">
       <div className="flex flex-row">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0, transition: { duration: 0.4 } }}
-          className="w-full flex flex-row justify-between">
+          className="flex w-full flex-row justify-between">
           <p>Choose background</p>
           {background === "gradient" && (
             <motion.div
@@ -106,7 +106,7 @@ export default function BackgroundSection() {
             </motion.div>
           )}
           {storedFiles.length > 0 && (
-            <div className="grid grid-cols-1 gap-4 mt-4">
+            <div className="mt-4 grid grid-cols-1 gap-4">
               <button
                 onClick={() => {
                   setPreview(!preview);
@@ -119,17 +119,17 @@ export default function BackgroundSection() {
                     <motion.div
                       key={file.id}
                       className={cn(
-                        "overflow-hidden bg-white flex flex-col items-start justify-start p-4 mt-4 w-full mx-auto rounded-md shadow-sm"
+                        "mx-auto mt-4 flex w-full flex-col items-start justify-start overflow-hidden rounded-md bg-white p-4 shadow-sm"
                       )}>
-                      <div className="flex justify-between w-full items-center gap-4">
+                      <div className="flex w-full items-center justify-between gap-4">
                         <motion.p
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
-                          className="text-base text-neutral-700 truncate max-w-xs">
+                          className="max-w-xs truncate text-base text-neutral-700">
                           {file.name}
                         </motion.p>
                         <div className="flex flex-row gap-2">
-                          <div className="bg-red-500 rounded-lg px-2 py-1 w-fit shadow-input">
+                          <div className="w-fit rounded-lg bg-red-500 px-2 py-1 shadow-input">
                             <motion.button
                               initial={{ opacity: 0 }}
                               animate={{ opacity: 1 }}
@@ -144,7 +144,7 @@ export default function BackgroundSection() {
                           <motion.p
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            className="rounded-lg px-2 py-1 w-fit flex-shrink-0 text-sm text-neutral-600 shadow-input">
+                            className="w-fit flex-shrink-0 rounded-lg px-2 py-1 text-sm text-neutral-600 shadow-input">
                             {(file.imageBlob.size / (1024 * 1024)).toFixed(2)}{" "}
                             MB
                           </motion.p>
@@ -153,7 +153,7 @@ export default function BackgroundSection() {
                       <img
                         src={URL.createObjectURL(file.imageBlob)}
                         alt={file.name}
-                        className="w-full h-auto mt-2 rounded-md"
+                        className="mt-2 h-auto w-full rounded-md"
                       />
                     </motion.div>
                   )

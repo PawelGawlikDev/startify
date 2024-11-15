@@ -234,22 +234,22 @@ export default function SearchInput({
     <div className="w-full" data-testid="SearchInput">
       <form
         className={cn(
-          `hover:scale-105 w-full relative max-w-2xl mx-auto bg-white  h-16 rounded-full rounded-b-full overflow-hidden shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),_0px_1px_0px_0px_rgba(25,28,33,0.02),_0px_0px_0px_1px_rgba(25,28,33,0.08)] transition duration-200`,
+          `relative mx-auto h-16 w-full max-w-2xl overflow-hidden rounded-full rounded-b-full bg-white shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),_0px_1px_0px_0px_rgba(25,28,33,0.02),_0px_0px_0px_1px_rgba(25,28,33,0.08)] transition duration-200 hover:scale-105`,
           value && "bg-gray-50",
           `${active ? "scale-105" : ""}`
         )}
         onSubmit={handleSubmit}>
         <canvas
           className={cn(
-            "absolute pointer-events-none  text-base transform scale-50 top-[30%] left-2 sm:left-10 origin-top-left filter invert pr-20",
+            "pointer-events-none absolute left-2 top-[30%] origin-top-left scale-50 transform pr-20 text-base invert filter sm:left-10",
             !animating ? "opacity-0" : "opacity-100"
           )}
           ref={canvasRef}
         />
-        <div className="absolute inset-0 w-10 h-full top-0 bottom-0 right-0 left-0 flex justify-center items-center">
+        <div className="absolute inset-0 bottom-0 left-0 right-0 top-0 flex h-full w-10 items-center justify-center">
           <img
             src={engine?.favicon}
-            className="h-8 pl-2 rounded-full z-40 cursor-pointer"
+            className="z-40 h-8 cursor-pointer rounded-full pl-2"
             alt={engine?.name}
           />
         </div>
@@ -277,7 +277,7 @@ export default function SearchInput({
           id="SearchBox"
           type="text"
           className={cn(
-            "w-full relative text-sm sm:text-base z-50 border-none  bg-transparent text-black h-full rounded-full focus:outline-none focus:ring-0 pl-6 sm:pl-12 pr-20",
+            "relative z-50 h-full w-full rounded-full border-none bg-transparent pl-6 pr-20 text-sm text-black focus:outline-none focus:ring-0 sm:pl-12 sm:text-base",
             animating && "text-transparent"
           )}
         />
@@ -285,7 +285,7 @@ export default function SearchInput({
         <button
           disabled={!value}
           type="submit"
-          className="absolute right-2 top-1/2 z-50 -translate-y-1/2 h-8 w-8 rounded-full disabled:bg-gray-100 bg-black  transition duration-200 flex items-center justify-center">
+          className="absolute right-2 top-1/2 z-50 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-black transition duration-200 disabled:bg-gray-100">
           <motion.svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -296,7 +296,7 @@ export default function SearchInput({
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="text-gray-300 h-4 w-4">
+            className="h-4 w-4 text-gray-300">
             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
             <motion.path
               d="M5 12l14 0"
@@ -317,7 +317,7 @@ export default function SearchInput({
           </motion.svg>
         </button>
 
-        <div className="absolute inset-0 flex items-center rounded-full pointer-events-none">
+        <div className="pointer-events-none absolute inset-0 flex items-center rounded-full">
           <AnimatePresence mode="wait">
             {!value && (
               <motion.p
@@ -338,7 +338,7 @@ export default function SearchInput({
                   duration: 0.3,
                   ease: "linear"
                 }}
-                className="text-sm sm:text-base font-normal text-neutral-500 pl-4 sm:pl-12 text-left w-[calc(100%-2rem)] truncate">
+                className="w-[calc(100%-2rem)] truncate pl-4 text-left text-sm font-normal text-neutral-500 sm:pl-12 sm:text-base">
                 {placeholders[currentPlaceholder]}
               </motion.p>
             )}
@@ -362,7 +362,7 @@ export default function SearchInput({
               height: { duration: 0.3, ease: "easeInOut" },
               transform: { duration: 0.3 }
             }}
-            className="absolute right-0 z-40 left-0 w-full max-w-2xl mx-auto bg-white  border border-gray-300  rounded-lg shadow-lg max-h-60 overflow-y-auto">
+            className="absolute left-0 right-0 z-40 mx-auto max-h-60 w-full max-w-2xl overflow-y-auto rounded-lg border border-gray-300 bg-white shadow-lg">
             {suggestions.map((suggestion, index) => (
               <motion.li
                 key={index}
@@ -372,7 +372,7 @@ export default function SearchInput({
                   setAnimating(false);
                   inputRef.current?.focus();
                 }}
-                className="cursor-pointer px-4 py-2 hover:bg-gray-100 ">
+                className="cursor-pointer px-4 py-2 hover:bg-gray-100">
                 {suggestion}
               </motion.li>
             ))}

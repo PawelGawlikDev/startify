@@ -18,14 +18,14 @@ export default function QuickLinkSection() {
 
   return (
     <SettingsSection
-      className="relative w-full flex flex-col gap-4"
+      className="relative flex w-full flex-col gap-4"
       sectionTitle="Quick Links Section">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0, transition: { duration: 0.4 } }}
-        className="flex items-center flex-row justify-between">
+        className="flex flex-row items-center justify-between">
         <p>Big Quick Links</p>
-        <div className="flex z-2 flex-row gap-2 min-w-32 justify-center cursor-default items-center">
+        <div className="z-2 flex min-w-32 cursor-default flex-row items-center justify-center gap-2">
           <Button
             onClick={async () => {
               await setQuickLink({
@@ -39,7 +39,7 @@ export default function QuickLinkSection() {
                 : ""
             }
             borderRadius="1.75rem"
-            className="bg-slate-900 text-white border-slate-800 hover:bg-slate-700">
+            className="border-slate-800 bg-slate-900 text-white hover:bg-slate-700">
             {quickLink?.bigQuickLinks ? "Disable" : "Enable"}
           </Button>
         </div>
@@ -47,7 +47,7 @@ export default function QuickLinkSection() {
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0, transition: { duration: 0.4 } }}
-        className="flex flex-row justify-between z-[1]">
+        className="z-[1] flex flex-row justify-between">
         <p>Choose quick link type</p>
         <QuickLinkTypeDropdown />
       </motion.div>

@@ -15,7 +15,7 @@ const Circle: React.FC<CircleProps> = ({
 }) => {
   return (
     <div
-      className="absolute rounded-full transform -translate-x-1/2 -translate-y-1/2"
+      className="absolute -translate-x-1/2 -translate-y-1/2 transform rounded-full"
       style={{
         left: `${x}px`,
         top: `${y}px`,

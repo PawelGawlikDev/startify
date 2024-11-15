@@ -26,6 +26,10 @@ export default [
   {
     rules: {
       "no-console": "error",
+      "@typescript-eslint/no-unused-expressions": [
+        "error",
+        { allowShortCircuit: true }
+      ],
       "padding-line-between-statements": [
         "error",
         { blankLine: "always", prev: "import", next: "*" },
