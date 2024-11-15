@@ -11,7 +11,7 @@ export default function GradientBackground() {
 
   return (
     <div
-      className="inset-0 absolute"
+      className="absolute inset-0"
       style={{
         backgroundImage: `linear-gradient(${color?.deg}deg, ${
           color?.primary

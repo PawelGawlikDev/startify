@@ -12,10 +12,10 @@ export default function App() {
         href={chrome.runtime.getURL("/options.html")}
         target="_blank"
         rel="noreferrer"
-        className="text-white w-4 h-4 relative inline-flex left-2 top-2 cursor-pointer">
+        className="relative left-2 top-2 inline-flex h-4 w-4 cursor-pointer text-white">
         <SettingsGear />
       </a>
-      <div className="flex flex-col items-center px-4 gap-14">
+      <div className="flex flex-col items-center gap-14 px-4">
         <DigitalTime />
         <SeatchBox />
         <QuickLinkGrid />

@@ -13,15 +13,15 @@ const containerVariants = {
 
 export default function Settings() {
   return (
-    <div className="text-white flex flex-col gap-8">
+    <div className="flex flex-col gap-8 text-white">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0, transition: { duration: 0.4 } }}
-        className="w-full h-full mx-[20%] relative z-10 text-4xl">
+        className="relative z-10 mx-[20%] h-full w-full text-4xl">
         <h1>Settings</h1>
       </motion.div>
       <motion.div
-        className="flex relative mx-[20%] mt-5 flex-col justify-center items-center gap-16"
+        className="relative mx-[20%] mt-5 flex flex-col items-center justify-center gap-16"
         initial="hidden"
         animate="visible"
         variants={containerVariants}>

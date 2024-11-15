@@ -86,23 +86,23 @@ export function QuickLink(props: QuickLinkProps) {
       data-testid="QuickLink"
       layout
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      className="relative group z-10 flex flex-col justify-center items-center"
+      className="group relative z-10 flex flex-col items-center justify-center"
       draggable="true">
       <a draggable="false" href={url}>
         <QuickLinkBackground
           type={quickLinkSettings?.type}
           className={cn(
-            "w-[144px] h-[88px] flex items-center justify-center",
+            "flex h-[88px] w-[144px] items-center justify-center",
             quickLinkSettings?.bigQuickLinks
-              ? "w-[166px] h-28"
-              : "w-[144px] h-[88px]"
+              ? "h-28 w-[166px]"
+              : "h-[88px] w-[144px]"
           )}>
-          <div className="triangle gradient-background transition-opacity opacity-0 group-hover:opacity-100 w-4 h-4 absolute right-[-4px] top-[-4px] rotate-[270deg]" />
-          <div className="triangle gradient-background transition-opacity opacity-0 group-hover:opacity-100 w-4 h-4 absolute left-[-4px] top-[-4px] rotate-180" />
+          <div className="triangle gradient-background absolute right-[-4px] top-[-4px] h-4 w-4 rotate-[270deg] opacity-0 transition-opacity group-hover:opacity-100" />
+          <div className="triangle gradient-background absolute left-[-4px] top-[-4px] h-4 w-4 rotate-180 opacity-0 transition-opacity group-hover:opacity-100" />
           <div
             data-testid="QuickLinkSettingsButton"
             ref={menuRef}
-            className={`absolute w-5 h-5 top-1 ${showMenu ? "opacity-100" : "opacity-0"} group-hover:opacity-100 hover:bg-neutral-800/75 rounded-full p-1 right-2 transition-all`}
+            className={`absolute top-1 h-5 w-5 ${showMenu ? "opacity-100" : "opacity-0"} right-2 rounded-full p-1 transition-all hover:bg-neutral-800/75 group-hover:opacity-100`}
             onClick={(e) => {
               e.preventDefault();
               setShowMenu(!showMenu);
@@ -111,16 +111,16 @@ export function QuickLink(props: QuickLinkProps) {
             {showMenu && (
               <div
                 data-testid="QuickLinkMenu"
-                className="absolute bg-neutral-950 text-white flex flex-col items-center rounded-xl z-[1]">
+                className="absolute z-[1] flex flex-col items-center rounded-xl bg-neutral-950 text-white">
                 <span
                   data-testid="EditQuickLink"
-                  className="hover:bg-neutral-600 p-3 w-full flex items-center justify-center rounded-t-xl"
+                  className="flex w-full items-center justify-center rounded-t-xl p-3 hover:bg-neutral-600"
                   onClick={handleEditClick}>
                   Edit
                 </span>
                 <span
                   data-testid="DeleteQuickLink"
-                  className="hover:bg-neutral-600 p-3 w-full flex items-center justify-center rounded-b-xl"
+                  className="flex w-full items-center justify-center rounded-b-xl p-3 hover:bg-neutral-600"
                   onClick={handleDeleteClick}>
                   Delete
                 </span>
@@ -136,14 +136,14 @@ export function QuickLink(props: QuickLinkProps) {
               height={48}
             />
           ) : (
-            <div className="flex items-center justify-center w-[48px] h-[48px] rounded">
+            <div className="flex h-[48px] w-[48px] items-center justify-center rounded">
               <span className="text-xl font-bold text-white">
                 {pageName.charAt(0).toUpperCase()}
               </span>
             </div>
           )}
-          <div className="triangle gradient-background transition-opacity opacity-0 group-hover:opacity-100 w-4 h-4 absolute right-[-4px] bottom-[-4px]" />
-          <div className="triangle gradient-background transition-opacity opacity-0 group-hover:opacity-100 w-4 h-4 absolute left-[-4px] bottom-[-4px] rotate-90" />
+          <div className="triangle gradient-background absolute bottom-[-4px] right-[-4px] h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100" />
+          <div className="triangle gradient-background absolute bottom-[-4px] left-[-4px] h-4 w-4 rotate-90 opacity-0 transition-opacity group-hover:opacity-100" />
         </QuickLinkBackground>
       </a>
       <p data-testid="QuickLinkName" className="text-white">
@@ -163,16 +163,16 @@ export function AddQuickLinkButton(props: AddQuickLink) {
         setShowModal(true);
         setEditingLink({ name: "", url: "" });
       }}
-      className="relative flex justify-center items-start">
+      className="relative flex items-start justify-center">
       <QuickLinkBackground
         type={quickLinkSettings?.type}
         className={
           quickLinkSettings?.bigQuickLinks
-            ? "w-[166px] h-28"
-            : "w-[144px] h-[88px]"
+            ? "h-28 w-[166px]"
+            : "h-[88px] w-[144px]"
         }
         draggable={false}>
-        <div className="z-10 flex items-center justify-center h-full">
+        <div className="z-10 flex h-full items-center justify-center">
           <AddButton />
         </div>
       </QuickLinkBackground>
@@ -230,11 +230,11 @@ export function QuickLinkPreview({
   return (
     <QuickLinkBackground
       type={quickLinkSettings?.type}
-      className="w-[166px] h-28 flex items-center justify-center">
+      className="flex h-28 w-[166px] items-center justify-center">
       {favicon ? (
         <img src={favicon} alt={pageName} width={48} height={48} />
       ) : (
-        <div className="flex items-center justify-center w-[48px] h-[48px] rounded">
+        <div className="flex h-[48px] w-[48px] items-center justify-center rounded">
           <span className="text-xl font-bold text-white">
             {pageName.charAt(0).toUpperCase()}
           </span>

@@ -61,14 +61,14 @@ export function BackgroundDropdown() {
       className="relative"
       onHoverStart={() => setShown(true)}
       onHoverEnd={() => setShown(false)}>
-      <div className="flex z-2 flex-row gap-2 min-w-32 justify-center cursor-default items-center">
+      <div className="z-2 flex min-w-32 cursor-default flex-row items-center justify-center gap-2">
         <span>{background}</span>
       </div>
       <motion.ul
         variants={showMenu}
         initial="exit"
         animate={shown ? "enter" : "exit"}
-        className="absolute z-50 cursor-pointer bg-black right-0 left-0 border border-blue-strong border-opacity-50 rounded-sm list-none">
+        className="border-blue-strong absolute left-0 right-0 z-50 cursor-pointer list-none rounded-sm border border-opacity-50 bg-black">
         {Object.entries(backgroundOptions).map(([key, option]) => (
           <div key={key}>
             <motion.li
@@ -77,7 +77,7 @@ export function BackgroundDropdown() {
                 color: "#FFB703",
                 x: 2
               }}
-              className="cursor-pointer p-1 text-blue-primary flex items-center justify-center">
+              className="text-blue-primary flex cursor-pointer items-center justify-center p-1">
               {option.name}
             </motion.li>
           </div>
@@ -123,7 +123,7 @@ export function EngineDropdown() {
       className="relative"
       onHoverStart={() => setShown(true)}
       onHoverEnd={() => setShown(false)}>
-      <div className="flex items-center justify-center gap-4 min-w-36">
+      <div className="flex min-w-36 items-center justify-center gap-4">
         <span className="cursor-pointer">{engine?.name}</span>
         <img width={20} height={20} src={engine?.favicon} alt={engine?.name} />
       </div>
@@ -131,7 +131,7 @@ export function EngineDropdown() {
         variants={showMenu}
         initial="exit"
         animate={shown ? "enter" : "exit"}
-        className="absolute right-0 left-0 bg-black border border-blue-strong border-opacity-50 rounded-sm list-none">
+        className="border-blue-strong absolute left-0 right-0 list-none rounded-sm border border-opacity-50 bg-black">
         {Object.entries(searchEngines).map(([key, engine]) => (
           <div key={key}>
             <motion.li
@@ -142,11 +142,11 @@ export function EngineDropdown() {
                 color: "#FFB703",
                 x: 2
               }}
-              className="cursor-pointer p-1 text-blue-primary flex items-center justify-center">
+              className="text-blue-primary flex cursor-pointer items-center justify-center p-1">
               <img
                 src={engine.favicon}
                 alt={`${engine.name} logo`}
-                className="w-4 h-4 mr-2"
+                className="mr-2 h-4 w-4"
               />
               {engine.name}
             </motion.li>
@@ -192,14 +192,14 @@ export function QuickLinkTypeDropdown() {
       className="relative"
       onHoverStart={() => setShown(true)}
       onHoverEnd={() => setShown(false)}>
-      <div className="flex z-2 flex-row gap-2 min-w-32 justify-center cursor-default items-center">
+      <div className="z-2 flex min-w-32 cursor-default flex-row items-center justify-center gap-2">
         <span>{quickLink?.type}</span>
       </div>
       <motion.ul
         variants={showMenu}
         initial="exit"
         animate={shown ? "enter" : "exit"}
-        className="absolute z-50 cursor-pointer bg-black right-0 left-0 border border-blue-strong border-opacity-50 rounded-sm list-none">
+        className="border-blue-strong absolute left-0 right-0 z-50 cursor-pointer list-none rounded-sm border border-opacity-50 bg-black">
         {Object.entries(quickLinkTypes).map(([key, option]) => (
           <div key={key}>
             <motion.li
@@ -208,7 +208,7 @@ export function QuickLinkTypeDropdown() {
                 color: "#FFB703",
                 x: 2
               }}
-              className="cursor-pointer p-1 text-blue-primary flex items-center justify-center">
+              className="text-blue-primary flex cursor-pointer items-center justify-center p-1">
               {option}
             </motion.li>
           </div>

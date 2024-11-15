@@ -64,7 +64,7 @@ const BackgroundRain = ({ className }: { className?: string }) => {
     <div
       ref={parentRef}
       className={cn(
-        "absolute inset-0 bg-gradient-to-b from-neutral-950 to-neutral-800 flex items-center w-full justify-center overflow-hidden",
+        "absolute inset-0 flex w-full items-center justify-center overflow-hidden bg-gradient-to-b from-neutral-950 to-neutral-800",
         className
       )}>
       {beams.map((beam) => (
@@ -77,7 +77,7 @@ const BackgroundRain = ({ className }: { className?: string }) => {
       ))}
       <div
         ref={containerRef}
-        className="absolute bottom-0 bg-neutral-100 w-full inset-x-0 pointer-events-none"
+        className="pointer-events-none absolute inset-x-0 bottom-0 w-full bg-neutral-100"
         style={{
           boxShadow:
             "0 0 24px rgba(34, 42, 53, 0.06), 0 1px 1px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(34, 42, 53, 0.04), 0 0 4px rgba(34, 42, 53, 0.08), 0 16px 68px rgba(47, 48, 55, 0.05), 0 1px 0 rgba(255, 255, 255, 0.1) inset"

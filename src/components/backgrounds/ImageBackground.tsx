@@ -34,7 +34,7 @@ export default function ImageBackground() {
 
   return (
     <div
-      className="inset-0 absolute"
+      className="absolute inset-0"
       style={{
         backgroundImage: `url(${backgroundImageUrl})`,
         backgroundSize: "cover",

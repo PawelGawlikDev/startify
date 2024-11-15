@@ -46,17 +46,11 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setVisible(true)}
         onMouseLeave={() => setVisible(false)}
-        className="p-[2px] rounded-lg transition duration-300 group/input">
+        className="group/input rounded-lg p-[2px] transition duration-300">
         <input
           type={type}
           className={cn(
-            `flex h-10 w-full border-none bg-zinc-800  text-white shadow-input rounded-md px-3 py-2 text-sm  file:border-0 file:bg-transparent 
-          file:text-sm file:font-medium placeholder:text-neutral-400 
-          focus-visible:outline-none focus-visible:ring-[2px]  focus-visible:ring-neutral-600 
-           disabled:cursor-not-allowed disabled:opacity-50
-           
-           group-hover/input:shadow-none transition duration-400
-           `,
+            `duration-400 flex h-10 w-full rounded-md border-none bg-zinc-800 px-3 py-2 text-sm text-white shadow-input transition file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-neutral-400 focus-visible:outline-none focus-visible:ring-[2px] focus-visible:ring-neutral-600 disabled:cursor-not-allowed disabled:opacity-50 group-hover/input:shadow-none`,
             className
           )}
           ref={ref}
@@ -77,7 +71,7 @@ const Label = React.forwardRef<
   <LabelPrimitive.Root
     ref={ref}
     className={cn(
-      "text-sm font-medium text-white leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+      "text-sm font-medium leading-none text-white peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
       className
     )}
     {...props}
@@ -95,7 +89,7 @@ const LabelInputContainer = ({
   className?: string;
 }) => {
   return (
-    <div className={cn("flex flex-col space-y-2 w-full", className)}>
+    <div className={cn("flex w-full flex-col space-y-2", className)}>
       {children}
     </div>
   );

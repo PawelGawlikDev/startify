@@ -23,7 +23,7 @@ const Border = forwardRef<HTMLDivElement, BorderProps>((props, ref) => {
     <div
       ref={ref}
       onMouseDown={onMouseDown}
-      className="relative rounded-full shadow-sm box-border"
+      className="relative box-border rounded-full shadow-sm"
       style={{
         width: `${width}px`,
         height: `${width}px`,

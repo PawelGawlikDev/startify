@@ -55,7 +55,7 @@ export const FileUpload = ({
       <motion.div
         onClick={handleClick}
         whileHover="animate"
-        className="p-10 group/file block rounded-lg cursor-pointer w-full relative overflow-hidden">
+        className="group/file relative block w-full cursor-pointer overflow-hidden rounded-lg p-10">
         <input
           ref={fileInputRef}
           id="file-upload-handle"
@@ -64,13 +64,13 @@ export const FileUpload = ({
           className="hidden"
         />
         <div className="flex flex-col items-center justify-center">
-          <p className="relative z-20 font-sans font-bold text-neutral-700  text-base">
+          <p className="relative z-20 font-sans text-base font-bold text-neutral-700">
             Upload Wallpaper
           </p>
-          <p className="relative z-20 font-sans font-normal text-neutral-400  text-base mt-2">
+          <p className="relative z-20 mt-2 font-sans text-base font-normal text-neutral-400">
             Drag or drop your wallpaper here or click to upload
           </p>
-          <div className="relative w-full mt-10 max-w-xl mx-auto">
+          <div className="relative mx-auto mt-10 w-full max-w-xl">
             <motion.div
               layoutId="file-upload"
               variants={mainVariant}
@@ -80,25 +80,25 @@ export const FileUpload = ({
                 damping: 20
               }}
               className={cn(
-                "relative group-hover/file:shadow-2xl z-40 bg-white  flex items-center justify-center h-32 mt-4 w-full max-w-[8rem] mx-auto rounded-md",
+                "relative z-40 mx-auto mt-4 flex h-32 w-full max-w-[8rem] items-center justify-center rounded-md bg-white group-hover/file:shadow-2xl",
                 "shadow-[0px_10px_50px_rgba(0,0,0,0.1)]"
               )}>
               {isDragActive ? (
                 <motion.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="text-neutral-600 flex flex-col items-center">
+                  className="flex flex-col items-center text-neutral-600">
                   Drop it
-                  <IconUpload className="h-4 w-4 text-neutral-600 " />
+                  <IconUpload className="h-4 w-4 text-neutral-600" />
                 </motion.p>
               ) : (
-                <IconUpload className="h-4 w-4 text-neutral-600 " />
+                <IconUpload className="h-4 w-4 text-neutral-600" />
               )}
             </motion.div>
 
             <motion.div
               variants={secondaryVariant}
-              className="absolute opacity-0 border border-dashed border-sky-400 inset-0 z-30 bg-transparent flex items-center justify-center h-32 mt-4 w-full max-w-[8rem] mx-auto rounded-md"></motion.div>
+              className="absolute inset-0 z-30 mx-auto mt-4 flex h-32 w-full max-w-[8rem] items-center justify-center rounded-md border border-dashed border-sky-400 bg-transparent opacity-0"></motion.div>
           </div>
         </div>
       </motion.div>
