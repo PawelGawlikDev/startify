@@ -18,6 +18,8 @@ categories:
     label: "testing"
   - title: "💄 Style"
     label: "style"
+  - title: "⬆️ Update Dependency"
+    label: "update_deps"
 exclude-labels:
   - "skip changelog"
 template: |
