@@ -1,10 +1,11 @@
 import faviconFetch from "favicon-fetch";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import React, { useState } from "react";
 
 import { Button } from "~components/Button";
 import { db } from "~indexdb/index";
 import type { QuickLinkSettings } from "~types";
+import { cn } from "~utils/cn";
 import isValidUrl from "~utils/valudUrl";
 
 import { Input, Label, LabelInputContainer } from "./Form";
@@ -102,7 +103,9 @@ const QuickLinkModal = (props: ModalProps) => {
             <Button
               onClick={addQuickLink}
               borderRadius="1.75rem"
-              className="border-slate-800 bg-slate-900 text-white hover:bg-slate-700">
+              className={cn(
+                "border-slate-800 bg-slate-900 text-white hover:bg-slate-700"
+              )}>
               Save
             </Button>
             <Button
