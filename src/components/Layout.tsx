@@ -1,4 +1,6 @@
-import React, { type ReactNode } from "react";
+import React, { useEffect, type ReactNode } from "react";
+
+import { checkUserSettings } from "~utils/checkUserSettings";
 
 import Background from "./backgrounds/Background";
 
@@ -7,6 +9,12 @@ interface LayoutProps {
 }
 
 export default function Layout({ children }: LayoutProps): React.JSX.Element {
+  useEffect(() => {
+    (async () => {
+      await checkUserSettings();
+    })();
+  }, []);
+
   return (
     <Background>
       <main>{children}</main>
