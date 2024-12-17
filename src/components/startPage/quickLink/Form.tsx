@@ -1,5 +1,5 @@
 import * as LabelPrimitive from "@radix-ui/react-label";
-import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
+import { motion, useMotionTemplate, useMotionValue } from "motion/react";
 import * as React from "react";
 
 import { cn } from "~utils/cn";

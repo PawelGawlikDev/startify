@@ -30,7 +30,7 @@
     "dexie": "^4.0.10",
     "dexie-react-hooks": "^1.1.7",
     "favicon-fetch": "^1.0.0",
-    "framer-motion": "^11.13.1",
+    "motion": "^12.0.0-alpha.2",
     "plasmo": "0.89.4",
     "react": "18.3.1",
     "react-dom": "18.3.1",
