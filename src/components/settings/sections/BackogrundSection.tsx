@@ -27,7 +27,9 @@ export default function BackgroundSection() {
   useEffect(() => {
     const fetchStoredWallpapers = async () => {
       try {
-        const wallpapers = await db.wallpaper.toArray();
+        const wallpapers = await db.wallpaper
+          .filter((wallpaper) => wallpaper.name !== "daily")
+          .toArray();
 
         setStoredFiles(wallpapers);
       } catch {
@@ -45,15 +47,16 @@ export default function BackgroundSection() {
       const blob = new Blob([file], { type: file.type });
 
       try {
-        if ((await db.wallpaper.toArray()).length > 0) {
-          await db.wallpaper.clear();
-        }
-
         await db.wallpaper.add({
           name: file.name,
           imageBlob: blob
         });
-        setStoredFiles(await db.wallpaper.toArray());
+
+        const wallpapers = await db.wallpaper
+          .filter((wallpaper) => wallpaper.name !== "daily")
+          .toArray();
+
+        setStoredFiles(wallpapers);
       } catch {
         return;
       }
@@ -136,7 +139,14 @@ export default function BackgroundSection() {
                               className="text-sm text-neutral-100"
                               onClick={async () => {
                                 await db.wallpaper.delete(file.id);
-                                setStoredFiles([]);
+
+                                const updatedFiles = await db.wallpaper
+                                  .filter(
+                                    (wallpaper) => wallpaper.name !== "daily"
+                                  )
+                                  .toArray();
+
+                                setStoredFiles(updatedFiles);
                               }}>
                               Delete
                             </motion.button>

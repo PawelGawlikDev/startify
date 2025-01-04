@@ -43,6 +43,16 @@ describe("Resolve background types", () => {
     expect(module).toHaveProperty("default");
   });
 
+  test("should return a function for a valid background type 'random'", async () => {
+    const imageBg = resolveBgType("random");
+
+    expect(imageBg).toBeInstanceOf(Function);
+
+    const module = await imageBg();
+
+    expect(module).toHaveProperty("default");
+  });
+
   test("should return a function for a valid background type 'aurora'", async () => {
     const imageBg = resolveBgType("aurora");
 

@@ -5,7 +5,8 @@ const BgTypes = {
   image: () => import("~components/backgrounds/ImageBackground"),
   aurora: () => import("~components/backgrounds/AuroraBackground"),
   boxes: () => import("~components/backgrounds/BackgroundBoxes"),
-  snakes: () => import("~components/backgrounds/BackgroundSnakes")
+  snakes: () => import("~components/backgrounds/BackgroundSnakes"),
+  random: () => import("~components/backgrounds/RandomBackground")
 };
 
 export const resolveBgType = (type?: string) => {

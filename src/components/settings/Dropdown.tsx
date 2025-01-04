@@ -18,7 +18,8 @@ const backgroundOptions: Record<Backgrounds, { name: string }> = {
   lines: { name: "lines" },
   aurora: { name: "aurora" },
   boxes: { name: "boxes" },
-  snakes: { name: "snakes" }
+  snakes: { name: "snakes" },
+  random: { name: "random" }
 };
 
 const quickLinkTypes: Record<QuickLinkTypes, string> = {
