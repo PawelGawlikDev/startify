@@ -33,6 +33,7 @@ export type Backgrounds =
   | "lines"
   | "aurora"
   | "boxes"
+  | "random"
   | "snakes";
 
 export type QuickLinkTypes = "gradient" | "transparent";

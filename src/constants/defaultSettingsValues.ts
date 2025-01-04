@@ -9,7 +9,7 @@ export const defaultColor = {
 
 export const defaultSearchEngine = searchEngines[SearchEngineEnum.Google];
 
-export const defaultWallpaper = "beams";
+export const defaultWallpaper = "gradient";
 
 export const defaultVanishAnimation = true;
 
