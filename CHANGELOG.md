@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.8](https://github.com/PawelGawlikDev/startify/compare/v0.0.7...v0.0.8) (2025-01-04)
+
+
+### Features
+
+* add new wallpaper type ([e6871dc](https://github.com/PawelGawlikDev/startify/commit/e6871dc4889e8ef400941f402c09fb97ca35a406))
+* update prettier ([435e2fd](https://github.com/PawelGawlikDev/startify/commit/435e2fda765102a49addb848284593c5fad7280f))
+
+
+### Bug Fixes
+
+* add new update_dependency label ([5e9c55c](https://github.com/PawelGawlikDev/startify/commit/5e9c55cdc82d09c373b7c014b06794f753fa70c1))
+
 ### [0.0.7](https://github.com/PawelGawlikDev/startify/compare/v0.0.6...v0.0.7) (2024-11-10)
 
 
