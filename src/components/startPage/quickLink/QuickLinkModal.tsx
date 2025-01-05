@@ -1,5 +1,5 @@
 import faviconFetch from "favicon-fetch";
-import { AnimatePresence, motion } from "motion/react";
+import { motion } from "motion/react";
 import React, { useState } from "react";
 
 import { Button } from "~components/Button";
@@ -60,65 +60,59 @@ const QuickLinkModal = (props: ModalProps) => {
   }
 
   return (
-    <AnimatePresence>
-      <motion.div
-        data-testid="QuickLinkModal"
-        className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.3 }}>
-        <motion.div
-          className="flex flex-col items-center justify-center gap-3 rounded-lg bg-neutral-950 p-6"
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.8, opacity: 0 }}
-          transition={{ duration: 0.3 }}>
-          <QuickLinkPreview
-            quickLinkSettings={quickLinkSettings}
-            pageName={dialName}
-            favicon={favicon}
-          />
-          <LabelInputContainer>
-            <Label htmlFor="name">Name</Label>
-            <Input
-              id="name"
-              placeholder="Name"
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </LabelInputContainer>
-          <LabelInputContainer>
-            <Label htmlFor="url">Address</Label>
-            <Input
-              placeholder="URL"
-              id="url"
-              type="text"
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-            />
-          </LabelInputContainer>
-          <div className="mt-4 flex gap-3">
-            <Button
-              onClick={addQuickLink}
-              borderRadius="1.75rem"
-              className={cn(
-                "border-slate-800 bg-slate-900 text-white hover:bg-slate-700"
-              )}>
-              Save
-            </Button>
-            <Button
-              onClick={() => setShowModal(false)}
-              borderRadius="1.75rem"
-              borderClassName="bg-[radial-gradient(var(--red-500)_40%,transparent_60%)]"
-              className="border-slate-800 bg-slate-900 text-white hover:bg-slate-700">
-              Close
-            </Button>
-          </div>
-        </motion.div>
-      </motion.div>
-    </AnimatePresence>
+    <motion.div
+      className="flex flex-col items-center justify-center gap-3 rounded-lg bg-neutral-950 p-6"
+      initial={{ scale: 0.8, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      exit={{ scale: 0.8, opacity: 0 }}
+      transition={{ duration: 0.3 }}>
+      <QuickLinkPreview
+        quickLinkSettings={quickLinkSettings}
+        pageName={dialName}
+        favicon={favicon}
+      />
+      <LabelInputContainer>
+        <Label htmlFor="name">Name</Label>
+        <Input
+          id="name"
+          placeholder="Name"
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </LabelInputContainer>
+      <LabelInputContainer>
+        <Label htmlFor="url">Address</Label>
+        <Input
+          placeholder="URL"
+          id="url"
+          type="text"
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
+        />
+      </LabelInputContainer>
+      <div className="mt-4 flex gap-3">
+        <Button
+          onClick={addQuickLink}
+          borderRadius="1.75rem"
+          disabled={name === "" || url === ""}
+          className={cn(
+            "border-slate-800 text-white",
+            name === "" || url === ""
+              ? "cursor-not-allowed bg-gray-700"
+              : "bg-slate-900 hover:bg-slate-700"
+          )}>
+          Save
+        </Button>
+        <Button
+          onClick={() => setShowModal(false)}
+          borderRadius="1.75rem"
+          borderClassName="bg-[radial-gradient(var(--red-500)_40%,transparent_60%)]"
+          className="border-slate-800 bg-slate-900 text-white hover:bg-slate-700">
+          Close
+        </Button>
+      </div>
+    </motion.div>
   );
 };
 

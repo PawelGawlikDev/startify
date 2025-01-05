@@ -18,7 +18,13 @@ export default function RandomBackground() {
 
       const blob = await response.blob();
 
-      await db.wallpaper.put({ name: "daily", imageBlob: blob });
+      const existingWallpaper = await db.wallpaper.get({ name: "daily" });
+
+      if (existingWallpaper) {
+        await db.wallpaper.update(existingWallpaper.id, { imageBlob: blob });
+      } else {
+        await db.wallpaper.put({ name: "daily", imageBlob: blob });
+      }
 
       const objectUrl = URL.createObjectURL(blob);
 
