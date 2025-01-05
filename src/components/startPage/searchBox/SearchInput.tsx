@@ -72,6 +72,26 @@ export default function SearchInput({
   const inputRef = useRef<HTMLInputElement>(null);
   const [value, setValue] = useState("");
   const [animating, setAnimating] = useState(false);
+  const [valueWithSuggestion, setValueWithSuggestion] = useState("");
+  const [addSuggestion, setAddSuggestion] = useState(true);
+
+  useEffect(() => {
+    if (inputRef.current) {
+      const userInputLength = value.length;
+      const suggestion = addSuggestion
+        ? suggestions[0]?.slice(userInputLength) || ""
+        : "";
+
+      setValueWithSuggestion(value + suggestion);
+
+      if (suggestion) {
+        inputRef.current.setSelectionRange(
+          userInputLength,
+          suggestion.length + userInputLength
+        );
+      }
+    }
+  }, [value, suggestions, valueWithSuggestion]);
 
   const draw = useCallback(() => {
     if (!inputRef.current) return;
@@ -192,9 +212,27 @@ export default function SearchInput({
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !animating) {
-      if (!skipAnimation) {
-        vanishAndSubmit();
+      inputRef.current.setSelectionRange(0, 0);
+      setValue(valueWithSuggestion);
+      setValueWithSuggestion(valueWithSuggestion);
+      setAnimating(false);
+    }
+
+    if (e.key === "Backspace" && value !== valueWithSuggestion) {
+      e.preventDefault();
+      setValue(value);
+      setValueWithSuggestion(value);
+      setAddSuggestion(false);
+    }
+
+    if (e.key === "Escape") {
+      if (suggestions.length > 0) {
+        suggestions.splice(0, suggestions.length);
       }
+
+      setAddSuggestion(false);
+      setValue("");
+      setValueWithSuggestion("");
     }
   };
 
@@ -261,9 +299,11 @@ export default function SearchInput({
             setActive(false);
           }}
           onChange={(e) => {
-            if (!animating) {
-              setValue(e.target.value);
+            setValue("");
+            setValue(e.target.value);
+            setAddSuggestion(true);
 
+            if (!animating) {
               if (onChange) {
                 onChange(e);
               }
@@ -271,7 +311,7 @@ export default function SearchInput({
           }}
           onKeyDown={handleKeyDown}
           ref={inputRef}
-          value={value}
+          value={valueWithSuggestion}
           spellCheck="false"
           autoComplete="one-time-code"
           id="SearchBox"
@@ -372,7 +412,7 @@ export default function SearchInput({
                   setAnimating(false);
                   inputRef.current?.focus();
                 }}
-                className="cursor-pointer px-4 py-2 hover:bg-gray-100">
+                className="cursor-pointer px-4 py-2">
                 {suggestion}
               </motion.li>
             ))}
