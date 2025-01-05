@@ -5,7 +5,7 @@
   "description": "A customizable and beautiful new tab page for your browser.",
   "author": "PawelGawlikDev",
   "scripts": {
-    "build": "plasmo build",
+    "build": "plasmo build --hoist",
     "dev": "plasmo dev",
     "dev:firefox": "plasmo dev --target=firefox-mv3 --env=.env.firefox",
     "dev:firefox-mv2": "plasmo dev --target=firefox-mv2 --env=.env.firefox",

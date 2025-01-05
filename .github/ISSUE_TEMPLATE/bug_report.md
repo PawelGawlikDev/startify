@@ -1,12 +1,12 @@
 ---
 name: Bug report
-about: Report unexpected behavior in Nova
+about: Report unexpected behavior in Startify
 title: ""
 labels: bug
 assignees: ""
 ---
 
-- **Nova Version:**
+- **Startify Version:**
 - **Operating system:**
 <!-- e.g. "Windows 10", "macOS 10.14" -->
 
