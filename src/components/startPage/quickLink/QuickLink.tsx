@@ -92,7 +92,7 @@ export function QuickLink(props: QuickLinkProps) {
         <QuickLinkBackground
           type={quickLinkSettings?.type}
           className={cn(
-            "flex h-[88px] w-[144px] items-center justify-center",
+            "flex items-center justify-center",
             quickLinkSettings?.bigQuickLinks
               ? "h-28 w-[166px]"
               : "h-[88px] w-[144px]"
@@ -146,9 +146,14 @@ export function QuickLink(props: QuickLinkProps) {
           <div className="triangle gradient-background absolute bottom-[-4px] left-[-4px] h-4 w-4 rotate-90 opacity-0 transition-opacity group-hover:opacity-100" />
         </QuickLinkBackground>
       </a>
-      <p data-testid="QuickLinkName" className="text-white">
+      <motion.p
+        initial={{ scale: 0.1, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 0.3 }}
+        data-testid="QuickLinkName"
+        className="text-white">
         {pageName}
-      </p>
+      </motion.p>
     </motion.div>
   );
 }

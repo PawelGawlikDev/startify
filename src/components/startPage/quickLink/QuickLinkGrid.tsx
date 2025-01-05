@@ -1,4 +1,5 @@
 import { useLiveQuery } from "dexie-react-hooks";
+import { AnimatePresence, motion } from "motion/react";
 import React, { useEffect, useState } from "react";
 
 import { useStorage } from "@plasmohq/storage/hook";
@@ -41,6 +42,22 @@ export default function QuickLinkGrid() {
     }
   }, [quickLinks]);
 
+  useEffect(() => {
+    document.addEventListener("keydown", (event) => {
+      if (showModal && event.key === "Escape") {
+        setShowModal(false);
+      }
+    });
+
+    return () => {
+      document.removeEventListener("keydown", (event) => {
+        if (showModal && event.key === "Escape") {
+          setShowModal(false);
+        }
+      });
+    };
+  });
+
   const { onDragEnter, onDragStart, onDragEnd, onDragOver, onDrop } =
     useDragAndDrop(quickLinkOrder, setQuickLinkOrder);
 
@@ -51,16 +68,26 @@ export default function QuickLinkGrid() {
         "grid w-full max-w-7xl grid-cols-2 gap-6 p-4 sm:grid-cols-3 md:grid-cols-4",
         quickLink?.bigQuickLinks ? "lg:grid-cols-6" : "lg:grid-cols-6"
       )}>
-      {showModal && (
-        <QuickLinkModal
-          quickLinkSettings={quickLink}
-          setShowModal={setShowModal}
-          id={editingLink?.id}
-          favicon={editingLink?.favicon}
-          dialName={editingLink?.name}
-          dialUrl={editingLink?.url}
-        />
-      )}
+      <AnimatePresence>
+        {showModal && (
+          <motion.div
+            data-testid="QuickLinkModal"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}>
+            <QuickLinkModal
+              quickLinkSettings={quickLink}
+              setShowModal={setShowModal}
+              id={editingLink?.id}
+              favicon={editingLink?.favicon}
+              dialName={editingLink?.name}
+              dialUrl={editingLink?.url}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
       {quickLinkOrder
         .map((id: number) => quickLinks?.find((dial) => dial.id === id))
         .filter(Boolean)

@@ -63,7 +63,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
 Input.displayName = "Input";
 
-/* eslint-disable react/prop-types */
 const Label = React.forwardRef<
   React.ElementRef<typeof LabelPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>
@@ -78,7 +77,6 @@ const Label = React.forwardRef<
   />
 ));
 
-/* eslint-enable react/prop-types */
 Label.displayName = LabelPrimitive.Root.displayName;
 
 const LabelInputContainer = ({
