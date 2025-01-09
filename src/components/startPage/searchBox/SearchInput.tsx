@@ -27,8 +27,8 @@ export default function SearchInput({
   engine
 }: {
   placeholders: string[];
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  onChange: (value: string) => void;
+  onSubmit: (value: string) => void;
   suggestions: string[];
   skipAnimation: boolean;
   engine: Engine;
@@ -72,26 +72,6 @@ export default function SearchInput({
   const inputRef = useRef<HTMLInputElement>(null);
   const [value, setValue] = useState("");
   const [animating, setAnimating] = useState(false);
-  const [valueWithSuggestion, setValueWithSuggestion] = useState("");
-  const [addSuggestion, setAddSuggestion] = useState(true);
-
-  useEffect(() => {
-    if (inputRef.current) {
-      const userInputLength = value.length;
-      const suggestion = addSuggestion
-        ? suggestions[0]?.slice(userInputLength) || ""
-        : "";
-
-      setValueWithSuggestion(value + suggestion);
-
-      if (suggestion) {
-        inputRef.current.setSelectionRange(
-          userInputLength,
-          suggestion.length + userInputLength
-        );
-      }
-    }
-  }, [value, suggestions, valueWithSuggestion]);
 
   const draw = useCallback(() => {
     if (!inputRef.current) return;
@@ -212,27 +192,9 @@ export default function SearchInput({
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !animating) {
-      inputRef.current.setSelectionRange(0, 0);
-      setValue(valueWithSuggestion);
-      setValueWithSuggestion(valueWithSuggestion);
-      setAnimating(false);
-    }
-
-    if (e.key === "Backspace" && value !== valueWithSuggestion) {
-      e.preventDefault();
-      setValue(value);
-      setValueWithSuggestion(value);
-      setAddSuggestion(false);
-    }
-
-    if (e.key === "Escape") {
-      if (suggestions.length > 0) {
-        suggestions.splice(0, suggestions.length);
+      if (!skipAnimation) {
+        vanishAndSubmit();
       }
-
-      setAddSuggestion(false);
-      setValue("");
-      setValueWithSuggestion("");
     }
   };
 
@@ -258,10 +220,12 @@ export default function SearchInput({
       vanishAndSubmit();
     }
 
+    const submitValue = inputRef.current?.value || value;
+
     setTimeout(
       () => {
         if (onSubmit) {
-          onSubmit(e);
+          onSubmit(submitValue);
         }
       },
       calculateAnimationDuration(skipAnimation ? 0 : maxX)
@@ -299,19 +263,17 @@ export default function SearchInput({
             setActive(false);
           }}
           onChange={(e) => {
-            setValue("");
-            setValue(e.target.value);
-            setAddSuggestion(true);
-
             if (!animating) {
+              setValue(e.target.value);
+
               if (onChange) {
-                onChange(e);
+                onChange(inputRef.current.value);
               }
             }
           }}
           onKeyDown={handleKeyDown}
           ref={inputRef}
-          value={valueWithSuggestion}
+          value={value}
           spellCheck="false"
           autoComplete="one-time-code"
           id="SearchBox"
@@ -409,10 +371,16 @@ export default function SearchInput({
                 whileHover={{ backgroundColor: "rgba(0,0,0,0.05)" }}
                 onClick={() => {
                   setValue(suggestion);
+                  inputRef.current!.value = suggestion;
+
+                  if (onChange) {
+                    onChange(suggestion);
+                  }
+
                   setAnimating(false);
                   inputRef.current?.focus();
                 }}
-                className="cursor-pointer px-4 py-2">
+                className="cursor-pointer px-4 py-2 hover:bg-gray-100">
                 {suggestion}
               </motion.li>
             ))}

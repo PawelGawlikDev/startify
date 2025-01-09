@@ -11,7 +11,6 @@ export default function SeatchBox() {
   const [engine] = useStorage<Engine>("engine");
   const [vanish] = useStorage<boolean>("vanish");
   const [suggestions, setSuggestions] = useState<string[]>([]);
-  const [query, setQuery] = useState<string>("");
   const placeholders = [
     "Search the web for anything...",
     "Find the latest news or updates...",
@@ -28,11 +27,7 @@ export default function SeatchBox() {
     }
   });
 
-  const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const query = e.target.value;
-
-    setQuery(query);
-
+  const handleChange = async (query: string) => {
     if (!query) {
       setSuggestions([]);
 
@@ -67,7 +62,7 @@ export default function SeatchBox() {
     }
   };
 
-  const onSubmit = () => {
+  const onSubmit = (query: string) => {
     if (!query) return;
 
     const searchUrl = engine?.searchURL.replace(
