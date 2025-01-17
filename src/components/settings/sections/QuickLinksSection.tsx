@@ -4,7 +4,7 @@ import React from "react";
 import { useStorage } from "@plasmohq/storage/hook";
 
 import { Button } from "~components/Button";
-import { QuickLinkTypeDropdown } from "~components/settings/Dropdown";
+import { Dropdown, QuickLinkOptions } from "~components/settings/Dropdown";
 import { defaultQuickLink } from "~constants/defaultSettingsValues";
 import type { QuickLinkSettings } from "~types";
 
@@ -49,7 +49,9 @@ export default function QuickLinkSection() {
         animate={{ opacity: 1, y: 0, transition: { duration: 0.4 } }}
         className="z-[1] flex flex-row justify-between">
         <p>Choose quick link type</p>
-        <QuickLinkTypeDropdown />
+        <Dropdown title={quickLink.type}>
+          <QuickLinkOptions />
+        </Dropdown>
       </motion.div>
     </SettingsSection>
   );

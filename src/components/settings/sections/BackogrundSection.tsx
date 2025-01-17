@@ -8,7 +8,7 @@ import type { Backgrounds, UserWallpaper } from "~types";
 import { cn } from "~utils/cn";
 
 import ColorPickerButton from "../ColorPickerButtons";
-import { BackgroundDropdown } from "../Dropdown";
+import { BackgroundOptions, Dropdown } from "../Dropdown";
 import { FileUpload } from "../FileUpload";
 import AgnleSettings from "./AngleSettings";
 import SettingsSection from "./SettingsSection";
@@ -93,7 +93,9 @@ export default function BackgroundSection() {
             </motion.div>
           )}
         </motion.div>
-        <BackgroundDropdown />
+        <Dropdown title={background}>
+          <BackgroundOptions />
+        </Dropdown>
       </div>
 
       {background === "image" && (
