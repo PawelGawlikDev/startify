@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState, type ReactNode } from "react";
+import { FiChevronDown } from "react-icons/fi";
 
 import { useStorage } from "@plasmohq/storage/hook";
 
@@ -27,9 +28,47 @@ const quickLinkTypes: Record<QuickLinkTypes, string> = {
   transparent: "transparent"
 };
 
-export function BackgroundDropdown() {
+const wrapperVariants = {
+  open: {
+    scaleY: 1,
+    transition: {
+      when: "beforeChildren",
+      staggerChildren: 0.1
+    }
+  },
+  closed: {
+    scaleY: 0,
+    transition: {
+      when: "afterChildren",
+      staggerChildren: 0.1
+    }
+  }
+};
+
+const iconVariants = {
+  open: { rotate: 180 },
+  closed: { rotate: 0 }
+};
+
+const itemVariants = {
+  open: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      when: "beforeChildren"
+    }
+  },
+  closed: {
+    opacity: 0,
+    y: -15,
+    transition: {
+      when: "afterChildren"
+    }
+  }
+};
+
+export const BackgroundOptions = () => {
   const [background, setBackground] = useStorage<Backgrounds>("background");
-  const [shown, setShown] = useState(false);
 
   const handleBackgroundClick = (newBackground: Backgrounds) => {
     if (background === newBackground) {
@@ -39,59 +78,40 @@ export function BackgroundDropdown() {
     setBackground(newBackground);
   };
 
-  const showMenu = {
-    enter: {
-      opacity: 1,
-      y: 0,
-      display: "block"
-    },
-    exit: {
-      y: -5,
-      opacity: 0,
-      transition: {
-        duration: 0.3
-      },
-      transitionEnd: {
-        display: "none"
-      }
+  return Object.entries(backgroundOptions).map(([key, option]) => (
+    <motion.li
+      key={key}
+      variants={itemVariants}
+      onClick={() => handleBackgroundClick(key as Backgrounds)}
+      className="flex w-full cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md p-2 text-xs font-medium text-slate-700 hover:bg-indigo-100 hover:text-indigo-500">
+      <span>{option.name}</span>
+    </motion.li>
+  ));
+};
+
+export const QuickLinkOptions = () => {
+  const [quickLink, setQuickLink] = useStorage<QuickLinkSettings>("quickLink");
+  const handleBackgroundClick = (newQuickLink: QuickLinkTypes) => {
+    if (quickLink?.type === newQuickLink) {
+      return;
     }
+
+    setQuickLink({ ...quickLink, type: newQuickLink });
   };
 
-  return (
-    <motion.div
-      className="relative"
-      onHoverStart={() => setShown(true)}
-      onHoverEnd={() => setShown(false)}>
-      <div className="z-2 flex min-w-32 cursor-default flex-row items-center justify-center gap-2">
-        <span>{background}</span>
-      </div>
-      <motion.ul
-        variants={showMenu}
-        initial="exit"
-        animate={shown ? "enter" : "exit"}
-        className="border-blue-strong absolute left-0 right-0 z-50 cursor-pointer list-none rounded-sm border border-opacity-50 bg-black">
-        {Object.entries(backgroundOptions).map(([key, option]) => (
-          <div key={key}>
-            <motion.li
-              onClick={() => handleBackgroundClick(key as Backgrounds)}
-              whileHover={{
-                color: "#FFB703",
-                x: 2
-              }}
-              className="text-blue-primary flex cursor-pointer items-center justify-center p-1">
-              {option.name}
-            </motion.li>
-          </div>
-        ))}
-      </motion.ul>
-    </motion.div>
-  );
-}
+  return Object.entries(quickLinkTypes).map(([key, option]) => (
+    <motion.li
+      key={key}
+      variants={itemVariants}
+      onClick={() => handleBackgroundClick(key as QuickLinkTypes)}
+      className="flex w-full cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md p-2 text-xs font-medium text-slate-700 hover:bg-indigo-100 hover:text-indigo-500">
+      <span>{option}</span>
+    </motion.li>
+  ));
+};
 
-export function EngineDropdown() {
+export const EngineOptions = () => {
   const [engine, setEngine] = useStorage<Engine>("engine");
-
-  const [shown, setShown] = useState(false);
 
   const handleEngineClick = (newEngine: Engine) => {
     if (engine?.name === newEngine.name) {
@@ -101,120 +121,65 @@ export function EngineDropdown() {
     setEngine(newEngine);
   };
 
-  const showMenu = {
-    enter: {
-      opacity: 1,
-      y: 0,
-      display: "block"
-    },
-    exit: {
-      y: -5,
-      opacity: 0,
-      transition: {
-        duration: 0.3
-      },
-      transitionEnd: {
-        display: "none"
+  return Object.entries(searchEngines).map(([key, engine]) => (
+    <motion.li
+      key={key}
+      variants={itemVariants}
+      onClick={() => handleEngineClick(engine)}
+      className="flex w-full cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md p-2 text-xs font-medium text-slate-700 hover:bg-indigo-100 hover:text-indigo-500">
+      <span>{engine.name}</span>
+    </motion.li>
+  ));
+};
+
+export const Dropdown = ({
+  children,
+  title
+}: {
+  children: ReactNode;
+  title: string;
+}) => {
+  const [open, setOpen] = useState(false);
+
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setOpen(false);
       }
-    }
-  };
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
 
   return (
     <motion.div
-      className="relative"
-      onHoverStart={() => setShown(true)}
-      onHoverEnd={() => setShown(false)}>
-      <div className="flex min-w-36 items-center justify-center gap-4">
-        <span className="cursor-pointer">{engine?.name}</span>
-        <img width={20} height={20} src={engine?.favicon} alt={engine?.name} />
-      </div>
+      ref={dropdownRef}
+      animate={open ? "open" : "closed"}
+      className="relative flex items-center justify-center">
+      <button
+        onClick={(event) => {
+          event.stopPropagation();
+          setOpen((pv) => !pv);
+        }}
+        className="flex items-center gap-2 rounded-md bg-indigo-500 px-3 py-2 text-indigo-50 transition-colors hover:bg-indigo-500">
+        <span className="text-sm font-medium">{title}</span>
+        <motion.span variants={iconVariants}>
+          <FiChevronDown />
+        </motion.span>
+      </button>
       <motion.ul
-        variants={showMenu}
-        initial="exit"
-        animate={shown ? "enter" : "exit"}
-        className="border-blue-strong absolute left-0 right-0 list-none rounded-sm border border-opacity-50 bg-black">
-        {Object.entries(searchEngines).map(([key, engine]) => (
-          <div key={key}>
-            <motion.li
-              onClick={() => {
-                handleEngineClick(engine);
-              }}
-              whileHover={{
-                color: "#FFB703",
-                x: 2
-              }}
-              className="text-blue-primary flex cursor-pointer items-center justify-center p-1">
-              <img
-                src={engine.favicon}
-                alt={`${engine.name} logo`}
-                className="mr-2 h-4 w-4"
-              />
-              {engine.name}
-            </motion.li>
-          </div>
-        ))}
+        initial={wrapperVariants.closed}
+        variants={wrapperVariants}
+        style={{ originY: "top", translateX: "-50%" }}
+        className="absolute left-[50%] top-[120%] flex min-w-28 flex-col gap-2 overflow-hidden rounded-lg bg-white p-2 shadow-xl">
+        {children}
       </motion.ul>
     </motion.div>
   );
-}
-
-export function QuickLinkTypeDropdown() {
-  const [quickLink, setQuickLink] = useStorage<QuickLinkSettings>("quickLink");
-  const [shown, setShown] = useState(false);
-
-  const handleBackgroundClick = (newQuickLink: QuickLinkTypes) => {
-    if (quickLink?.type === newQuickLink) {
-      return;
-    }
-
-    setQuickLink({ ...quickLink, type: newQuickLink });
-  };
-
-  const showMenu = {
-    enter: {
-      opacity: 1,
-      y: 0,
-      display: "block"
-    },
-    exit: {
-      y: -5,
-      opacity: 0,
-      transition: {
-        duration: 0.3
-      },
-      transitionEnd: {
-        display: "none"
-      }
-    }
-  };
-
-  return (
-    <motion.div
-      className="relative"
-      onHoverStart={() => setShown(true)}
-      onHoverEnd={() => setShown(false)}>
-      <div className="z-2 flex min-w-32 cursor-default flex-row items-center justify-center gap-2">
-        <span>{quickLink?.type}</span>
-      </div>
-      <motion.ul
-        variants={showMenu}
-        initial="exit"
-        animate={shown ? "enter" : "exit"}
-        className="border-blue-strong absolute left-0 right-0 z-50 cursor-pointer list-none rounded-sm border border-opacity-50 bg-black">
-        {Object.entries(quickLinkTypes).map(([key, option]) => (
-          <div key={key}>
-            <motion.li
-              onClick={() => handleBackgroundClick(key as QuickLinkTypes)}
-              whileHover={{
-                color: "#FFB703",
-                x: 2
-              }}
-              className="text-blue-primary flex cursor-pointer items-center justify-center p-1">
-              {option}
-            </motion.li>
-          </div>
-        ))}
-      </motion.ul>
-    </motion.div>
-  );
-}
+};

@@ -4,12 +4,14 @@ import React from "react";
 import { useStorage } from "@plasmohq/storage/hook";
 
 import { Button } from "~components/Button";
+import type { Engine } from "~types";
 
-import { EngineDropdown } from "../Dropdown";
+import { Dropdown, EngineOptions } from "../Dropdown";
 import SettingsSection from "./SettingsSection";
 
 export default function SearchBoxSection() {
   const [vanish, setVanish] = useStorage<boolean>("vanish");
+  const [engine] = useStorage<Engine>("engine");
 
   return (
     <SettingsSection
@@ -19,8 +21,17 @@ export default function SearchBoxSection() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0, transition: { duration: 0.4 } }}
         className="z-[1] flex flex-row justify-between">
-        <p>Choose search engine</p>
-        <EngineDropdown />
+        <div className="flex items-center justify-center gap-3">
+          <p>Choose search engine</p>
+          <img
+            src={engine?.favicon}
+            alt={`${engine?.name} logo`}
+            className="h-6 w-6"
+          />
+        </div>
+        <Dropdown title={engine?.name}>
+          <EngineOptions />
+        </Dropdown>
       </motion.div>
       {vanish !== undefined && (
         <motion.div
