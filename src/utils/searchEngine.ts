@@ -1,3 +1,5 @@
+import { isFirefox, userLang } from "~constants/browser";
+
 export enum SearchEngineEnum {
   DuckDuckGo = "DuckDuckGo",
   Google = "Google",
@@ -12,16 +14,15 @@ export enum SearchEngineEnum {
 export const searchEngines = {
   [SearchEngineEnum.DuckDuckGo]: {
     name: "DuckDuck",
-    searchURL: "https://duckduckgo.com/?q=%s&t=startify",
-    suggestionsURL: "https://ac.duckduckgo.com/ac/?q=%s&type=list&t=startify",
+    searchURL: `https://duckduckgo.com/?q=%s&t=${isFirefox ? "firefox" : "chrome"}`,
+    suggestionsURL: `https://ac.duckduckgo.com/ac/?q=%s&type=list&t=${isFirefox ? "firefox" : "chrome"}`,
     queryParam: "q",
     favicon: "https://duckduckgo.com/favicon.ico"
   },
   [SearchEngineEnum.Google]: {
     name: "Google",
     searchURL: "https://www.google.com/search?q=%s",
-    suggestionsURL:
-      "https://suggestqueries.google.com/complete/search?client=chrome&q=%s&hl=en",
+    suggestionsURL: `https://suggestqueries.google.com/complete/search?client=${isFirefox ? "firefox" : "chrome"}&q=%s&hl=${userLang}`,
     queryParam: "q",
     favicon: "https://www.google.com/favicon.ico"
   },
