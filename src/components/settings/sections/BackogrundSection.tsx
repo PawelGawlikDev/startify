@@ -71,31 +71,33 @@ export default function BackgroundSection() {
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0, transition: { duration: 0.4 } }}
-          className="flex w-full flex-row justify-between">
+          className="flex w-full flex-row items-center justify-between">
           <p>Choose background</p>
-          {background === "gradient" && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{
-                opacity: 1,
-                transition: { delay: 0.3, duration: 0.5 }
-              }}>
-              <div className="flex flex-row gap-6">
-                <ColorPickerButton
-                  color={{
-                    primary: colors?.primary ?? "#ffffff",
-                    secondary: colors?.secondary ?? "#ffffff"
-                  }}
-                  setColor={setColors}
-                />
-                <AgnleSettings deg={colors?.deg} setColors={setColors} />
-              </div>
-            </motion.div>
-          )}
+          <div className="flex flex-row gap-3">
+            {background === "gradient" && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{
+                  opacity: 1,
+                  transition: { delay: 0.3, duration: 0.5 }
+                }}>
+                <div className="flex flex-row items-center justify-center gap-6">
+                  <ColorPickerButton
+                    color={{
+                      primary: colors?.primary ?? "#ffffff",
+                      secondary: colors?.secondary ?? "#ffffff"
+                    }}
+                    setColor={setColors}
+                  />
+                  <AgnleSettings deg={colors?.deg} setColors={setColors} />
+                </div>
+              </motion.div>
+            )}
+            <Dropdown title={background}>
+              <BackgroundOptions />
+            </Dropdown>
+          </div>
         </motion.div>
-        <Dropdown title={background}>
-          <BackgroundOptions />
-        </Dropdown>
       </div>
 
       {background === "image" && (

@@ -161,7 +161,7 @@ export const Dropdown = ({
     <motion.div
       ref={dropdownRef}
       animate={open ? "open" : "closed"}
-      className="relative">
+      className="relative flex items-center justify-center">
       <button
         onClick={(event) => {
           event.stopPropagation();
