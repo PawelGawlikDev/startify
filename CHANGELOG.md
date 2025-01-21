@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.10](https://github.com/PawelGawlikDev/startify/compare/v0.0.8...v0.0.10) (2025-01-21)
+
+
+### Features
+
+* add button with default start page for chrome ([fa53f23](https://github.com/PawelGawlikDev/startify/commit/fa53f23abb96aec76e61e180b0b993c2876b88d6))
+* improve quick links ([93f5e93](https://github.com/PawelGawlikDev/startify/commit/93f5e933b3e713635c01d293dc6a7a95b5018ca0))
+* new dropdown ([1e4b29a](https://github.com/PawelGawlikDev/startify/commit/1e4b29a7b85ba13ef982078044e1ade08be364f2))
+* search box improvement ([795999b](https://github.com/PawelGawlikDev/startify/commit/795999b283b47befa1a8bcef2a29b5c9bae5cab1))
+
+
+### Bug Fixes
+
+* fix reports and workflows names ([f4b7464](https://github.com/PawelGawlikDev/startify/commit/f4b746435ffbd92545171ed406b7ac3cde46fac1))
+* fix search box ([f530314](https://github.com/PawelGawlikDev/startify/commit/f530314cd96f7c6d3e238510723fecf5cac4f51b))
+* fix tests ([60ced64](https://github.com/PawelGawlikDev/startify/commit/60ced64fe70e61c104afe8fc1a9197f1f699c3d3))
+* fixes for deopdown ([73c55bd](https://github.com/PawelGawlikDev/startify/commit/73c55bdfbcaa8842b6f36a64031cfa9fcba48da5))
+
 ### [0.0.8](https://github.com/PawelGawlikDev/startify/compare/v0.0.7...v0.0.8) (2025-01-04)
 
 
