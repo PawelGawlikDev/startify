@@ -6,6 +6,8 @@
   "author": "PawelGawlikDev",
   "scripts": {
     "build": "plasmo build --hoist",
+    "build:firefox": "plasmo build --hoist --target=firefox-mv3 --env=.env.firefox",
+    "build:firefox-mv2": "plasmo build --hoist --target=firefox-mv2 --env=.env.firefox",
     "dev": "plasmo dev",
     "dev:firefox": "plasmo dev --target=firefox-mv3 --env=.env.firefox",
     "dev:firefox-mv2": "plasmo dev --target=firefox-mv2 --env=.env.firefox",
@@ -24,7 +26,7 @@
   },
   "dependencies": {
     "@radix-ui/react-label": "^2.1.1",
-    "@tabler/icons-react": "^3.28.1",
+    "@tabler/icons-react": "^3.29.0",
     "clsx": "^2.1.1",
     "dexie": "^4.0.11",
     "dexie-react-hooks": "^1.1.7",

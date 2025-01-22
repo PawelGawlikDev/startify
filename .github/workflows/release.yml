@@ -1,4 +1,4 @@
-name: "Create Startify Extension"
+name: "Release Startify Extension"
 on:
   push:
     tags:
@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   lint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
@@ -33,7 +33,7 @@ jobs:
 
   vitest:
     needs: lint
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
@@ -57,7 +57,7 @@ jobs:
 
   playwright:
     needs: lint
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
@@ -83,9 +83,80 @@ jobs:
       - name: Run Playwright tests
         run: pnpm e2e
 
-  release:
+  release_chrome:
     needs: [vitest, playwright]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Cache pnpm modules
+        uses: actions/cache@v4
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-
+      - uses: pnpm/action-setup@v4
+        with:
+          version: latest
+          run_install: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: "pnpm"
+      - name: Build and zip Chrome extension
+        run: pnpm build --zip --env=.env.chrome
+      - name: Release on GitHub (Chrome)
+        uses: softprops/action-gh-release@v2
+        with:
+          draft: true
+          files: build/chrome-mv3-prod.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload to Chrome Web Store
+        uses: mobilefirstllc/cws-publish@latest
+        with:
+          action: "publish"
+          client_id: ${{ secrets.CHROME_CLIENT_ID }}
+          client_secret: ${{ secrets.CHROME_CLIENT_SECTER }}
+          refresh_token: ${{ secrets.CHROME_REFRESH_TOKEN }}
+          extension_id: "fjjipcmebaelmnkkbdjnhhjbgenecgbd"
+          zip_file: "build/chrome-mv3-prod.zip"
+
+  release_firefox:
+    needs: [vitest, playwright]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Cache pnpm modules
+        uses: actions/cache@v4
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-
+      - uses: pnpm/action-setup@v4
+        with:
+          version: latest
+          run_install: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: "pnpm"
+      - name: Build and zip Firefox MV3 extension
+        run: pnpm build --zip --target=firefox-mv3 --env=.env.firefox
+      - name: Upload to Mozilla Add-ons
+        uses: wdzeng/firefox-addon@v1
+        with:
+          addon-guid: "{d5e5fe42-da08-4573-8ffd-6075ae68c834}"
+          xpi-path: build/firefox-mv3-prod.zip
+          jwt-issuer: ${{ secrets.FIREFOX_API_KEY }}
+          jwt-secret: ${{ secrets.FIREFOX_API_SECRET }}
+
+  release_github:
+    needs: [vitest, playwright]
+    runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
@@ -109,7 +180,7 @@ jobs:
           pnpm build --zip --env=.env.chrome
           pnpm build --zip --target=firefox-mv3 --env=.env.firefox
           pnpm build --zip --target=firefox-mv2 --env=.env.firefox
-      - name: release on Github
+      - name: Release on GitHub (Firefox MV2)
         uses: softprops/action-gh-release@v2
         with:
           draft: true
@@ -117,19 +188,3 @@ jobs:
             build/*.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Upload to Chrome Web Store
-        uses: mobilefirstllc/cws-publish@latest
-        with:
-          action: "publish"
-          client_id: ${{ secrets.CHROME_CLIENT_ID }}
-          client_secret: ${{ secrets.CHROME_CLIENT_SECTER }}
-          refresh_token: ${{ secrets.CHROME_REFRESH_TOKEN }}
-          extension_id: "fjjipcmebaelmnkkbdjnhhjbgenecgbd"
-          zip_file: "build/chrome-mv3-prod.zip"
-      - name: Upload to Mozzila addons
-        uses: wdzeng/firefox-addon@v1
-        with:
-          addon-guid: "{d5e5fe42-da08-4573-8ffd-6075ae68c834}"
-          xpi-path: build/firefox-mv3-prod.zip
-          jwt-issuer: ${{ secrets.FIREFOX_API_KEY }}
-          jwt-secret: ${{ secrets.FIREFOX_API_SECRET }}
