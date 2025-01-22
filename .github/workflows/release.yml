@@ -106,13 +106,6 @@ jobs:
           cache: "pnpm"
       - name: Build and zip Chrome extension
         run: pnpm build --zip --env=.env.chrome
-      - name: Release on GitHub (Chrome)
-        uses: softprops/action-gh-release@v2
-        with:
-          draft: true
-          files: build/chrome-mv3-prod.zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload to Chrome Web Store
         uses: mobilefirstllc/cws-publish@latest
         with:
