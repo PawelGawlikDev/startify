@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.11](https://github.com/PawelGawlikDev/startify/compare/v0.0.10...v0.0.11) (2025-01-22)
+
+
+### Bug Fixes
+
+* fix build workflow ([5068816](https://github.com/PawelGawlikDev/startify/commit/50688160fb95a5c5e13dd99eb962176906ea6514))
+* fix gh actions ([1dbf941](https://github.com/PawelGawlikDev/startify/commit/1dbf941e3a76bbd1b24ae46b20042ff903b3be3f))
+* new worfklow ([31b9b5d](https://github.com/PawelGawlikDev/startify/commit/31b9b5d250161d5c06fdc92938db341bb023b015))
+* use martix ([00922eb](https://github.com/PawelGawlikDev/startify/commit/00922ebd974ac3d5d23d5d146bb938689979a7ce))
+
 ### [0.0.10](https://github.com/PawelGawlikDev/startify/compare/v0.0.8...v0.0.10) (2025-01-21)
 
 
