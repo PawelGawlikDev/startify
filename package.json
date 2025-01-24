@@ -31,7 +31,7 @@
     "dexie": "^4.0.11",
     "dexie-react-hooks": "^1.1.7",
     "favicon-fetch": "^1.0.0",
-    "motion": "^12.0.1",
+    "motion": "^12.0.5",
     "plasmo": "^0.89.4",
     "react": "18.3.1",
     "react-dom": "18.3.1",
@@ -42,36 +42,36 @@
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^19.6.0",
-    "@eslint/js": "^9.18.0",
+    "@eslint/js": "^9.19.0",
     "@ianvs/prettier-plugin-sort-imports": "^4.4.1",
     "@plasmohq/rps": "^1.8.7",
     "@plasmohq/storage": "1.13.0",
-    "@playwright/test": "^1.49.1",
+    "@playwright/test": "^1.50.0",
     "@types/chrome": "^0.0.299",
-    "@types/node": "^22.10.7",
-    "@types/react": "^19.0.7",
+    "@types/node": "^22.10.10",
+    "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
-    "@vitest/coverage-v8": "^3.0.3",
+    "@vitest/coverage-v8": "^3.0.4",
     "@vitest/eslint-plugin": "^1.1.25",
-    "@vitest/ui": "^3.0.3",
+    "@vitest/ui": "^3.0.4",
     "autoprefixer": "^10.4.20",
     "commitlint": "^19.6.1",
     "cross-env": "^7.0.3",
-    "eslint": "^9.18.0",
-    "eslint-plugin-playwright": "^2.1.0",
+    "eslint": "^9.19.0",
+    "eslint-plugin-playwright": "^2.2.0",
     "eslint-plugin-react": "^7.37.4",
     "globals": "^15.14.0",
     "husky": "^9.1.7",
     "jsdom": "^26.0.0",
-    "lint-staged": "^15.4.1",
+    "lint-staged": "^15.4.2",
     "postcss": "^8.5.1",
     "prettier": "3.4.2",
-    "prettier-plugin-tailwindcss": "^0.6.10",
+    "prettier-plugin-tailwindcss": "^0.6.11",
     "standard-version": "^9.5.0",
     "tailwindcss": "^3.4.17",
     "typescript": "5.7.3",
     "typescript-eslint": "^8.21.0",
-    "vitest": "^3.0.3"
+    "vitest": "^3.0.4"
   },
   "manifest": {
     "browser_specific_settings": {
@@ -90,5 +90,14 @@
       "storage",
       "activeTab"
     ]
+  },
+  "pnpm": {
+    "updateConfig": {
+      "ignoreDependencies": [
+        "react",
+        "react-dom",
+        "tailwindcss"
+      ]
+    }
   }
 }

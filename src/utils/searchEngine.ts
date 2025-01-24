@@ -8,7 +8,8 @@ export enum SearchEngineEnum {
   Ecosia = "Ecosia",
   Qwant = "Qwant",
   Yandex = "Yandex",
-  Brave = "Brave"
+  Brave = "Brave",
+  PrivacyWall = "PrivacyWall "
 }
 
 export const searchEngines = {
@@ -67,5 +68,12 @@ export const searchEngines = {
     suggestionsURL: "https://search.brave.com/api/suggest?q=%s",
     queryParam: "q",
     favicon: "https://brave.com/static-assets/images/brave-favicon.png"
+  },
+  [SearchEngineEnum.PrivacyWall]: {
+    name: "PrivacyWall",
+    searchURL: `https://www.privacywall.org/search/secure?q=%s&cc=${userLang}`,
+    suggestionsURL: `https://www.privacywall.org/search/secure/suggestions.php?q=%s&cc=${userLang}`,
+    queryParam: "q",
+    favicon: "https://external.privacywall.org/images/favicon_hi.ico"
   }
 };

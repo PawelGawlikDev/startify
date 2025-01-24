@@ -12,7 +12,8 @@ describe("Search engines", () => {
       SearchEngineEnum.Ecosia,
       SearchEngineEnum.Qwant,
       SearchEngineEnum.Yandex,
-      SearchEngineEnum.Brave
+      SearchEngineEnum.Brave,
+      SearchEngineEnum.PrivacyWall
     ]);
   });
 
