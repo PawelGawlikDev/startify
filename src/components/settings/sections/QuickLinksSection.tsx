@@ -49,9 +49,14 @@ export default function QuickLinkSection() {
         animate={{ opacity: 1, y: 0, transition: { duration: 0.4 } }}
         className="z-[1] flex flex-row justify-between">
         <p>Choose quick link type</p>
-        <Dropdown title={quickLink.type}>
-          <QuickLinkOptions />
-        </Dropdown>
+        {quickLink && (
+          <Dropdown
+            title={
+              quickLink.type[0].toUpperCase() + quickLink.type.substring(1)
+            }>
+            <QuickLinkOptions />
+          </Dropdown>
+        )}
       </motion.div>
     </SettingsSection>
   );

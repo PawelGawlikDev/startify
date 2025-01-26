@@ -18,7 +18,7 @@ export default function Background({
     const component = resolveBgType(background);
 
     if (component) {
-      component().then((module) => {
+      component().then((module: { default: React.ComponentType }) => {
         setBackgroundComponent(() => module.default);
       });
     } else {
@@ -27,9 +27,13 @@ export default function Background({
   }, [background]);
 
   return (
-    <div>
-      {BackgroundComponent && <BackgroundComponent />}
-      <div className="relative z-10">{children}</div>
+    <div className="relative min-h-screen w-full">
+      {BackgroundComponent && (
+        <div className="fixed inset-0 -z-10">
+          <BackgroundComponent />
+        </div>
+      )}
+      <div className="relative z-10 min-h-screen">{children}</div>
     </div>
   );
 }

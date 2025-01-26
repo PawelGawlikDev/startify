@@ -84,7 +84,7 @@ export const BackgroundOptions = () => {
       variants={itemVariants}
       onClick={() => handleBackgroundClick(key as Backgrounds)}
       className="flex w-full cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md p-2 text-xs font-medium text-slate-700 hover:bg-indigo-100 hover:text-indigo-500">
-      <span>{option.name}</span>
+      <span>{option.name?.[0].toUpperCase() + option.name?.substring(1)}</span>
     </motion.li>
   ));
 };
@@ -105,7 +105,7 @@ export const QuickLinkOptions = () => {
       variants={itemVariants}
       onClick={() => handleBackgroundClick(key as QuickLinkTypes)}
       className="flex w-full cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md p-2 text-xs font-medium text-slate-700 hover:bg-indigo-100 hover:text-indigo-500">
-      <span>{option}</span>
+      <span>{option?.[0].toUpperCase() + option?.substring(1)}</span>
     </motion.li>
   ));
 };
@@ -127,7 +127,7 @@ export const EngineOptions = () => {
       variants={itemVariants}
       onClick={() => handleEngineClick(engine)}
       className="flex w-full cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md p-2 text-xs font-medium text-slate-700 hover:bg-indigo-100 hover:text-indigo-500">
-      <span>{engine.name}</span>
+      <span>{engine.name?.[0].toUpperCase() + engine.name?.substring(1)}</span>
     </motion.li>
   ));
 };
