@@ -29,9 +29,11 @@ export default function SearchBoxSection() {
             className="h-6 w-6"
           />
         </div>
-        <Dropdown title={engine?.name}>
-          <EngineOptions />
-        </Dropdown>
+        {engine && (
+          <Dropdown title={engine.name}>
+            <EngineOptions />
+          </Dropdown>
+        )}
       </motion.div>
       {vanish !== undefined && (
         <motion.div

@@ -17,7 +17,7 @@ export default function Layout({ children }: LayoutProps): React.JSX.Element {
 
   return (
     <Background>
-      <main>{children}</main>
+      <main className="min-h-screen">{children}</main>
     </Background>
   );
 }

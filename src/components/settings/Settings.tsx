@@ -13,7 +13,7 @@ const containerVariants = {
 
 export default function Settings() {
   return (
-    <div className="flex flex-col gap-8 text-white">
+    <div className="flex min-h-screen flex-col gap-8 bg-neutral-900 text-white">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0, transition: { duration: 0.4 } }}
@@ -21,13 +21,13 @@ export default function Settings() {
         <h1>Settings</h1>
       </motion.div>
       <motion.div
-        className="relative mx-[20%] mt-5 flex flex-col items-center justify-center gap-16"
+        className="relative mx-[20%] my-5 flex flex-col items-center justify-center gap-16"
         initial="hidden"
         animate="visible"
         variants={containerVariants}>
         <SearchBoxSection />
-        <QuickLinkSection />
         <BackgroundSection />
+        <QuickLinkSection />
         <RestartSection />
       </motion.div>
     </div>

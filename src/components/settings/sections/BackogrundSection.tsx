@@ -93,9 +93,12 @@ export default function BackgroundSection() {
                 </div>
               </motion.div>
             )}
-            <Dropdown title={background}>
-              <BackgroundOptions />
-            </Dropdown>
+            {background && (
+              <Dropdown
+                title={background[0].toUpperCase() + background.substring(1)}>
+                <BackgroundOptions />
+              </Dropdown>
+            )}
           </div>
         </motion.div>
       </div>
