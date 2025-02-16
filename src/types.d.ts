@@ -30,9 +30,7 @@ export type Backgrounds =
   | "gradient"
   | "beams"
   | "image"
-  | "lines"
   | "aurora"
-  | "boxes"
   | "random"
   | "snakes";
 

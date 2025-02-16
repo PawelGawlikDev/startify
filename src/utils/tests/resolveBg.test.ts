@@ -13,16 +13,6 @@ describe("Resolve background types", () => {
     expect(module).toHaveProperty("default");
   });
 
-  test("should return a function for a valid background type 'lines'", async () => {
-    const linesBg = resolveBgType("lines");
-
-    expect(linesBg).toBeInstanceOf(Function);
-
-    const module = await linesBg();
-
-    expect(module).toHaveProperty("default");
-  });
-
   test("should return a function for a valid background type 'gradient'", async () => {
     const gradientBg = resolveBgType("gradient");
 
@@ -55,16 +45,6 @@ describe("Resolve background types", () => {
 
   test("should return a function for a valid background type 'aurora'", async () => {
     const imageBg = resolveBgType("aurora");
-
-    expect(imageBg).toBeInstanceOf(Function);
-
-    const module = await imageBg();
-
-    expect(module).toHaveProperty("default");
-  });
-
-  test("should return a function for a valid background type 'boxes'", async () => {
-    const imageBg = resolveBgType("boxes");
 
     expect(imageBg).toBeInstanceOf(Function);
 

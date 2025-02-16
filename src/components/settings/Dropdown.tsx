@@ -16,9 +16,7 @@ const backgroundOptions: Record<Backgrounds, { name: string }> = {
   gradient: { name: "gradient" },
   beams: { name: "beams" },
   image: { name: "image" },
-  lines: { name: "lines" },
   aurora: { name: "aurora" },
-  boxes: { name: "boxes" },
   snakes: { name: "snakes" },
   random: { name: "random" }
 };
