@@ -22,56 +22,58 @@
     "release": "standard-version",
     "test": "vitest",
     "test:coverage": "vitest --coverage",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui",
+    "storybook": "ladle serve --theme dark"
   },
   "dependencies": {
-    "@radix-ui/react-label": "^2.1.1",
-    "@tabler/icons-react": "^3.29.0",
+    "@ladle/react": "^5.0.1",
+    "@radix-ui/react-label": "^2.1.2",
+    "@tabler/icons-react": "^3.30.0",
     "clsx": "^2.1.1",
     "dexie": "^4.0.11",
     "dexie-react-hooks": "^1.1.7",
     "favicon-fetch": "^1.0.0",
-    "motion": "^12.0.5",
-    "plasmo": "^0.89.4",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
+    "motion": "^12.4.3",
+    "plasmo": "^0.90.3",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
     "react-dropzone": "^14.3.5",
     "react-icons": "^5.4.0",
-    "tailwind-merge": "^2.6.0",
-    "vite": "^6.0.11"
+    "tailwind-merge": "^3.0.1",
+    "vite": "^6.1.0"
   },
   "devDependencies": {
-    "@commitlint/config-conventional": "^19.6.0",
-    "@eslint/js": "^9.19.0",
+    "@commitlint/config-conventional": "^19.7.1",
+    "@eslint/js": "^9.20.0",
     "@ianvs/prettier-plugin-sort-imports": "^4.4.1",
     "@plasmohq/rps": "^1.8.7",
-    "@plasmohq/storage": "1.13.0",
-    "@playwright/test": "^1.50.0",
-    "@types/chrome": "^0.0.299",
-    "@types/node": "^22.10.10",
+    "@plasmohq/storage": "1.15.0",
+    "@playwright/test": "^1.50.1",
+    "@types/chrome": "^0.0.304",
+    "@types/node": "^22.13.4",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
-    "@vitest/coverage-v8": "^3.0.4",
-    "@vitest/eslint-plugin": "^1.1.25",
-    "@vitest/ui": "^3.0.4",
+    "@vitest/coverage-v8": "^3.0.5",
+    "@vitest/eslint-plugin": "^1.1.31",
+    "@vitest/ui": "^3.0.5",
     "autoprefixer": "^10.4.20",
-    "commitlint": "^19.6.1",
+    "commitlint": "^19.7.1",
     "cross-env": "^7.0.3",
-    "eslint": "^9.19.0",
+    "eslint": "^9.20.1",
     "eslint-plugin-playwright": "^2.2.0",
     "eslint-plugin-react": "^7.37.4",
-    "globals": "^15.14.0",
+    "globals": "^15.15.0",
     "husky": "^9.1.7",
     "jsdom": "^26.0.0",
-    "lint-staged": "^15.4.2",
-    "postcss": "^8.5.1",
-    "prettier": "3.4.2",
+    "lint-staged": "^15.4.3",
+    "postcss": "^8.5.2",
+    "prettier": "3.5.1",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "standard-version": "^9.5.0",
     "tailwindcss": "^3.4.17",
     "typescript": "5.7.3",
-    "typescript-eslint": "^8.21.0",
-    "vitest": "^3.0.4"
+    "typescript-eslint": "^8.24.0",
+    "vitest": "^3.0.5"
   },
   "manifest": {
     "browser_specific_settings": {
@@ -94,10 +96,17 @@
   "pnpm": {
     "updateConfig": {
       "ignoreDependencies": [
-        "react",
-        "react-dom",
         "tailwindcss"
       ]
-    }
+    },
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "@swc/core",
+      "esbuild",
+      "lmdb",
+      "msgpackr-extract",
+      "msw",
+      "sharp"
+    ]
   }
 }
