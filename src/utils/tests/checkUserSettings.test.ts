@@ -8,9 +8,9 @@ import {
   defaultSearchEngine,
   defaultVanishAnimation,
   defaultWallpaper
-} from "~constants/defaultSettingsValues";
-import { checkUserSettings } from "~utils/checkUserSettings";
-import { SearchEngineEnum, searchEngines } from "~utils/searchEngine";
+} from "@/constants/defaultSettingsValues";
+import { checkUserSettings } from "@/utils/checkUserSettings";
+import { SearchEngineEnum, searchEngines } from "@/utils/searchEngine";
 
 vi.mock("@plasmohq/storage", () => {
   const storageMock = {

@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 
-import { SearchEngineEnum, searchEngines } from "~utils/searchEngine";
+import { SearchEngineEnum, searchEngines } from "@/utils/searchEngine";
 
 describe("Search engines", () => {
   test("should have all defined search engines", () => {

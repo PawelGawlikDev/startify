@@ -3,10 +3,10 @@ import React from "react";
 
 import { useStorage } from "@plasmohq/storage/hook";
 
-import { Button } from "~components/Button";
-import { Dropdown, QuickLinkOptions } from "~components/settings/Dropdown";
-import { defaultQuickLink } from "~constants/defaultSettingsValues";
-import type { QuickLinkSettings } from "~types";
+import { Button } from "@/components/Button";
+import { Dropdown, QuickLinkOptions } from "@/components/settings/Dropdown";
+import { defaultQuickLink } from "@/constants/defaultSettingsValues";
+import type { QuickLinkSettings } from "@/types";
 
 import SettingsSection from "./SettingsSection";
 

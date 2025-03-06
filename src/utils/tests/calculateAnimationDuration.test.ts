@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 
-import { calculateAnimationDuration } from "~utils/calculateTimeout";
+import { calculateAnimationDuration } from "@/utils/calculateTimeout";
 
 describe("Calculate animation duration", () => {
   test("should calculate duration for default speed and fps", () => {

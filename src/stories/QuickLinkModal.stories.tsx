@@ -3,7 +3,7 @@ import "../style.css";
 import { motion } from "motion/react";
 import React, { useState } from "react";
 
-import QuickLinkModal from "~components/startPage/quickLink/QuickLinkModal";
+import QuickLinkModal from "@/components/startPage/quickLink/QuickLinkModal";
 
 export const QuickLInkModalStories = () => {
   const [showModal, setShowModal] = useState(false);

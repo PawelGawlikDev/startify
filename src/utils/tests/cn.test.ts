@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 
-import { cn } from "~utils/cn";
+import { cn } from "@/utils/cn";
 
 describe("Merge tailwind function tests (cn)", () => {
   test("should merge multiple classes", () => {

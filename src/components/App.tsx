@@ -1,7 +1,7 @@
 import { IconBrandChrome } from "@tabler/icons-react";
 import React from "react";
 
-import { isFirefox } from "~constants/browser";
+import { isFirefox } from "@/constants/browser";
 
 import SettingsGear from "./SettingsGear";
 import DigitalTime from "./startPage/DigitalTime";

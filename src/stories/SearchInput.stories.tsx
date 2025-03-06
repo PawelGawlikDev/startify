@@ -1,5 +1,5 @@
-import SearchInput from "~components/startPage/searchBox/SearchInput";
-import { searchEngines } from "~utils/searchEngine";
+import SearchInput from "@/components/startPage/searchBox/SearchInput";
+import { searchEngines } from "@/utils/searchEngine";
 
 import "../style.css";
 

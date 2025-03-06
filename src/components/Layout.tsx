@@ -1,6 +1,6 @@
 import React, { useEffect, type ReactNode } from "react";
 
-import { checkUserSettings } from "~utils/checkUserSettings";
+import { checkUserSettings } from "@/utils/checkUserSettings";
 
 import Background from "./backgrounds/Background";
 

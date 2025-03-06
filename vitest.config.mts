@@ -4,11 +4,11 @@ import { defineConfig } from "vitest/config";
 export default defineConfig({
   resolve: {
     alias: {
-      "~utils": path.resolve(__dirname, "src/utils"),
-      "~components": path.resolve(__dirname, "src/components"),
-      "~indexdb": path.resolve(__dirname, "src/indexdb"),
-      "~types": path.resolve(__dirname, "src/types.d.ts"),
-      "~constants": path.resolve(__dirname, "src/constants")
+      "@/utils": path.resolve(__dirname, "src/utils"),
+      "@/components": path.resolve(__dirname, "src/components"),
+      "@/indexdb": path.resolve(__dirname, "src/indexdb"),
+      "@/types": path.resolve(__dirname, "src/types.d.ts"),
+      "@/constants": path.resolve(__dirname, "src/constants")
     }
   },
   test: {

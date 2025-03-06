@@ -2,7 +2,7 @@ import React from "react";
 
 import "../style.css";
 
-import Settings from "~components/settings/Settings";
+import Settings from "@/components/settings/Settings";
 
 function Options() {
   return <Settings />;

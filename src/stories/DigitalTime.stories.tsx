@@ -1,4 +1,4 @@
-import DigitalTime from "~components/startPage/DigitalTime";
+import DigitalTime from "@/components/startPage/DigitalTime";
 
 import "../style.css";
 

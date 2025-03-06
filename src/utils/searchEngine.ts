@@ -1,4 +1,4 @@
-import { isFirefox, userLang } from "~constants/browser";
+import { isFirefox, userLang } from "@/constants/browser";
 
 export enum SearchEngineEnum {
   DuckDuckGo = "DuckDuckGo",

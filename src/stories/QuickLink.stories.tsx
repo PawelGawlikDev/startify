@@ -1,6 +1,6 @@
 import React from "react";
 
-import { QuickLink } from "~components/startPage/quickLink/QuickLink";
+import { QuickLink } from "@/components/startPage/quickLink/QuickLink";
 
 import "../style.css";
 

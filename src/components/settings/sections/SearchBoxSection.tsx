@@ -3,8 +3,8 @@ import React from "react";
 
 import { useStorage } from "@plasmohq/storage/hook";
 
-import { Button } from "~components/Button";
-import type { Engine } from "~types";
+import { Button } from "@/components/Button";
+import type { Engine } from "@/types";
 
 import { Dropdown, EngineOptions } from "../Dropdown";
 import SettingsSection from "./SettingsSection";

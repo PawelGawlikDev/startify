@@ -6,7 +6,7 @@ import {
   defaultSearchEngine,
   defaultVanishAnimation,
   defaultWallpaper
-} from "~constants/defaultSettingsValues";
+} from "@/constants/defaultSettingsValues";
 
 export const setDefaultEngine = async (storage: BaseStorage) => {
   await storage.set("engine", defaultSearchEngine);

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import AnglePicker from "~components/anglePicker/AnglePicker";
+import AnglePicker from "@/components/anglePicker/AnglePicker";
 
 interface AngleSettingsProps {
   deg: number;

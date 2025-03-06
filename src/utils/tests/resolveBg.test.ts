@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 
-import { resolveBgType } from "~utils/backgroundMap";
+import { resolveBgType } from "@/utils/backgroundMap";
 
 describe("Resolve background types", () => {
   test("should return a function for a valid background type 'beams'", async () => {

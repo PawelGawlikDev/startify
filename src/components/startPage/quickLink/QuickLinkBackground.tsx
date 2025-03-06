@@ -3,7 +3,7 @@ import React from "react";
 
 import "./quickLink.css";
 
-import { cn } from "~utils/cn";
+import { cn } from "@/utils/cn";
 
 export default function QuickLinkBackground({
   children,

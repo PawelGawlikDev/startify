@@ -8,12 +8,10 @@ import tseslint from "typescript-eslint";
 export default [
   {
     ignores: [
-      ".next/",
       "build/",
       ".plasmo/",
       "node_modules/",
       "pnpm-lock.yaml",
-      "storybook/",
       "coverage/",
       "playwright-report/"
     ]

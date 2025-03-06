@@ -3,8 +3,8 @@ import { Storage } from "@plasmohq/storage";
 import {
   defaultColor,
   defaultQuickLink
-} from "~constants/defaultSettingsValues";
-import type { ColorSettings, QuickLinkSettings } from "~types";
+} from "@/constants/defaultSettingsValues";
+import type { ColorSettings, QuickLinkSettings } from "@/types";
 
 import checkAndSetDefaults from "./checkAndSetDefault";
 import {

@@ -2,11 +2,11 @@ import faviconFetch from "favicon-fetch";
 import { motion } from "motion/react";
 import React, { useState } from "react";
 
-import { Button } from "~components/Button";
-import { db } from "~indexdb/index";
-import type { QuickLinkSettings } from "~types";
-import { cn } from "~utils/cn";
-import isValidUrl from "~utils/valudUrl";
+import { Button } from "@/components/Button";
+import { db } from "@/indexdb/index";
+import type { QuickLinkSettings } from "@/types";
+import { cn } from "@/utils/cn";
+import isValidUrl from "@/utils/valudUrl";
 
 import { Input, Label, LabelInputContainer } from "./Form";
 import { QuickLinkPreview } from "./QuickLink";
