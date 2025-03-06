@@ -1,5 +1,5 @@
-import type { QuickLinkSettings } from "~types";
-import { SearchEngineEnum, searchEngines } from "~utils/searchEngine";
+import type { QuickLinkSettings } from "@/types";
+import { SearchEngineEnum, searchEngines } from "@/utils/searchEngine";
 
 export const defaultColor = {
   deg: 0,

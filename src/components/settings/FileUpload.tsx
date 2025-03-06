@@ -3,7 +3,7 @@ import { motion } from "motion/react";
 import React, { useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
-import { cn } from "~utils/cn";
+import { cn } from "@/utils/cn";
 
 const mainVariant = {
   initial: {

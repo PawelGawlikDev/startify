@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react";
 
 import { useStorage } from "@plasmohq/storage/hook";
 
-import { db } from "~indexdb";
-import type { Backgrounds, UserWallpaper } from "~types";
-import { cn } from "~utils/cn";
+import { db } from "@/indexdb";
+import type { Backgrounds, UserWallpaper } from "@/types";
+import { cn } from "@/utils/cn";
 
 import ColorPickerButton from "../ColorPickerButtons";
 import { BackgroundOptions, Dropdown } from "../Dropdown";

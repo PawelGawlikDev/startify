@@ -9,8 +9,8 @@ import type {
   Engine,
   QuickLinkSettings,
   QuickLinkTypes
-} from "~types";
-import { searchEngines } from "~utils/searchEngine";
+} from "@/types";
+import { searchEngines } from "@/utils/searchEngine";
 
 const backgroundOptions: Record<Backgrounds, { name: string }> = {
   gradient: { name: "gradient" },

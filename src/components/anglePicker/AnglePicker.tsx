@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import { type Point } from "~types";
+import { type Point } from "@/types";
 
 import Border from "./Border";
 import Circle from "./Circle";

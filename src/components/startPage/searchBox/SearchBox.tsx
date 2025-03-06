@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Storage } from "@plasmohq/storage";
 import { useStorage } from "@plasmohq/storage/hook";
 
-import type { Engine } from "~types";
+import type { Engine } from "@/types";
 
 import SearchInput from "./SearchInput";
 

@@ -1,12 +1,12 @@
 import { motion } from "motion/react";
 import React, { useEffect, useRef, useState } from "react";
 
-import { db } from "~indexdb";
-import type { QuickLinkSettings } from "~types";
+import { db } from "@/indexdb";
+import type { QuickLinkSettings } from "@/types";
 
 import "./quickLink.css";
 
-import { cn } from "~utils/cn";
+import { cn } from "@/utils/cn";
 
 import QuickLinkBackground from "./QuickLinkBackground";
 

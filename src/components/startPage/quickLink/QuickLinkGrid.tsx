@@ -4,10 +4,10 @@ import React, { useEffect, useState } from "react";
 
 import { useStorage } from "@plasmohq/storage/hook";
 
-import { useDragAndDrop } from "~hooks/useDragAndDrop";
-import { db } from "~indexdb";
-import type { QuickLinkSettings } from "~types";
-import { cn } from "~utils/cn";
+import { useDragAndDrop } from "@/hooks/useDragAndDrop";
+import { db } from "@/indexdb";
+import type { QuickLinkSettings } from "@/types";
+import { cn } from "@/utils/cn";
 
 import { AddQuickLinkButton, QuickLink } from "./QuickLink";
 import QuickLinkModal from "./QuickLinkModal";

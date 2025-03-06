@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 
 import { useStorage } from "@plasmohq/storage/hook";
 
-import type { Backgrounds } from "~types";
-import { resolveBgType } from "~utils/backgroundMap";
+import type { Backgrounds } from "@/types";
+import { resolveBgType } from "@/utils/backgroundMap";
 
 export default function Background({
   children

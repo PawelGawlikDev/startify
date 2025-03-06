@@ -1,6 +1,6 @@
 import Dexie, { type EntityTable } from "dexie";
 
-import type { QuickLink, UserWallpaper } from "~types";
+import type { QuickLink, UserWallpaper } from "@/types";
 
 const db = new Dexie("UserData") as Dexie & {
   quickLinks: EntityTable<QuickLink, "id">;

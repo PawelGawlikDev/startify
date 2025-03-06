@@ -2,7 +2,7 @@ import * as LabelPrimitive from "@radix-ui/react-label";
 import { motion, useMotionTemplate, useMotionValue } from "motion/react";
 import * as React from "react";
 
-import { cn } from "~utils/cn";
+import { cn } from "@/utils/cn";
 
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 export interface InputProps

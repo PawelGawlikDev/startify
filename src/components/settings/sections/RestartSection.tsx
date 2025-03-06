@@ -3,15 +3,15 @@ import React from "react";
 
 import { Storage } from "@plasmohq/storage";
 
-import { Button } from "~components/Button";
-import { db } from "~indexdb";
+import { Button } from "@/components/Button";
+import { db } from "@/indexdb";
 import {
   setDefaultColors,
   setDefaultEngine,
   setDefaultQuickLink,
   setDefaultVanishAnimation,
   setDefaultWallpaper
-} from "~utils/defaultSettings";
+} from "@/utils/defaultSettings";
 
 import SettingsSection from "./SettingsSection";
 

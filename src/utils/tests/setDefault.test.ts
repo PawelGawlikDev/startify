@@ -5,8 +5,8 @@ import { Storage } from "@plasmohq/storage";
 import {
   defaultColor,
   defaultQuickLink
-} from "~constants/defaultSettingsValues";
-import { setDefaultColors, setDefaultQuickLink } from "~utils/defaultSettings";
+} from "@/constants/defaultSettingsValues";
+import { setDefaultColors, setDefaultQuickLink } from "@/utils/defaultSettings";
 
 vi.mock("@plasmohq/storage", () => {
   const storageMock = {

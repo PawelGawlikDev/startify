@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 
 import { useStorage } from "@plasmohq/storage/hook";
 
-import { db } from "~indexdb";
-import { type Backgrounds } from "~types";
+import { db } from "@/indexdb";
+import { type Backgrounds } from "@/types";
 
 export default function ImageBackground() {
   const [background] = useStorage<Backgrounds>("background");

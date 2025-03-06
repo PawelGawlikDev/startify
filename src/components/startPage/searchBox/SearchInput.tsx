@@ -1,9 +1,9 @@
 import { AnimatePresence, motion } from "motion/react";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
-import type { Engine } from "~types";
-import { calculateAnimationDuration } from "~utils/calculateTimeout";
-import { cn } from "~utils/cn";
+import type { Engine } from "@/types";
+import { calculateAnimationDuration } from "@/utils/calculateTimeout";
+import { cn } from "@/utils/cn";
 
 type PixelData = {
   x: number;

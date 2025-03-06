@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { db } from "~indexdb";
+import { db } from "@/indexdb";
 
 export default function RandomBackground() {
   const [backgroundImageUrl, setBackgroundImageUrl] = useState<string | null>(
