@@ -53,6 +53,6 @@ jobs:
       - name: Install Playwright Browsers
         run: pnpm playwright install --with-deps chromium
       - name: Build Extension
-        run: pnpm build
+        run: PARCEL_WORKER_BACKEND=process pnpm build
       - name: Run Playwright tests
         run: pnpm e2e
