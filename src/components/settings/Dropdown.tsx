@@ -13,17 +13,17 @@ import type {
 import { searchEngines } from "@/utils/searchEngine";
 
 const backgroundOptions: Record<Backgrounds, { name: string }> = {
-  gradient: { name: "gradient" },
-  beams: { name: "beams" },
-  image: { name: "image" },
-  aurora: { name: "aurora" },
-  snakes: { name: "snakes" },
-  random: { name: "random" }
+  gradient: { name: "Gradient" },
+  beams: { name: "Beams" },
+  image: { name: "Image" },
+  aurora: { name: "Aurora" },
+  snakes: { name: "Snakes" },
+  random: { name: "Random" }
 };
 
 const quickLinkTypes: Record<QuickLinkTypes, string> = {
-  gradient: "gradient",
-  transparent: "transparent"
+  gradient: "Gradient",
+  transparent: chrome.i18n.getMessage("transparent") ?? "transparent"
 };
 
 const wrapperVariants = {
@@ -103,7 +103,7 @@ export const QuickLinkOptions = () => {
       variants={itemVariants}
       onClick={() => handleBackgroundClick(key as QuickLinkTypes)}
       className="flex w-full cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md p-2 text-xs font-medium text-slate-700 hover:bg-indigo-100 hover:text-indigo-500">
-      <span>{option?.[0].toUpperCase() + option?.substring(1)}</span>
+      <span>{option}</span>
     </motion.li>
   ));
 };

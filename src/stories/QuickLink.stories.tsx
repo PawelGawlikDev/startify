@@ -1,6 +1,9 @@
 import React from "react";
 
-import { QuickLink } from "@/components/startPage/quickLink/QuickLink";
+import {
+  AddQuickLinkButton,
+  QuickLink
+} from "@/components/startPage/quickLink/QuickLink";
 
 import "../style.css";
 
@@ -14,9 +17,6 @@ export const DefaultQuickLink = () => (
     setShowModal={() => {}}
     id={1}
     pageName={"test quick link"}
-    favicon={
-      "https://developer.mozilla.org/favicon-48x48.bc390275e955dacb2e65.png"
-    }
     url={""}
   />
 );
@@ -31,9 +31,6 @@ export const BigDefaultQuickLink = () => (
     setShowModal={() => {}}
     id={1}
     pageName={"test quick link"}
-    favicon={
-      "https://developer.mozilla.org/favicon-48x48.bc390275e955dacb2e65.png"
-    }
     url={""}
   />
 );
@@ -48,9 +45,6 @@ export const BigTransparentQuickLink = () => (
     setShowModal={() => {}}
     id={1}
     pageName={"test quick link"}
-    favicon={
-      "https://developer.mozilla.org/favicon-48x48.bc390275e955dacb2e65.png"
-    }
     url={""}
   />
 );
@@ -65,9 +59,19 @@ export const TransparentQuickLink = () => (
     setShowModal={() => {}}
     id={1}
     pageName={"test quick link"}
-    favicon={
-      "https://developer.mozilla.org/favicon-48x48.bc390275e955dacb2e65.png"
-    }
     url={""}
   />
+);
+
+export const AddQuickLinkButtonStories = () => (
+  <div className="flex w-full justify-center">
+    <AddQuickLinkButton
+      quickLinkSettings={{
+        bigQuickLinks: false,
+        type: "gradient"
+      }}
+      setShowModal={() => {}}
+      setEditingLink={() => {}}
+    />
+  </div>
 );

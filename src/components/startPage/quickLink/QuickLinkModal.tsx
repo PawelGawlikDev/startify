@@ -1,4 +1,3 @@
-import faviconFetch from "favicon-fetch";
 import { motion } from "motion/react";
 import React, { useState } from "react";
 
@@ -16,13 +15,11 @@ interface ModalProps {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   dialName?: string;
   dialUrl?: string;
-  favicon?: string;
   id?: number;
 }
 
 const QuickLinkModal = (props: ModalProps) => {
-  const { setShowModal, dialName, dialUrl, id, favicon, quickLinkSettings } =
-    props;
+  const { setShowModal, dialName, dialUrl, id, quickLinkSettings } = props;
 
   const [name, setName] = useState<string>(dialName ?? "");
   const [url, setUrl] = useState<string>(dialUrl ?? "");
@@ -35,7 +32,6 @@ const QuickLinkModal = (props: ModalProps) => {
     }
 
     try {
-      let favicon: string | undefined;
       let updatedUrl = url;
 
       if (!isValidUrl(url)) {
@@ -43,14 +39,10 @@ const QuickLinkModal = (props: ModalProps) => {
         setUrl(updatedUrl);
       }
 
-      if (isValidUrl(updatedUrl)) {
-        favicon = await faviconFetch({ uri: updatedUrl });
-      }
-
       if (id && (await db.quickLinks.get(id))) {
-        await db.quickLinks.update(id, { name, url: updatedUrl, favicon });
+        await db.quickLinks.update(id, { name, url: updatedUrl });
       } else {
-        await db.quickLinks.add({ name, url: updatedUrl, favicon });
+        await db.quickLinks.add({ name, url: updatedUrl });
       }
 
       setShowModal(false);
@@ -69,22 +61,23 @@ const QuickLinkModal = (props: ModalProps) => {
       <QuickLinkPreview
         quickLinkSettings={quickLinkSettings}
         pageName={dialName}
-        favicon={favicon}
       />
       <LabelInputContainer>
-        <Label htmlFor="name">Name</Label>
+        <Label htmlFor="name">{chrome.i18n.getMessage("name") ?? "Name"}</Label>
         <Input
           id="name"
-          placeholder="Name"
+          placeholder={chrome.i18n.getMessage("name") ?? "Name"}
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
       </LabelInputContainer>
       <LabelInputContainer>
-        <Label htmlFor="url">Address</Label>
+        <Label htmlFor="url">
+          {chrome.i18n.getMessage("address") ?? "Address"}
+        </Label>
         <Input
-          placeholder="URL"
+          placeholder={chrome.i18n.getMessage("address") ?? "Address"}
           id="url"
           type="text"
           value={url}
@@ -94,6 +87,7 @@ const QuickLinkModal = (props: ModalProps) => {
       <div className="mt-4 flex gap-3">
         <Button
           onClick={addQuickLink}
+          data-testid={"SaveButton"}
           borderRadius="1.75rem"
           disabled={name === "" || url === ""}
           className={cn(
@@ -102,14 +96,14 @@ const QuickLinkModal = (props: ModalProps) => {
               ? "cursor-not-allowed bg-gray-700"
               : "bg-slate-900 hover:bg-slate-700"
           )}>
-          Save
+          {chrome.i18n.getMessage("save") ?? "Save"}
         </Button>
         <Button
           onClick={() => setShowModal(false)}
           borderRadius="1.75rem"
           borderClassName="bg-[radial-gradient(var(--red-500)_40%,transparent_60%)]"
           className="border-slate-800 bg-slate-900 text-white hover:bg-slate-700">
-          Close
+          {chrome.i18n.getMessage("close") ?? "Colse"}
         </Button>
       </div>
     </motion.div>

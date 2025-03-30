@@ -13,7 +13,6 @@ import QuickLinkBackground from "./QuickLinkBackground";
 interface QuickLinkProps {
   pageName: string;
   url: string;
-  favicon?: string;
   id: number;
   quickLinkSettings: QuickLinkSettings;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -22,7 +21,6 @@ interface QuickLinkProps {
       name: string;
       url: string;
       id: number;
-      favicon: string;
     }>
   >;
 }
@@ -36,15 +34,8 @@ interface AddQuickLink {
 }
 
 export function QuickLink(props: QuickLinkProps) {
-  const {
-    pageName,
-    url,
-    favicon,
-    id,
-    quickLinkSettings,
-    setShowModal,
-    setEditingLink
-  } = props;
+  const { pageName, url, id, quickLinkSettings, setShowModal, setEditingLink } =
+    props;
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef(null);
 
@@ -68,7 +59,6 @@ export function QuickLink(props: QuickLinkProps) {
     if (dialInfo) {
       setEditingLink({
         name: dialInfo.name,
-        favicon: dialInfo?.favicon,
         url: dialInfo.url,
         id: dialInfo.id
       });
@@ -122,26 +112,12 @@ export function QuickLink(props: QuickLinkProps) {
                   data-testid="DeleteQuickLink"
                   className="flex w-full items-center justify-center rounded-b-xl p-3 hover:bg-neutral-600"
                   onClick={handleDeleteClick}>
-                  Delete
+                  {chrome.i18n.getMessage("delete") ?? "Delete"}
                 </span>
               </div>
             )}
           </div>
-          {favicon ? (
-            <img
-              draggable="false"
-              src={favicon}
-              alt={pageName}
-              width={48}
-              height={48}
-            />
-          ) : (
-            <div className="flex h-[48px] w-[48px] items-center justify-center rounded">
-              <span className="text-xl font-bold text-white">
-                {pageName.charAt(0).toUpperCase()}
-              </span>
-            </div>
-          )}
+          <QuickLinkTitle pageName={pageName} />
           <div className="triangle gradient-background absolute bottom-[-4px] right-[-4px] h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100" />
           <div className="triangle gradient-background absolute bottom-[-4px] left-[-4px] h-4 w-4 rotate-90 opacity-0 transition-opacity group-hover:opacity-100" />
         </QuickLinkBackground>
@@ -151,7 +127,7 @@ export function QuickLink(props: QuickLinkProps) {
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.3 }}
         data-testid="QuickLinkName"
-        className="text-white">
+        className="max-w-[60%] truncate text-white">
         {pageName}
       </motion.p>
     </motion.div>
@@ -168,7 +144,7 @@ export function AddQuickLinkButton(props: AddQuickLink) {
         setShowModal(true);
         setEditingLink({ name: "", url: "" });
       }}
-      className="relative flex items-start justify-center">
+      className="group relative flex items-start justify-center">
       <QuickLinkBackground
         type={quickLinkSettings?.type}
         className={
@@ -177,8 +153,11 @@ export function AddQuickLinkButton(props: AddQuickLink) {
             : "h-[88px] w-[144px]"
         }
         draggable={false}>
-        <div className="z-10 flex h-full items-center justify-center">
+        <div className="z-10 flex h-full items-center justify-center gap-1">
           <AddButton />
+          <p className="inline-block max-w-0 overflow-hidden text-nowrap text-white opacity-0 transition-all duration-500 group-hover:max-w-full group-hover:opacity-100">
+            {chrome.i18n.getMessage("addQuickLinkText") ?? "Add QuickLink"}
+          </p>
         </div>
       </QuickLinkBackground>
     </button>
@@ -189,8 +168,9 @@ function AddButton() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="36"
-      height="36"
+      className="shrink-0"
+      width="30"
+      height="30"
       viewBox="0 0 24 24"
       fill="none">
       <path
@@ -224,11 +204,9 @@ function EditDots() {
 }
 
 export function QuickLinkPreview({
-  favicon,
   quickLinkSettings,
   pageName
 }: {
-  favicon: string;
   quickLinkSettings: QuickLinkSettings;
   pageName: string;
 }) {
@@ -236,15 +214,17 @@ export function QuickLinkPreview({
     <QuickLinkBackground
       type={quickLinkSettings?.type}
       className="flex h-28 w-[166px] items-center justify-center">
-      {favicon ? (
-        <img src={favicon} alt={pageName} width={48} height={48} />
-      ) : (
-        <div className="flex h-[48px] w-[48px] items-center justify-center rounded">
-          <span className="text-xl font-bold text-white">
-            {pageName.charAt(0).toUpperCase()}
-          </span>
-        </div>
-      )}
+      <QuickLinkTitle pageName={pageName} />
     </QuickLinkBackground>
   );
 }
+
+const QuickLinkTitle = ({ pageName }: { pageName: string }) => {
+  return (
+    <div className="flex h-[48px] w-full max-w-full items-center justify-center rounded p-2">
+      <span className="truncate text-xl font-bold text-white">
+        {pageName.toUpperCase()}
+      </span>
+    </div>
+  );
+};

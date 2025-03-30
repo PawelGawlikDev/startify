@@ -8,7 +8,7 @@ const db = new Dexie("UserData") as Dexie & {
 };
 
 db.version(1).stores({
-  quickLinks: "++id, name, url, favicon, textColor, backgroundColor",
+  quickLinks: "++id, name, url, textColor, backgroundColor",
   wallpaper: "++id, name, imageBlob"
 });
 

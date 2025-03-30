@@ -26,9 +26,6 @@ export const QuickLInkModalStories = () => {
             }}
             setShowModal={setShowModal}
             id={1}
-            favicon={
-              "https://developer.mozilla.org/favicon-48x48.bc390275e955dacb2e65.png"
-            }
             dialName={"test quick link"}
             dialUrl={""}
           />

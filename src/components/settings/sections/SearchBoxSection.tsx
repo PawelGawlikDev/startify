@@ -16,13 +16,17 @@ export default function SearchBoxSection() {
   return (
     <SettingsSection
       className="relative z-50 flex w-full flex-col gap-4"
-      sectionTitle="Engine Settings">
+      sectionTitle={
+        chrome.i18n.getMessage("engineSettings") ?? "Engine Settings"
+      }>
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0, transition: { duration: 0.4 } }}
         className="z-[1] flex flex-row justify-between">
         <div className="flex items-center justify-center gap-3">
-          <p>Choose search engine</p>
+          <p>
+            {chrome.i18n.getMessage("chosseEngine") ?? "Choose search engine"}
+          </p>
           <img
             src={engine?.favicon}
             alt={`${engine?.name} logo`}
@@ -40,7 +44,9 @@ export default function SearchBoxSection() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0, transition: { duration: 0.4 } }}
           className="flex flex-row items-center justify-between">
-          <p>Vanish Animation</p>
+          <p>
+            {chrome.i18n.getMessage("vanishAnimation") ?? "Vanish Animation"}
+          </p>
           <div className="z-2 flex min-w-32 cursor-default flex-row items-center justify-center gap-2">
             <Button
               onClick={async () => {
@@ -53,7 +59,9 @@ export default function SearchBoxSection() {
               }
               borderRadius="1.75rem"
               className="border-slate-800 bg-slate-900 text-white hover:bg-slate-700">
-              {vanish ? "Disable" : "Enable"}
+              {vanish
+                ? (chrome.i18n.getMessage("disable") ?? "Disable")
+                : (chrome.i18n.getMessage("enable") ?? "Enable")}
             </Button>
           </div>
         </motion.div>
