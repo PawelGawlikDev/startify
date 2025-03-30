@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.13](https://github.com/PawelGawlikDev/startify/compare/v0.0.12...v0.0.13) (2025-03-30)
+
+
+### Bug Fixes
+
+* add var to build command ([de218e8](https://github.com/PawelGawlikDev/startify/commit/de218e82d924eaef8e75fd5ea419a2cebc825a89))
+* fix rests workflows ([45f4dc1](https://github.com/PawelGawlikDev/startify/commit/45f4dc144d749dd394bf54c46ebfde06274b2e68))
+
 ### [0.0.12](https://github.com/PawelGawlikDev/startify/compare/v0.0.11...v0.0.12) (2025-03-30)
 
 
