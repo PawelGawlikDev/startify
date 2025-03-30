@@ -27,7 +27,7 @@ jobs:
           node-version: 20.x
           cache: "pnpm"
       - name: Build and zip Chrome extension
-        run: pnpm plasmo build --zip --hoist --env=.env.chrome
+        run: PARCEL_WORKER_BACKEND=process pnpm plasmo build --zip --hoist --env=.env.chrome
       - uses: actions/upload-artifact@v4
         with:
           name: chrome-mv3
@@ -54,7 +54,7 @@ jobs:
           node-version: 20.x
           cache: "pnpm"
       - name: Build and zip Firefox MV3 extension
-        run: pnpm plasmo build --zip --hoist --target=firefox-mv3 --env=.env.firefox
+        run: PARCEL_WORKER_BACKEND=process pnpm plasmo build --zip --hoist --target=firefox-mv3 --env=.env.firefox
       - uses: actions/upload-artifact@v4
         with:
           name: firefox-mv3
@@ -81,7 +81,7 @@ jobs:
           node-version: 20.x
           cache: "pnpm"
       - name: Build and zip Firefox MV2 extension
-        run: pnpm plasmo build --zip --hoist --target=firefox-mv2 --env=.env.firefox
+        run: PARCEL_WORKER_BACKEND=process pnpm plasmo build --zip --hoist --target=firefox-mv2 --env=.env.firefox
       - uses: actions/upload-artifact@v4
         with:
           name: firefox-mv2
