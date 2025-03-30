@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.12](https://github.com/PawelGawlikDev/startify/compare/v0.0.11...v0.0.12) (2025-03-30)
+
+
+### Features
+
+* add new search engine ([22e996a](https://github.com/PawelGawlikDev/startify/commit/22e996a9b1387f6e0131202e8c6fed4c56e024d9))
+* improve settings and background ([a18815f](https://github.com/PawelGawlikDev/startify/commit/a18815fd32f302dfa15bb2eae2224edb82192f75))
+* introduce storybook ([6078b0a](https://github.com/PawelGawlikDev/startify/commit/6078b0aaf2d0c389051bd27ce54ffa727ea71dd5))
+* update deps and readme ([fcce90c](https://github.com/PawelGawlikDev/startify/commit/fcce90cf38cc882e029f39d5065f27c381e228a4))
+
+
+### Bug Fixes
+
+* add locales ([dde2ba8](https://github.com/PawelGawlikDev/startify/commit/dde2ba82935a932c74c738c4c47b00831c994a51))
+* add locales ([b5a2e9d](https://github.com/PawelGawlikDev/startify/commit/b5a2e9d6174cb1c5101d35cdc9275e3742ad26a6))
+* remove unnsesery release ([6bfa5c7](https://github.com/PawelGawlikDev/startify/commit/6bfa5c76af174cb83cc607cca4cfb40e7c59edbd))
+
 ### [0.0.11](https://github.com/PawelGawlikDev/startify/compare/v0.0.10...v0.0.11) (2025-01-22)
 
 
