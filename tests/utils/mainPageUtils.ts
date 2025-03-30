@@ -46,7 +46,7 @@ export class StartifyStartPage {
 
     await this.fillInput(addModal.locator("#url"), url);
 
-    await addModal.getByRole("button", { name: "Save" }).click();
+    await addModal.getByTestId("SaveButton").click();
 
     await this.page.waitForLoadState("domcontentloaded");
   }

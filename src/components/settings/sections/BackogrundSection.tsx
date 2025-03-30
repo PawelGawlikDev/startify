@@ -65,14 +65,18 @@ export default function BackgroundSection() {
 
   return (
     <SettingsSection
-      sectionTitle="Background Settings"
+      sectionTitle={
+        chrome.i18n.getMessage("backgroundSettings") ?? "Background Settings"
+      }
       className="relative z-40 flex w-full flex-col gap-4">
       <div className="flex flex-row">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0, transition: { duration: 0.4 } }}
           className="flex w-full flex-row items-center justify-between">
-          <p>Choose background</p>
+          <p>
+            {chrome.i18n.getMessage("chooseBackground") ?? "Choose background"}
+          </p>
           <div className="flex flex-row gap-3">
             {background === "gradient" && (
               <motion.div
@@ -155,7 +159,7 @@ export default function BackgroundSection() {
 
                                 setStoredFiles(updatedFiles);
                               }}>
-                              Delete
+                              {chrome.i18n.getMessage("delete") ?? "Delete"}
                             </motion.button>
                           </div>
                           <motion.p

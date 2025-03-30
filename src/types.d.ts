@@ -10,7 +10,6 @@ export interface QuickLink {
   id: number;
   name: string;
   url: string;
-  favicon?: string;
   textColor?: string;
   backgroundColor?: string;
 }

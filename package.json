@@ -20,46 +20,45 @@
     "package": "plasmo package",
     "prepare": "husky",
     "release": "standard-version",
+    "storybook": "ladle serve --theme dark",
     "test": "vitest",
     "test:coverage": "vitest --coverage",
-    "test:ui": "vitest --ui",
-    "storybook": "ladle serve --theme dark"
+    "test:ui": "vitest --ui"
   },
   "dependencies": {
-    "@ladle/react": "^5.0.1",
+    "@ladle/react": "^5.0.2",
     "@radix-ui/react-label": "^2.1.2",
     "@tabler/icons-react": "^3.31.0",
     "clsx": "^2.1.1",
     "dexie": "^4.0.11",
     "dexie-react-hooks": "^1.1.7",
-    "favicon-fetch": "^1.0.0",
-    "motion": "^12.5.0",
+    "motion": "^12.6.2",
     "plasmo": "^0.90.3",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
     "react-dropzone": "^14.3.8",
     "react-icons": "^5.5.0",
     "tailwind-merge": "^3.0.2",
-    "vite": "^6.2.2"
+    "vite": "^6.2.3"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^19.8.0",
-    "@eslint/js": "^9.22.0",
+    "@eslint/js": "^9.23.0",
     "@ianvs/prettier-plugin-sort-imports": "^4.4.1",
     "@plasmohq/rps": "^1.8.7",
     "@plasmohq/storage": "1.15.0",
     "@playwright/test": "^1.51.1",
-    "@types/chrome": "^0.0.309",
-    "@types/node": "^22.13.10",
-    "@types/react": "^19.0.11",
+    "@types/chrome": "^0.0.313",
+    "@types/node": "^22.13.14",
+    "@types/react": "^19.0.12",
     "@types/react-dom": "^19.0.4",
     "@vitest/coverage-v8": "^3.0.9",
-    "@vitest/eslint-plugin": "^1.1.37",
+    "@vitest/eslint-plugin": "^1.1.38",
     "@vitest/ui": "^3.0.9",
     "autoprefixer": "^10.4.21",
     "commitlint": "^19.8.0",
     "cross-env": "^7.0.3",
-    "eslint": "^9.22.0",
+    "eslint": "^9.23.0",
     "eslint-plugin-playwright": "^2.2.0",
     "eslint-plugin-react": "^7.37.4",
     "globals": "^16.0.0",
@@ -72,8 +71,24 @@
     "standard-version": "^9.5.0",
     "tailwindcss": "^3.4.17",
     "typescript": "5.8.2",
-    "typescript-eslint": "^8.26.1",
+    "typescript-eslint": "^8.28.0",
     "vitest": "^3.0.9"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "@swc/core",
+      "esbuild",
+      "lmdb",
+      "msgpackr-extract",
+      "msw",
+      "sharp"
+    ],
+    "updateConfig": {
+      "ignoreDependencies": [
+        "tailwindcss"
+      ]
+    }
   },
   "manifest": {
     "browser_specific_settings": {
@@ -84,6 +99,7 @@
     "chrome_settings_overrides": {
       "homepage": "$HOMEPAGE"
     },
+    "default_locale": "en",
     "host_permissions": [
       "https://*/*",
       "http://*/*"
@@ -91,22 +107,6 @@
     "permissions": [
       "storage",
       "activeTab"
-    ]
-  },
-  "pnpm": {
-    "updateConfig": {
-      "ignoreDependencies": [
-        "tailwindcss"
-      ]
-    },
-    "onlyBuiltDependencies": [
-      "@parcel/watcher",
-      "@swc/core",
-      "esbuild",
-      "lmdb",
-      "msgpackr-extract",
-      "msw",
-      "sharp"
     ]
   }
 }

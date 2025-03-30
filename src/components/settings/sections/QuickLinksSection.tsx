@@ -19,12 +19,14 @@ export default function QuickLinkSection() {
   return (
     <SettingsSection
       className="relative flex w-full flex-col gap-4"
-      sectionTitle="Quick Links Section">
+      sectionTitle={
+        chrome.i18n.getMessage("quickLinkSection") ?? "Quick Links Section"
+      }>
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0, transition: { duration: 0.4 } }}
         className="flex flex-row items-center justify-between">
-        <p>Big Quick Links</p>
+        <p>{chrome.i18n.getMessage("bigQuickLink") ?? "Big Quick Links"}</p>
         <div className="z-2 flex min-w-32 cursor-default flex-row items-center justify-center gap-2">
           <Button
             onClick={async () => {
@@ -40,23 +42,20 @@ export default function QuickLinkSection() {
             }
             borderRadius="1.75rem"
             className="border-slate-800 bg-slate-900 text-white hover:bg-slate-700">
-            {quickLink?.bigQuickLinks ? "Disable" : "Enable"}
+            {quickLink?.bigQuickLinks
+              ? (chrome.i18n.getMessage("disable") ?? "Disable")
+              : (chrome.i18n.getMessage("enable") ?? "Enable")}
           </Button>
+          <p>{chrome.i18n.getMessage("") ?? "Choose quick link type"}</p>
+          {quickLink && (
+            <Dropdown
+              title={
+                quickLink.type[0].toUpperCase() + quickLink.type.substring(1)
+              }>
+              <QuickLinkOptions />
+            </Dropdown>
+          )}
         </div>
-      </motion.div>
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0, transition: { duration: 0.4 } }}
-        className="z-[1] flex flex-row justify-between">
-        <p>Choose quick link type</p>
-        {quickLink && (
-          <Dropdown
-            title={
-              quickLink.type[0].toUpperCase() + quickLink.type.substring(1)
-            }>
-            <QuickLinkOptions />
-          </Dropdown>
-        )}
       </motion.div>
     </SettingsSection>
   );

@@ -23,7 +23,6 @@ export default function QuickLinkGrid() {
   const [editingLink, setEditingLink] = useState<{
     name: string;
     url: string;
-    favicon: string;
     id: number;
   } | null>(null);
   const quickLinks = useLiveQuery(async () => await db.quickLinks.toArray());
@@ -81,7 +80,6 @@ export default function QuickLinkGrid() {
               quickLinkSettings={quickLink}
               setShowModal={setShowModal}
               id={editingLink?.id}
-              favicon={editingLink?.favicon}
               dialName={editingLink?.name}
               dialUrl={editingLink?.url}
             />
@@ -107,7 +105,6 @@ export default function QuickLinkGrid() {
               setShowModal={setShowModal}
               id={dial.id}
               pageName={dial.name}
-              favicon={dial?.favicon}
               url={dial.url}
             />
           </div>

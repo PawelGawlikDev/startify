@@ -18,7 +18,7 @@ export default function Settings() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0, transition: { duration: 0.4 } }}
         className="relative z-10 mx-[20%] h-full w-full text-4xl">
-        <h1>Settings</h1>
+        <h1>{chrome.i18n.getMessage("settingsHeader") ?? "Settings"}</h1>
       </motion.div>
       <motion.div
         className="relative mx-[20%] my-5 flex flex-col items-center justify-center gap-16"
