@@ -4,9 +4,9 @@ import { checkUserSettings } from "@/utils/checkUserSettings";
 
 import Background from "./backgrounds/Background";
 
-interface LayoutProps {
+type LayoutProps = {
   children: ReactNode;
-}
+};
 
 export default function Layout({ children }: LayoutProps): React.JSX.Element {
   useEffect(() => {

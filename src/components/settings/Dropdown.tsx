@@ -81,7 +81,7 @@ export const BackgroundOptions = () => {
       key={key}
       variants={itemVariants}
       onClick={() => handleBackgroundClick(key as Backgrounds)}
-      className="flex w-full cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md p-2 text-xs font-medium text-slate-700 hover:bg-indigo-100 hover:text-indigo-500">
+      className="flex w-full cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md p-2 text-xs font-medium text-black hover:bg-secondary-100 hover:text-secondary-500">
       <span>{option.name?.[0].toUpperCase() + option.name?.substring(1)}</span>
     </motion.li>
   ));
@@ -102,7 +102,7 @@ export const QuickLinkOptions = () => {
       key={key}
       variants={itemVariants}
       onClick={() => handleBackgroundClick(key as QuickLinkTypes)}
-      className="flex w-full cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md p-2 text-xs font-medium text-slate-700 hover:bg-indigo-100 hover:text-indigo-500">
+      className="flex w-full cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md p-2 text-xs font-medium text-black hover:bg-secondary-100 hover:text-secondary-500">
       <span>{option}</span>
     </motion.li>
   ));
@@ -124,7 +124,7 @@ export const EngineOptions = () => {
       key={key}
       variants={itemVariants}
       onClick={() => handleEngineClick(engine)}
-      className="flex w-full cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md p-2 text-xs font-medium text-slate-700 hover:bg-indigo-100 hover:text-indigo-500">
+      className="flex w-full cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md p-2 text-xs font-medium text-black hover:bg-secondary-100 hover:text-secondary-500">
       <span>{engine.name?.[0].toUpperCase() + engine.name?.substring(1)}</span>
     </motion.li>
   ));
@@ -165,7 +165,7 @@ export const Dropdown = ({
           event.stopPropagation();
           setOpen((pv) => !pv);
         }}
-        className="flex items-center gap-2 rounded-md bg-indigo-500 px-3 py-2 text-indigo-50 transition-colors hover:bg-indigo-500">
+        className="flex items-center gap-2 rounded-md bg-secondary-500 px-3 py-2 text-indigo-50 transition-colors hover:bg-secondary-600">
         <span className="text-sm font-medium">{title}</span>
         <motion.span variants={iconVariants}>
           <FiChevronDown />

@@ -10,7 +10,7 @@ import { cn } from "@/utils/cn";
 
 import QuickLinkBackground from "./QuickLinkBackground";
 
-interface QuickLinkProps {
+type QuickLinkProps = {
   pageName: string;
   url: string;
   id: number;
@@ -23,15 +23,15 @@ interface QuickLinkProps {
       id: number;
     }>
   >;
-}
+};
 
-interface AddQuickLink {
+type AddQuickLink = {
   quickLinkSettings: QuickLinkSettings;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   setEditingLink: React.Dispatch<
     React.SetStateAction<{ name: string; url: string }>
   >;
-}
+};
 
 export function QuickLink(props: QuickLinkProps) {
   const { pageName, url, id, quickLinkSettings, setShowModal, setEditingLink } =

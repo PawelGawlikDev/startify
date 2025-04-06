@@ -1,43 +1,55 @@
-import { describe, expect, test } from "vitest";
+import { afterEach, describe, expect, test, vi } from "vitest";
 
-import { SearchEngineEnum, searchEngines } from "@/utils/searchEngine";
+import * as browserConstants from "@/constants/browser";
+import { SearchEngineEnum } from "@/utils/searchEngine";
+
+vi.mock("@/constants/browser", () => ({
+  isFirefox: false,
+  userLang: "en"
+}));
 
 describe("Search engines", () => {
-  test("should have all defined search engines", () => {
-    expect(Object.keys(searchEngines)).toEqual([
-      SearchEngineEnum.DuckDuckGo,
-      SearchEngineEnum.Google,
-      SearchEngineEnum.Bing,
-      SearchEngineEnum.Yahoo,
-      SearchEngineEnum.Ecosia,
-      SearchEngineEnum.Qwant,
-      SearchEngineEnum.Yandex,
-      SearchEngineEnum.Brave,
-      SearchEngineEnum.PrivacyWall
-    ]);
+  afterEach(() => {
+    vi.resetModules();
   });
 
-  test("should have correct properties for each search engine", () => {
-    for (const engineKey in searchEngines) {
-      const engine = searchEngines[engineKey];
+  test("should return correct DuckDuckGo URL for Chrome", async () => {
+    browserConstants.isFirefox = false;
 
-      expect(engine).toHaveProperty("name");
-      expect(engine).toHaveProperty("searchURL");
-      expect(engine).toHaveProperty("suggestionsURL");
-      expect(engine).toHaveProperty("queryParam");
-      expect(engine).toHaveProperty("favicon");
-    }
+    const { searchEngines } = await import("@/utils/searchEngine");
+
+    expect(searchEngines[SearchEngineEnum.DuckDuckGo].searchURL).toContain(
+      "t=chrome"
+    );
   });
 
-  test("should have correct search URL format for Google", () => {
-    const google = searchEngines[SearchEngineEnum.Google];
+  test("should return correct DuckDuckGo URL for Firefox", async () => {
+    browserConstants.isFirefox = true;
 
-    expect(google.searchURL).toBe("https://www.google.com/search?q=%s");
+    const { searchEngines } = await import("@/utils/searchEngine");
+
+    expect(searchEngines[SearchEngineEnum.DuckDuckGo].searchURL).toContain(
+      "t=firefox"
+    );
   });
 
-  test("should have correct favicon for DuckDuckGo", () => {
-    const duckDuckGo = searchEngines[SearchEngineEnum.DuckDuckGo];
+  test("should use correct lang param for PrivacyWall (e.g. fr)", async () => {
+    browserConstants.userLang = "fr";
 
-    expect(duckDuckGo.favicon).toBe("https://duckduckgo.com/favicon.ico");
+    const { searchEngines } = await import("@/utils/searchEngine");
+
+    expect(searchEngines[SearchEngineEnum.PrivacyWall].searchURL).toContain(
+      "cc=fr"
+    );
+  });
+
+  test("should use correct lang param for Google (e.g. de)", async () => {
+    browserConstants.userLang = "de";
+
+    const { searchEngines } = await import("@/utils/searchEngine");
+
+    expect(searchEngines[SearchEngineEnum.Google].suggestionsURL).toContain(
+      "hl=de"
+    );
   });
 });

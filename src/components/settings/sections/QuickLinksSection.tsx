@@ -35,11 +35,7 @@ export default function QuickLinkSection() {
                 bigQuickLinks: !quickLink.bigQuickLinks
               });
             }}
-            borderClassName={
-              quickLink?.bigQuickLinks
-                ? "bg-[radial-gradient(var(--red-500)_40%,transparent_60%)]"
-                : ""
-            }
+            borderClassName={quickLink?.bigQuickLinks ? "bg-secondary-500" : ""}
             borderRadius="1.75rem"
             className="border-slate-800 bg-slate-900 text-white hover:bg-slate-700">
             {quickLink?.bigQuickLinks

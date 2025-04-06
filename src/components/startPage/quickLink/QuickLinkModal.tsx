@@ -10,13 +10,13 @@ import isValidUrl from "@/utils/valudUrl";
 import { Input, Label, LabelInputContainer } from "./Form";
 import { QuickLinkPreview } from "./QuickLink";
 
-interface ModalProps {
+type ModalProps = {
   quickLinkSettings: QuickLinkSettings;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   dialName?: string;
   dialUrl?: string;
   id?: number;
-}
+};
 
 const QuickLinkModal = (props: ModalProps) => {
   const { setShowModal, dialName, dialUrl, id, quickLinkSettings } = props;

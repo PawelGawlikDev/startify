@@ -5,7 +5,8 @@ import {
   defaultQuickLink,
   defaultSearchEngine,
   defaultVanishAnimation,
-  defaultWallpaper
+  defaultWallpaper,
+  defaultWeatherWidget
 } from "@/constants/defaultSettingsValues";
 
 export const setDefaultEngine = async (storage: BaseStorage) => {
@@ -26,4 +27,8 @@ export const setDefaultVanishAnimation = async (storage: BaseStorage) => {
 
 export const setDefaultQuickLink = async (storage: BaseStorage) => {
   await storage.set("quickLink", defaultQuickLink);
+};
+
+export const setDefaultWeatherWidget = async (storage: BaseStorage) => {
+  await storage.set("weatherWidget", defaultWeatherWidget);
 };

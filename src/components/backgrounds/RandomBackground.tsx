@@ -105,7 +105,7 @@ export default function RandomBackground() {
 
       <button
         onClick={fetchNewWallpaper}
-        className="absolute bottom-4 right-4 rounded-full bg-blue-500 px-4 py-2 text-white shadow-lg hover:bg-blue-600">
+        className="absolute bottom-4 right-4 rounded-full bg-secondary-500 px-4 py-2 text-white shadow-lg hover:bg-secondary-600">
         New Wallpaper
       </button>
     </div>

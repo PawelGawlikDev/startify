@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 import AnglePicker from "@/components/anglePicker/AnglePicker";
 
-interface AngleSettingsProps {
+type AngleSettingsProps = {
   deg: number;
   setColors: React.Dispatch<
     React.SetStateAction<{
@@ -11,7 +11,7 @@ interface AngleSettingsProps {
       secondary: string;
     }>
   >;
-}
+};
 
 export default function AgnleSettings(props: AngleSettingsProps) {
   const { deg, setColors } = props;
