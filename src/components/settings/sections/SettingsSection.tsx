@@ -16,7 +16,9 @@ export default function SettingsSection({
       <div className="flex flex-row p-2 text-lg">
         <p>{sectionTitle}</p>
       </div>
-      <div className="flex flex-col gap-6 bg-neutral-800 p-5">{children}</div>
+      <div className="relative flex flex-col gap-6 bg-neutral-800 p-5">
+        {children}
+      </div>
     </div>
   );
 }

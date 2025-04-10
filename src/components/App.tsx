@@ -1,14 +1,24 @@
-import { IconBrandChrome } from "@tabler/icons-react";
+import {
+  IconBrandChrome,
+  IconSettings,
+  IconWallpaper
+} from "@tabler/icons-react";
 import React from "react";
 
-import { isFirefox } from "@/constants/browser";
+import { useStorage } from "@plasmohq/storage/hook";
 
-import SettingsGear from "./SettingsGear";
+import { isFirefox } from "@/constants/browser";
+import { useWallpaper } from "@/context/WallpaperContext";
+import type { Backgrounds } from "@/types";
+
 import DigitalTime from "./startPage/DigitalTime";
 import QuickLinkGrid from "./startPage/quickLink/QuickLinkGrid";
 import SeatchBox from "./startPage/searchBox/SearchBox";
 
 export default function App() {
+  const [background] = useStorage<Backgrounds>("background");
+  const wallpaper = useWallpaper();
+
   return (
     <>
       <div className="relative left-2 top-2 inline-flex items-center gap-3">
@@ -16,8 +26,8 @@ export default function App() {
           href={chrome.runtime.getURL("/options.html")}
           target="_blank"
           rel="noreferrer"
-          className="h-4 w-4 cursor-pointer text-white">
-          <SettingsGear />
+          className="text-white">
+          <IconSettings stroke={1} width={20} height={20} />
         </a>
 
         {!isFirefox && (
@@ -29,6 +39,12 @@ export default function App() {
             }}
             className="text-white">
             <IconBrandChrome stroke={1} width={20} height={20} />
+          </button>
+        )}
+
+        {wallpaper && background === "random" && (
+          <button className="text-white" onClick={wallpaper.fetchNewWallpaper}>
+            <IconWallpaper stroke={1} width={20} height={20} />
           </button>
         )}
       </div>

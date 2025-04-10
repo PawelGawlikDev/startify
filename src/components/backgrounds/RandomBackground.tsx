@@ -1,73 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-import { db } from "@/indexdb";
+import { useWallpaper } from "@/context/WallpaperContext";
 
 export default function RandomBackground() {
-  const [backgroundImageUrl, setBackgroundImageUrl] = useState<string | null>(
-    null
-  );
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  const fetchNewWallpaper = async () => {
-    try {
-      const response = await fetch("https://bingw.jasonzeng.dev/?index=random");
-
-      if (!response.ok) {
-        throw new Error(`Failed to fetch image: ${response.statusText}`);
-      }
-
-      const blob = await response.blob();
-
-      const existingWallpaper = await db.wallpaper.get({ name: "daily" });
-
-      if (existingWallpaper) {
-        await db.wallpaper.update(existingWallpaper.id, { imageBlob: blob });
-      } else {
-        await db.wallpaper.put({ name: "daily", imageBlob: blob });
-      }
-
-      const objectUrl = URL.createObjectURL(blob);
-
-      setBackgroundImageUrl(objectUrl);
-      setIsLoaded(true);
-
-      localStorage.setItem("lastWallpaperUpdate", Date.now().toString());
-    } catch {
-      return;
-    }
-  };
-
-  useEffect(() => {
-    const saveAndLoadBackground = async () => {
-      try {
-        const savedWallpaper = await db.wallpaper.get({ name: "daily" });
-
-        const lastUpdate = localStorage.getItem("lastWallpaperUpdate");
-        const isExpired =
-          !lastUpdate ||
-          Date.now() - parseInt(lastUpdate, 10) > 24 * 60 * 60 * 1000;
-
-        if (savedWallpaper && savedWallpaper.imageBlob && !isExpired) {
-          const objectUrl = URL.createObjectURL(savedWallpaper.imageBlob);
-
-          setBackgroundImageUrl(objectUrl);
-          setIsLoaded(true);
-        } else {
-          await fetchNewWallpaper();
-        }
-      } catch {
-        setIsLoaded(false);
-      }
-    };
-
-    saveAndLoadBackground();
-
-    return () => {
-      if (backgroundImageUrl) {
-        URL.revokeObjectURL(backgroundImageUrl);
-      }
-    };
-  }, []);
+  const { backgroundImageUrl, isLoaded } = useWallpaper();
 
   return (
     <div className="absolute inset-0">
@@ -102,12 +38,6 @@ export default function RandomBackground() {
           opacity: isLoaded ? 1 : 0
         }}
       />
-
-      <button
-        onClick={fetchNewWallpaper}
-        className="absolute bottom-4 right-4 rounded-full bg-blue-500 px-4 py-2 text-white shadow-lg hover:bg-blue-600">
-        New Wallpaper
-      </button>
     </div>
   );
 }

@@ -42,7 +42,7 @@ export default function AgnleSettings(props: AngleSettingsProps) {
 
   return (
     <div>
-      <p>{tempDeg}°</p>
+      <p className="absolute top-0">{tempDeg}°</p>
       <AnglePicker value={deg} onChange={handleDegChange} />
     </div>
   );
