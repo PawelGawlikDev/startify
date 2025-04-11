@@ -1,7 +1,7 @@
 {
   "name": "startify",
   "displayName": "Startify",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "A customizable and beautiful new tab page for your browser.",
   "author": "PawelGawlikDev",
   "scripts": {
