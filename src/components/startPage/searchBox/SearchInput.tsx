@@ -340,7 +340,7 @@ export default function SearchInput({
                   duration: 0.3,
                   ease: "linear"
                 }}
-                className="w-[calc(100%-2rem)] truncate pl-4 text-left text-sm font-normal text-neutral-500 sm:pl-12 sm:text-base">
+                className="w-[calc(100%-2rem)] truncate pl-12 text-left text-sm font-normal text-neutral-500 sm:text-base">
                 {placeholders[currentPlaceholder]}
               </motion.p>
             )}

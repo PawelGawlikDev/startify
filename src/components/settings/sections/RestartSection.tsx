@@ -35,20 +35,18 @@ export default function RestartSection() {
   return (
     <SettingsSection
       className="relative flex w-full flex-col gap-4"
-      sectionTitle={chrome.i18n.getMessage("restart") ?? "Restart"}>
+      sectionTitle={chrome.i18n.getMessage("restart")}>
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0, transition: { duration: 0.4 } }}
         className="flex flex-row items-center justify-between">
-        <p>
-          {chrome.i18n.getMessage("deleteQuickLinks") ?? "Delete Quick Links"}
-        </p>
+        <p>{chrome.i18n.getMessage("deleteQuickLinks")}</p>
         <div className="z-2 flex min-w-32 cursor-default flex-row items-center justify-center gap-2">
           <Button
             onClick={handleDeleteQuickLinks}
             borderRadius="1.75rem"
             className="border-slate-800 bg-slate-900 text-white hover:bg-slate-700">
-            {chrome.i18n.getMessage("delete") ?? "Delete"}
+            {chrome.i18n.getMessage("delete")}
           </Button>
         </div>
       </motion.div>
@@ -56,16 +54,13 @@ export default function RestartSection() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0, transition: { duration: 0.4 } }}
         className="flex flex-row items-center justify-between">
-        <p>
-          {chrome.i18n.getMessage("restoreToDefaultSettings") ??
-            "Restore to default settings"}
-        </p>
+        <p>{chrome.i18n.getMessage("restoreToDefaultSettings")}</p>
         <div className="z-2 flex min-w-32 cursor-default flex-row items-center justify-center gap-2">
           <Button
             onClick={handleResetClick}
             borderRadius="1.75rem"
             className="border-slate-800 bg-slate-900 text-white hover:bg-slate-700">
-            {chrome.i18n.getMessage("reset") ?? "Reset"}
+            {chrome.i18n.getMessage("reset")}
           </Button>
         </div>
       </motion.div>

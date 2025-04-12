@@ -36,8 +36,8 @@
     "description": "Wybierz typ szybkiego łącza"
   },
   "restart": {
-    "message": "Uruchom ponownie",
-    "description": "Uruchom ponownie nagłówek"
+    "message": "Restart ustawień",
+    "description": "Restart ustawień"
   },
   "deleteQuickLinks": {
     "message": "Usuń szybkie linki",
@@ -50,6 +50,14 @@
   "restoreToDefaultSettings": {
     "message": "Przywróć do ustawień domyślnych",
     "description": "Przywróć do ustawień domyślnych"
+  },
+  "weatherWidget": {
+    "message": "Pogoda",
+    "description": "Pogoda"
+  },
+  "weatherWidgetSettingsText": {
+    "message": "Włącz widget pogody",
+    "description": "Włącz widget pogody"
   },
   "disable": {
     "message": "Wyłącz",

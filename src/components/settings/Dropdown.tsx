@@ -23,7 +23,7 @@ const backgroundOptions: Record<Backgrounds, { name: string }> = {
 
 const quickLinkTypes: Record<QuickLinkTypes, string> = {
   gradient: "Gradient",
-  transparent: chrome.i18n.getMessage("transparent") ?? "transparent"
+  transparent: chrome.i18n.getMessage("transparent")
 };
 
 const wrapperVariants = {

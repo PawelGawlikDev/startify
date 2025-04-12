@@ -18,7 +18,7 @@ import SeatchBox from "./startPage/searchBox/SearchBox";
 import { WeatherWidget } from "./weatherWidget/WeatherWidget";
 
 export default function App() {
-  const [weatherWidget, setWeatherWidget] = useStorage<WeatherWidgetSettings>(
+  const [weatherWidget] = useStorage<WeatherWidgetSettings>(
     "weatherWidget",
     defaultWeatherWidget
   );
@@ -31,39 +31,46 @@ export default function App() {
         <a
           href={chrome.runtime.getURL("/options.html")}
           target="_blank"
-          rel="noreferrer"
-          className="text-white">
-          <IconSettings stroke={1} width={20} height={20} />
+          rel="noreferrer">
+          <IconSettings color="white" stroke={1} width={20} height={20} />
         </a>
 
         {!isFirefox && (
-          <button
+          <IconBrandChrome
             onClick={async () => {
               chrome.tabs.update({
                 url: "chrome://new-tab-page/"
               });
             }}
-            className="text-white">
-            <IconBrandChrome stroke={1} width={20} height={20} />
-          </button>
+            className="cursor-pointer"
+            color="white"
+            stroke={1}
+            width={20}
+            height={20}
+          />
         )}
 
         {wallpaper && background === "random" && (
-          <button className="text-white" onClick={wallpaper.fetchNewWallpaper}>
-            <IconWallpaper stroke={1} width={20} height={20} />
-          </button>
+          <IconWallpaper
+            className="cursor-pointer"
+            color="white"
+            onClick={wallpaper.fetchNewWallpaper}
+            stroke={1}
+            width={20}
+            height={20}
+          />
         )}
       </div>
-      <div className="absolute right-2 top-2 inline-flex items-center">
-        <div className="aspect-[1/1] w-16">
-          <WeatherWidget
-            localizationType={weatherWidget.localizationType}
-            enable={weatherWidget.enable}
-            location={weatherWidget.location}
-            setWeatherWidget={setWeatherWidget}
-          />
+      {weatherWidget.enable && (
+        <div className="absolute right-2 top-2 inline-flex items-center">
+          <div className="aspect-[1/1] w-16">
+            <WeatherWidget
+              localizationType={weatherWidget.localizationType}
+              location={weatherWidget.location}
+            />
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="flex flex-col items-center gap-14 px-4">
         <DigitalTime />
