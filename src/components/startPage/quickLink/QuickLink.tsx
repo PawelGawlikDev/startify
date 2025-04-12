@@ -10,7 +10,7 @@ import { cn } from "@/utils/cn";
 
 import QuickLinkBackground from "./QuickLinkBackground";
 
-interface QuickLinkProps {
+type QuickLinkProps = {
   pageName: string;
   url: string;
   id: number;
@@ -23,15 +23,15 @@ interface QuickLinkProps {
       id: number;
     }>
   >;
-}
+};
 
-interface AddQuickLink {
+type AddQuickLink = {
   quickLinkSettings: QuickLinkSettings;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   setEditingLink: React.Dispatch<
     React.SetStateAction<{ name: string; url: string }>
   >;
-}
+};
 
 export function QuickLink(props: QuickLinkProps) {
   const { pageName, url, id, quickLinkSettings, setShowModal, setEditingLink } =
@@ -112,7 +112,7 @@ export function QuickLink(props: QuickLinkProps) {
                   data-testid="DeleteQuickLink"
                   className="flex w-full items-center justify-center rounded-b-xl p-3 hover:bg-neutral-600"
                   onClick={handleDeleteClick}>
-                  {chrome.i18n.getMessage("delete") ?? "Delete"}
+                  {chrome.i18n.getMessage("delete")}
                 </span>
               </div>
             )}
@@ -156,7 +156,7 @@ export function AddQuickLinkButton(props: AddQuickLink) {
         <div className="z-10 flex h-full items-center justify-center gap-1">
           <AddButton />
           <p className="inline-block max-w-0 overflow-hidden text-nowrap text-white opacity-0 transition-all duration-500 group-hover:max-w-full group-hover:opacity-100">
-            {chrome.i18n.getMessage("addQuickLinkText") ?? "Add QuickLink"}
+            {chrome.i18n.getMessage("addQuickLinkText")}
           </p>
         </div>
       </QuickLinkBackground>

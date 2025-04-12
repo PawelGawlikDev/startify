@@ -1,4 +1,4 @@
-import type { QuickLinkSettings } from "@/types";
+import type { QuickLinkSettings, WeatherWidgetSettings } from "@/types";
 import { SearchEngineEnum, searchEngines } from "@/utils/searchEngine";
 
 export const defaultColor = {
@@ -16,4 +16,10 @@ export const defaultVanishAnimation = true;
 export const defaultQuickLink: QuickLinkSettings = {
   bigQuickLinks: false,
   type: "gradient"
+};
+
+export const defaultWeatherWidget: WeatherWidgetSettings = {
+  localizationType: "ip",
+  location: "auto:ip",
+  enable: false
 };

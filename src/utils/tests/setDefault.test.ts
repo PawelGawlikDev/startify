@@ -4,9 +4,14 @@ import { Storage } from "@plasmohq/storage";
 
 import {
   defaultColor,
-  defaultQuickLink
+  defaultQuickLink,
+  defaultWeatherWidget
 } from "@/constants/defaultSettingsValues";
-import { setDefaultColors, setDefaultQuickLink } from "@/utils/defaultSettings";
+import {
+  setDefaultColors,
+  setDefaultQuickLink,
+  setDefaultWeatherWidget
+} from "@/utils/defaultSettings";
 
 vi.mock("@plasmohq/storage", () => {
   const storageMock = {
@@ -32,5 +37,12 @@ describe("Check user settings", () => {
   test("set default quick links test", async () => {
     await setDefaultQuickLink(storageMock);
     expect(storageMock.set).toHaveBeenCalledWith("quickLink", defaultQuickLink);
+  });
+  test("set default weather test", async () => {
+    await setDefaultWeatherWidget(storageMock);
+    expect(storageMock.set).toHaveBeenCalledWith(
+      "weatherWidget",
+      defaultWeatherWidget
+    );
   });
 });

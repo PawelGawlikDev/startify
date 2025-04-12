@@ -1,10 +1,10 @@
 import React, { type ReactNode } from "react";
 
-interface SettingsSectionProps {
+type SettingsSectionProps = {
   children: ReactNode;
   sectionTitle: string;
   className?: string;
-}
+};
 
 export default function SettingsSection({
   children,

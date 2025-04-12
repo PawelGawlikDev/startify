@@ -51,6 +51,14 @@
     "message": "Restore to default settings",
     "description": "Restore to default settings"
   },
+  "weatherWidget": {
+    "message": "Weather",
+    "description": "Weather"
+  },
+  "weatherWidgetSettingsText": {
+    "message": "Enable weather widget",
+    "description": "Enable weather widget"
+  },
   "disable": {
     "message": "Disable",
     "description": "Disable"

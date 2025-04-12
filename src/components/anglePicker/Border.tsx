@@ -1,13 +1,13 @@
 import React, { forwardRef } from "react";
 
-interface BorderProps {
+type BorderProps = {
   width?: number;
   borderColor?: string;
   borderStyle?: string;
   borderWidth?: number;
   onMouseDown?: React.MouseEventHandler<HTMLDivElement>;
   children: React.ReactNode;
-}
+};
 
 const Border = forwardRef<HTMLDivElement, BorderProps>((props, ref) => {
   const {

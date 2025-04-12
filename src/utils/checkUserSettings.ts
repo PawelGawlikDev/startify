@@ -2,9 +2,14 @@ import { Storage } from "@plasmohq/storage";
 
 import {
   defaultColor,
-  defaultQuickLink
+  defaultQuickLink,
+  defaultWeatherWidget
 } from "@/constants/defaultSettingsValues";
-import type { ColorSettings, QuickLinkSettings } from "@/types";
+import type {
+  ColorSettings,
+  QuickLinkSettings,
+  WeatherWidgetSettings
+} from "@/types";
 
 import checkAndSetDefaults from "./checkAndSetDefault";
 import {
@@ -52,6 +57,18 @@ export async function checkUserSettings() {
       "quickLink",
       quickLinksSettings,
       defaultQuickLink
+    );
+  }
+
+  const weatherWidgetSettings: WeatherWidgetSettings =
+    await storage.get("weatherWidget");
+
+  if (weatherWidgetSettings === undefined) {
+    await checkAndSetDefaults(
+      storage,
+      "weatherWidget",
+      weatherWidgetSettings,
+      defaultWeatherWidget
     );
   }
 }

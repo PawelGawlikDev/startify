@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 
-interface ColorPickerButtonProps {
+type ColorPickerButtonProps = {
   color: { primary: string; secondary: string };
   setColor: React.Dispatch<
     React.SetStateAction<{ deg: number; primary: string; secondary: string }>
   >;
-}
+};
 
 export default function ColorPickerButton(props: ColorPickerButtonProps) {
   const { color, setColor } = props;

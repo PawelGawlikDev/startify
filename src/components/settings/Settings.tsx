@@ -5,6 +5,7 @@ import BackgroundSection from "./sections/BackogrundSection";
 import QuickLinkSection from "./sections/QuickLinksSection";
 import RestartSection from "./sections/RestartSection";
 import SearchBoxSection from "./sections/SearchBoxSection";
+import WeatherSection from "./sections/WeatherSection";
 
 const containerVariants = {
   hidden: { opacity: 0, scale: 0.9 },
@@ -18,7 +19,7 @@ export default function Settings() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0, transition: { duration: 0.4 } }}
         className="relative z-10 mx-[20%] h-full w-full text-4xl">
-        <h1>{chrome.i18n.getMessage("settingsHeader") ?? "Settings"}</h1>
+        <h1>{chrome.i18n.getMessage("settingsHeader")}</h1>
       </motion.div>
       <motion.div
         className="relative mx-[20%] my-5 flex flex-col items-center justify-center gap-16"
@@ -27,6 +28,7 @@ export default function Settings() {
         variants={containerVariants}>
         <SearchBoxSection />
         <BackgroundSection />
+        <WeatherSection />
         <QuickLinkSection />
         <RestartSection />
       </motion.div>

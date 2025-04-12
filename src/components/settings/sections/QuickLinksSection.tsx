@@ -19,14 +19,12 @@ export default function QuickLinkSection() {
   return (
     <SettingsSection
       className="relative flex w-full flex-col gap-4"
-      sectionTitle={
-        chrome.i18n.getMessage("quickLinkSection") ?? "Quick Links Section"
-      }>
+      sectionTitle={chrome.i18n.getMessage("quickLinkSection")}>
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0, transition: { duration: 0.4 } }}
         className="flex flex-row items-center justify-between">
-        <p>{chrome.i18n.getMessage("bigQuickLink") ?? "Big Quick Links"}</p>
+        <p>{chrome.i18n.getMessage("bigQuickLink")}</p>
         <div className="z-2 flex min-w-32 cursor-default flex-row items-center justify-center gap-2">
           <Button
             onClick={async () => {
@@ -35,18 +33,13 @@ export default function QuickLinkSection() {
                 bigQuickLinks: !quickLink.bigQuickLinks
               });
             }}
-            borderClassName={
-              quickLink?.bigQuickLinks
-                ? "bg-[radial-gradient(var(--red-500)_40%,transparent_60%)]"
-                : ""
-            }
+            borderClassName={quickLink?.bigQuickLinks ? "bg-secondary-500" : ""}
             borderRadius="1.75rem"
             className="border-slate-800 bg-slate-900 text-white hover:bg-slate-700">
             {quickLink?.bigQuickLinks
-              ? (chrome.i18n.getMessage("disable") ?? "Disable")
-              : (chrome.i18n.getMessage("enable") ?? "Enable")}
+              ? chrome.i18n.getMessage("disable")
+              : chrome.i18n.getMessage("enable")}
           </Button>
-          <p>{chrome.i18n.getMessage("") ?? "Choose quick link type"}</p>
           {quickLink && (
             <Dropdown
               title={

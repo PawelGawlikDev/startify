@@ -1,11 +1,11 @@
 import React from "react";
 
-interface CircleProps {
+type CircleProps = {
   x: number;
   y: number;
   color?: string;
   width?: number;
-}
+};
 
 const Circle: React.FC<CircleProps> = ({
   x,

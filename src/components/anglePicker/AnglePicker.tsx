@@ -7,7 +7,7 @@ import Circle from "./Circle";
 import { BORDER_WIDTH, CIRCLE_WIDTH, WIDTH } from "./constant";
 import { getCenter, getStartPoint, radianToAngle } from "./service";
 
-interface PickerProps {
+type PickerProps = {
   borderColor?: string;
   pointerColor?: string;
   pointerWidth?: number;
@@ -18,7 +18,7 @@ interface PickerProps {
   onChange?: (newValue: number) => void;
   onAfterChange?: (interactiveValue: number) => void;
   preventDefault?: boolean;
-}
+};
 
 const AnglePicker: React.FC<PickerProps> = ({
   borderColor,
