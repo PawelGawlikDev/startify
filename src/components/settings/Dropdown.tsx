@@ -175,7 +175,7 @@ export const Dropdown = ({
         initial={wrapperVariants.closed}
         variants={wrapperVariants}
         style={{ originY: "top", translateX: "-50%" }}
-        className="absolute left-[50%] top-[120%] flex min-w-28 flex-col gap-2 overflow-hidden rounded-lg bg-white p-2 shadow-xl">
+        className="absolute left-[50%] top-[120%] z-50 flex min-w-28 flex-col gap-2 overflow-hidden rounded-lg bg-white p-2 shadow-xl">
         {children}
       </motion.ul>
     </motion.div>

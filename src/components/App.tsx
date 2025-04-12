@@ -1,13 +1,17 @@
-import { IconBrandChrome } from "@tabler/icons-react";
+import {
+  IconBrandChrome,
+  IconSettings,
+  IconWallpaper
+} from "@tabler/icons-react";
 import React from "react";
 
 import { useStorage } from "@plasmohq/storage/hook";
 
 import { isFirefox } from "@/constants/browser";
 import { defaultWeatherWidget } from "@/constants/defaultSettingsValues";
-import type { WeatherWidgetSettings } from "@/types";
+import { useWallpaper } from "@/context/WallpaperContext";
+import type { Backgrounds, WeatherWidgetSettings } from "@/types";
 
-import SettingsGear from "./SettingsGear";
 import DigitalTime from "./startPage/DigitalTime";
 import QuickLinkGrid from "./startPage/quickLink/QuickLinkGrid";
 import SeatchBox from "./startPage/searchBox/SearchBox";
@@ -18,6 +22,8 @@ export default function App() {
     "weatherWidget",
     defaultWeatherWidget
   );
+  const [background] = useStorage<Backgrounds>("background");
+  const wallpaper = useWallpaper();
 
   return (
     <>
@@ -26,8 +32,8 @@ export default function App() {
           href={chrome.runtime.getURL("/options.html")}
           target="_blank"
           rel="noreferrer"
-          className="h-4 w-4 cursor-pointer text-white">
-          <SettingsGear />
+          className="text-white">
+          <IconSettings stroke={1} width={20} height={20} />
         </a>
 
         {!isFirefox && (
@@ -39,6 +45,12 @@ export default function App() {
             }}
             className="text-white">
             <IconBrandChrome stroke={1} width={20} height={20} />
+          </button>
+        )}
+
+        {wallpaper && background === "random" && (
+          <button className="text-white" onClick={wallpaper.fetchNewWallpaper}>
+            <IconWallpaper stroke={1} width={20} height={20} />
           </button>
         )}
       </div>

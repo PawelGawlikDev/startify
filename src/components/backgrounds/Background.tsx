@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
 
-import { useStorage } from "@plasmohq/storage/hook";
-
 import type { Backgrounds } from "@/types";
 import { resolveBgType } from "@/utils/backgroundMap";
 
-export default function Background({
-  children
-}: {
+interface BackgroundProps {
   children: React.ReactNode;
-}) {
-  const [background] = useStorage<Backgrounds>("background");
+  background: Backgrounds;
+}
+
+export default function Background({ children, background }: BackgroundProps) {
   const [BackgroundComponent, setBackgroundComponent] =
     useState<React.ComponentType | null>(null);
 
@@ -33,7 +31,7 @@ export default function Background({
           <BackgroundComponent />
         </div>
       )}
-      <div className="relative z-10 min-h-screen">{children}</div>
+      {children}
     </div>
   );
 }

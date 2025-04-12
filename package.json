@@ -1,13 +1,13 @@
 {
   "name": "startify",
   "displayName": "Startify",
-  "version": "0.0.13",
+  "version": "0.0.15",
   "description": "A customizable and beautiful new tab page for your browser.",
   "author": "PawelGawlikDev",
   "scripts": {
-    "build": "plasmo build --hoist",
-    "build:firefox": "plasmo build --hoist --target=firefox-mv3 --env=.env.firefox",
-    "build:firefox-mv2": "plasmo build --hoist --target=firefox-mv2 --env=.env.firefox",
+    "build": "plasmo build",
+    "build:firefox": "plasmo build --target=firefox-mv3 --env=.env.firefox",
+    "build:firefox-mv2": "plasmo build --target=firefox-mv2 --env=.env.firefox",
     "dev": "plasmo dev",
     "dev:firefox": "plasmo dev --target=firefox-mv3 --env=.env.firefox",
     "dev:firefox-mv2": "plasmo dev --target=firefox-mv2 --env=.env.firefox",
