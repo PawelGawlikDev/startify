@@ -19,9 +19,7 @@ import {
 } from "./defaultSettings";
 
 export async function checkUserSettings() {
-  const storage = new Storage({
-    area: "local"
-  });
+  const storage = new Storage();
   const userEngineSettings = await storage.get("engine");
 
   if (userEngineSettings === undefined) {

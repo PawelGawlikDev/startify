@@ -94,6 +94,7 @@
     }
   },
   "manifest": {
+    "key": "$CRX_PUBLIC_KEY",
     "browser_specific_settings": {
       "gecko": {
         "id": "{d5e5fe42-da08-4573-8ffd-6075ae68c834}"
