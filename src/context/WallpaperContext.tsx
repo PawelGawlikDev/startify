@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 
+import { wallpaperApi } from "@/config";
 import { db } from "@/indexdb";
 
 interface WallpaperContextProps {
@@ -26,7 +27,7 @@ export const WallpaperProvider = ({
 
   const fetchNewWallpaper = async () => {
     try {
-      const response = await fetch("https://bingw.jasonzeng.dev/?index=random");
+      const response = await fetch(`${wallpaperApi}/?index=random`);
 
       if (!response.ok)
         throw new Error(`Failed to fetch image: ${response.statusText}`);

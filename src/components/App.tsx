@@ -1,9 +1,7 @@
-import {
-  IconBrandChrome,
-  IconSettings,
-  IconWallpaper
-} from "@tabler/icons-react";
 import React from "react";
+import IconChrome from "react:@/assets/icons/chromeIcon.svg";
+import IconSettings from "react:@/assets/icons/settings.svg";
+import IconWallpaper from "react:@/assets/icons/wallpaper.svg";
 
 import { useStorage } from "@plasmohq/storage/hook";
 
@@ -32,11 +30,11 @@ export default function App() {
           href={chrome.runtime.getURL("/options.html")}
           target="_blank"
           rel="noreferrer">
-          <IconSettings color="white" stroke={1} width={20} height={20} />
+          <IconSettings color="white" />
         </a>
 
         {!isFirefox && (
-          <IconBrandChrome
+          <IconChrome
             onClick={async () => {
               chrome.tabs.update({
                 url: "chrome://new-tab-page/"
@@ -44,9 +42,6 @@ export default function App() {
             }}
             className="cursor-pointer"
             color="white"
-            stroke={1}
-            width={20}
-            height={20}
           />
         )}
 
@@ -55,9 +50,6 @@ export default function App() {
             className="cursor-pointer"
             color="white"
             onClick={wallpaper.fetchNewWallpaper}
-            stroke={1}
-            width={20}
-            height={20}
           />
         )}
       </div>

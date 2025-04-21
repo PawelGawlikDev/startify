@@ -9,7 +9,8 @@ export default defineConfig({
       "@/components": path.resolve(__dirname, "src/components"),
       "@/indexdb": path.resolve(__dirname, "src/indexdb"),
       "@/types": path.resolve(__dirname, "src/types.d.ts"),
-      "@/constants": path.resolve(__dirname, "src/constants")
+      "@/constants": path.resolve(__dirname, "src/constants"),
+      "@/config": path.resolve(__dirname, "src/config.ts")
     }
   },
   test: {

@@ -4,11 +4,10 @@ import type { Backgrounds } from "@/types";
 import { resolveBgType } from "@/utils/backgroundMap";
 
 interface BackgroundProps {
-  children: React.ReactNode;
   background: Backgrounds;
 }
 
-export default function Background({ children, background }: BackgroundProps) {
+export default function Background({ background }: BackgroundProps) {
   const [BackgroundComponent, setBackgroundComponent] =
     useState<React.ComponentType | null>(null);
 
@@ -25,13 +24,8 @@ export default function Background({ children, background }: BackgroundProps) {
   }, [background]);
 
   return (
-    <div className="relative min-h-screen w-full">
-      {BackgroundComponent && (
-        <div className="fixed inset-0 -z-10">
-          <BackgroundComponent />
-        </div>
-      )}
-      {children}
+    <div className="absolute inset-0 -z-10">
+      {BackgroundComponent && <BackgroundComponent />}
     </div>
   );
 }

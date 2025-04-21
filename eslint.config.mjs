@@ -12,8 +12,10 @@ export default [
       ".plasmo/",
       "node_modules/",
       "pnpm-lock.yaml",
+      "CHANGELOG.md",
       "coverage/",
-      "playwright-report/"
+      "playwright-report/",
+      "playwright/.cache"
     ]
   },
   { files: ["**/*.{ts,tsx}"] },
@@ -95,7 +97,7 @@ export default [
   },
   {
     ...playwright.configs["flat/recommended"],
-    files: ["tests/**/*.ts"],
+    files: ["tests/**/*.ts", "tests/**/*.tsx"],
     rules: {
       ...playwright.configs["flat/recommended"].rules,
       "padding-line-between-statements": [

@@ -29,15 +29,17 @@ export default function RandomBackground() {
         </div>
       )}
 
-      <div
-        className="absolute inset-0 transition-opacity duration-500"
-        style={{
-          backgroundImage: `url(${backgroundImageUrl})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          opacity: isLoaded ? 1 : 0
-        }}
-      />
+      {backgroundImageUrl && (
+        <div
+          className="absolute inset-0 transition-opacity duration-500"
+          style={{
+            backgroundImage: `url(${backgroundImageUrl})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            opacity: isLoaded ? 1 : 0
+          }}
+        />
+      )}
     </div>
   );
 }
