@@ -6,7 +6,7 @@ import "../style.css";
 
 import Layout from "@/components/Layout";
 
-function IndexNewTab() {
+function NewTab() {
   return (
     <Layout>
       <App />
@@ -14,4 +14,4 @@ function IndexNewTab() {
   );
 }
 
-export default IndexNewTab;
+export default NewTab;

@@ -1,86 +1,86 @@
 {
   "addQuickLinkText": {
-    "message": "Add QuickLink",
+    "message": "QuickLink hinzufügen",
     "description": "Button or label for adding a new quick link on the start page"
   },
   "settingsHeader": {
-    "message": "Settings",
+    "message": "Einstellungen",
     "description": "Main header for the settings section"
   },
   "engineSettings": {
-    "message": "Search Engine",
+    "message": "Suchmaschine",
     "description": "Label for the section where the user can configure the default search engine"
   },
   "chosseEngine": {
-    "message": "Choose search engine",
+    "message": "Suchmaschine auswählen",
     "description": "Prompt or label instructing the user to select a preferred search engine"
   },
   "vanishAnimation": {
-    "message": "Vanish Animation",
+    "message": "Verschwinden-Animation",
     "description": "Option to enable or configure an animation effect for disappearing elements"
   },
   "backgroundSettings": {
-    "message": "Background Settings",
+    "message": "Hintergrundeinstellungen",
     "description": "Header for settings related to the application's background"
   },
   "chooseBackground": {
-    "message": "Choose background",
+    "message": "Hintergrund auswählen",
     "description": "Prompt or label for selecting a background image or color"
   },
   "quickLinkSection": {
-    "message": "Quick Links Section",
+    "message": "Bereich für Schnellzugriffe",
     "description": "Header for the section displaying quick access links"
   },
   "chooseQuickLinkType": {
-    "message": "Choose quick link type",
+    "message": "Typ des Schnellzugriffs wählen",
     "description": "Instruction for selecting the type or category of a quick link"
   },
   "restart": {
-    "message": "Restart",
+    "message": "Neustart",
     "description": "Header or label for restart-related settings or action"
   },
   "deleteQuickLinks": {
-    "message": "Delete Quick Links",
+    "message": "Schnellzugriffe löschen",
     "description": "Option or button to remove all quick links from the interface"
   },
   "bigQuickLink": {
-    "message": "Big Quick Links",
+    "message": "Große Schnellzugriffe",
     "description": "Label or toggle for enabling larger-sized quick link icons"
   },
   "restoreToDefaultSettings": {
-    "message": "Restore to default settings",
+    "message": "Auf Standardeinstellungen zurücksetzen",
     "description": "Button or action to reset all user settings to the default configuration"
   },
   "weatherWidget": {
-    "message": "Weather",
+    "message": "Wetter",
     "description": "Header or label related to weather features in the app"
   },
   "weatherWidgetSettingsText": {
-    "message": "Enable weather widget",
+    "message": "Wetter-Widget aktivieren",
     "description": "Toggle or option to show the weather widget on the interface"
   },
   "disable": {
-    "message": "Disable",
+    "message": "Deaktivieren",
     "description": "Generic action button or label to turn off a feature"
   },
   "enable": {
-    "message": "Enable",
+    "message": "Aktivieren",
     "description": "Generic action button or label to turn on a feature"
   },
   "delete": {
-    "message": "Delete",
+    "message": "Löschen",
     "description": "Generic action to remove an item"
   },
   "reset": {
-    "message": "Reset",
+    "message": "Zurücksetzen",
     "description": "Generic action to restore values or states to a previous or default condition"
   },
   "save": {
-    "message": "Save",
+    "message": "Speichern",
     "description": "Action button to confirm and save changes"
   },
   "address": {
-    "message": "Address",
+    "message": "Adresse",
     "description": "Field label for entering a URL or physical address"
   },
   "name": {
@@ -88,7 +88,7 @@
     "description": "Field label for entering a name or title"
   },
   "close": {
-    "message": "Close",
+    "message": "Schließen",
     "description": "Action to close a dialog, modal, or window"
   },
   "transparent": {

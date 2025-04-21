@@ -19,9 +19,12 @@ export default function Layout({ children }: LayoutProps): React.JSX.Element {
     checkUserSettings();
   }, []);
 
-  const content = <Background background={background}>{children}</Background>;
-
   return (
-    <WallpaperProvider background={background}>{content}</WallpaperProvider>
+    <>
+      <WallpaperProvider background={background}>
+        <Background background={background} />
+      </WallpaperProvider>
+      {children}
+    </>
   );
 }

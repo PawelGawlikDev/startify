@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 
+import { weatherApiKeys } from "@/config";
 import { userLang } from "@/constants/browser";
 import type { WeatherDataTypes } from "@/types";
 
@@ -10,19 +11,6 @@ type WeatherWidgetProps = {
 
 export const WeatherWidget = (props: WeatherWidgetProps) => {
   const { location, localizationType } = props;
-
-  const weatherApiKeys = [
-    "d36ce712613d4f21a6083436240910",
-    "db0392b338114f208ee135134240312",
-    "de5f7396db034fa2bf3140033240312",
-    "c64591e716064800992140217240312",
-    "9b3204c5201b4b4d8a2140330240312",
-    "eb8a315c15214422b60140503240312",
-    "cd148ebb1b784212b74140622240312",
-    "7ae67e219af54df2840140801240312",
-    "0a6bc8a404224c8d89953341241912",
-    "f59e58d7735d4739ae953115241912"
-  ];
 
   const getRandomKey = () => {
     return weatherApiKeys[Math.floor(Math.random() * weatherApiKeys.length)];

@@ -15,7 +15,7 @@ export const defaultVanishAnimation = true;
 
 export const defaultQuickLink: QuickLinkSettings = {
   bigQuickLinks: false,
-  type: "gradient"
+  type: "transparent"
 };
 
 export const defaultWeatherWidget: WeatherWidgetSettings = {

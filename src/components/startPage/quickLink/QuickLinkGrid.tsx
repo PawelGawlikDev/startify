@@ -15,7 +15,7 @@ import QuickLinkModal from "./QuickLinkModal";
 export default function QuickLinkGrid() {
   const [quickLink] = useStorage<QuickLinkSettings>("quickLink", {
     bigQuickLinks: false,
-    type: "gradient"
+    type: "transparent"
   });
 
   const [showModal, setShowModal] = useState(false);

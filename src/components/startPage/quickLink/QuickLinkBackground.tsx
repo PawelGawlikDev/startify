@@ -11,7 +11,7 @@ export default function QuickLinkBackground({
   containerClassName,
   draggable = true,
   animate = true,
-  type = "gradient"
+  type = "transparent"
 }: {
   children?: React.ReactNode;
   className?: string;

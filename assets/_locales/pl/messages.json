@@ -1,98 +1,98 @@
 {
   "addQuickLinkText": {
     "message": "Dodaj QuickLink",
-    "description": "Dodaj nowy szybki link do strony początkowej"
+    "description": "Button or label for adding a new quick link on the start page"
   },
   "settingsHeader": {
     "message": "Ustawienia",
-    "description": "Nagłówek ustawień"
+    "description": "Main header for the settings section"
   },
   "engineSettings": {
     "message": "Wyszukiwarka",
-    "description": "Wyszukiwarka konfiguracji"
+    "description": "Label for the section where the user can configure the default search engine"
   },
   "chosseEngine": {
     "message": "Wybierz wyszukiwarkę",
-    "description": "Wybierz wyszukiwarkę"
+    "description": "Prompt or label instructing the user to select a preferred search engine"
   },
   "vanishAnimation": {
     "message": "Znikają animację",
-    "description": "Znikają animację"
+    "description": "Option to enable or configure an animation effect for disappearing elements"
   },
   "backgroundSettings": {
     "message": "Ustawienia tła",
-    "description": "Nagłówek ustawień tła"
+    "description": "Header for settings related to the application's background"
   },
   "chooseBackground": {
     "message": "Wybierz tło",
-    "description": "Wybierz tło"
+    "description": "Prompt or label for selecting a background image or color"
   },
   "quickLinkSection": {
     "message": "Sekcja szybkich linków",
-    "description": "Sekcja szybkich linków"
+    "description": "Header for the section displaying quick access links"
   },
   "chooseQuickLinkType": {
     "message": "Wybierz typ szybkiego łącza",
-    "description": "Wybierz typ szybkiego łącza"
+    "description": "Instruction for selecting the type or category of a quick link"
   },
   "restart": {
     "message": "Restart ustawień",
-    "description": "Restart ustawień"
+    "description": "Header or label for restart-related settings or action"
   },
   "deleteQuickLinks": {
     "message": "Usuń szybkie linki",
-    "description": "Usuń szybkie linki"
+    "description": "Option or button to remove all quick links from the interface"
   },
   "bigQuickLink": {
     "message": "Duże szybkie linki",
-    "description": "Seckcja dużysz szybkich linków"
+    "description": "Label or toggle for enabling larger-sized quick link icons"
   },
   "restoreToDefaultSettings": {
     "message": "Przywróć do ustawień domyślnych",
-    "description": "Przywróć do ustawień domyślnych"
+    "description": "Button or action to reset all user settings to the default configuration"
   },
   "weatherWidget": {
     "message": "Pogoda",
-    "description": "Pogoda"
+    "description": "Header or label related to weather features in the app"
   },
   "weatherWidgetSettingsText": {
     "message": "Włącz widget pogody",
-    "description": "Włącz widget pogody"
+    "description": "Toggle or option to show the weather widget on the interface"
   },
   "disable": {
     "message": "Wyłącz",
-    "description": "Wyłącz"
+    "description": "Generic action button or label to turn off a feature"
   },
   "enable": {
     "message": "Włącz",
-    "description": "Włącz"
+    "description": "Generic action button or label to turn on a feature"
   },
   "delete": {
     "message": "Usuń",
-    "description": "Usuń"
+    "description": "Generic action to remove an item"
   },
   "reset": {
     "message": "Reset",
-    "description": "Reset"
+    "description": "Generic action to restore values or states to a previous or default condition"
   },
   "save": {
     "message": "Zapisz",
-    "description": "Zapisz"
+    "description": "Action button to confirm and save changes"
   },
   "address": {
     "message": "Adres",
-    "description": "Adres"
+    "description": "Field label for entering a URL or physical address"
   },
   "name": {
     "message": "Nazwa",
-    "description": "Nazwa"
+    "description": "Field label for entering a name or title"
   },
   "close": {
     "message": "Zamknij",
-    "description": "Zamknij"
+    "description": "Action to close a dialog, modal, or window"
   },
   "transparent": {
     "message": "Przezroczysty",
-    "description": "Przezroczysty"
+    "description": "Option or label referring to transparency settings"
   }
 }

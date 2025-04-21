@@ -1,98 +1,98 @@
 {
   "addQuickLinkText": {
-    "message": "Add QuickLink",
+    "message": "Agregar acceso rápido",
     "description": "Button or label for adding a new quick link on the start page"
   },
   "settingsHeader": {
-    "message": "Settings",
+    "message": "Configuración",
     "description": "Main header for the settings section"
   },
   "engineSettings": {
-    "message": "Search Engine",
+    "message": "Motor de búsqueda",
     "description": "Label for the section where the user can configure the default search engine"
   },
   "chosseEngine": {
-    "message": "Choose search engine",
+    "message": "Elegir motor de búsqueda",
     "description": "Prompt or label instructing the user to select a preferred search engine"
   },
   "vanishAnimation": {
-    "message": "Vanish Animation",
+    "message": "Animación de desaparición",
     "description": "Option to enable or configure an animation effect for disappearing elements"
   },
   "backgroundSettings": {
-    "message": "Background Settings",
+    "message": "Configuración de fondo",
     "description": "Header for settings related to the application's background"
   },
   "chooseBackground": {
-    "message": "Choose background",
+    "message": "Elegir fondo",
     "description": "Prompt or label for selecting a background image or color"
   },
   "quickLinkSection": {
-    "message": "Quick Links Section",
+    "message": "Sección de accesos rápidos",
     "description": "Header for the section displaying quick access links"
   },
   "chooseQuickLinkType": {
-    "message": "Choose quick link type",
+    "message": "Elegir tipo de acceso rápido",
     "description": "Instruction for selecting the type or category of a quick link"
   },
   "restart": {
-    "message": "Restart",
+    "message": "Reiniciar",
     "description": "Header or label for restart-related settings or action"
   },
   "deleteQuickLinks": {
-    "message": "Delete Quick Links",
+    "message": "Eliminar accesos rápidos",
     "description": "Option or button to remove all quick links from the interface"
   },
   "bigQuickLink": {
-    "message": "Big Quick Links",
+    "message": "Accesos rápidos grandes",
     "description": "Label or toggle for enabling larger-sized quick link icons"
   },
   "restoreToDefaultSettings": {
-    "message": "Restore to default settings",
+    "message": "Restaurar configuración predeterminada",
     "description": "Button or action to reset all user settings to the default configuration"
   },
-  "weatherWidget": {
-    "message": "Weather",
+  "weather": {
+    "message": "Clima",
     "description": "Header or label related to weather features in the app"
   },
   "weatherWidgetSettingsText": {
-    "message": "Enable weather widget",
+    "message": "Activar widget del clima",
     "description": "Toggle or option to show the weather widget on the interface"
   },
   "disable": {
-    "message": "Disable",
+    "message": "Desactivar",
     "description": "Generic action button or label to turn off a feature"
   },
   "enable": {
-    "message": "Enable",
+    "message": "Activar",
     "description": "Generic action button or label to turn on a feature"
   },
   "delete": {
-    "message": "Delete",
+    "message": "Eliminar",
     "description": "Generic action to remove an item"
   },
   "reset": {
-    "message": "Reset",
+    "message": "Restablecer",
     "description": "Generic action to restore values or states to a previous or default condition"
   },
   "save": {
-    "message": "Save",
+    "message": "Guardar",
     "description": "Action button to confirm and save changes"
   },
   "address": {
-    "message": "Address",
+    "message": "Dirección",
     "description": "Field label for entering a URL or physical address"
   },
   "name": {
-    "message": "Name",
+    "message": "Nombre",
     "description": "Field label for entering a name or title"
   },
   "close": {
-    "message": "Close",
+    "message": "Cerrar",
     "description": "Action to close a dialog, modal, or window"
   },
   "transparent": {
-    "message": "Transparent",
+    "message": "Transparente",
     "description": "Option or label referring to transparency settings"
   }
 }

@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import React, { useEffect, useRef, useState, type ReactNode } from "react";
-import { FiChevronDown } from "react-icons/fi";
+import Arrow from "react:@/assets/icons/arrow.svg";
 
 import { useStorage } from "@plasmohq/storage/hook";
 
@@ -168,7 +168,7 @@ export const Dropdown = ({
         className="flex items-center gap-2 rounded-md bg-secondary-500 px-3 py-2 text-indigo-50 transition-colors hover:bg-secondary-600">
         <span className="text-sm font-medium">{title}</span>
         <motion.span variants={iconVariants}>
-          <FiChevronDown />
+          <Arrow />
         </motion.span>
       </button>
       <motion.ul

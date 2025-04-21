@@ -1,7 +1,7 @@
-import { IconUpload } from "@tabler/icons-react";
 import { motion } from "motion/react";
 import React, { useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import IconUpload from "react:@/assets/icons/upload.svg";
 
 import { cn } from "@/utils/cn";
 
@@ -89,10 +89,10 @@ export const FileUpload = ({
                   animate={{ opacity: 1 }}
                   className="flex flex-col items-center text-neutral-600">
                   Drop it
-                  <IconUpload className="h-4 w-4 text-neutral-600" />
+                  <IconUpload className="text-neutral-600" />
                 </motion.p>
               ) : (
-                <IconUpload className="h-4 w-4 text-neutral-600" />
+                <IconUpload className="text-neutral-600" />
               )}
             </motion.div>
 
