@@ -51,7 +51,7 @@ jobs:
           node-version: 20.x
           cache: "pnpm"
       - name: Install Playwright Browsers
-        run: pnpm playwright install
+        run: pnpm playwright install --with-deps chromium firefox
       - name: Build Extension
         run: PARCEL_WORKER_BACKEND=process pnpm build
       - name: Run Playwright tests
