@@ -56,8 +56,8 @@ jobs:
         run: pnpm vitest
 
   playwright-ct:
-    runs-on: ubuntu-24.04
     needs: lint
+    runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
@@ -112,7 +112,7 @@ jobs:
         run: pnpm e2e
 
   release_chrome:
-    needs: [vitest, playwright]
+    needs: [vitest, playwright, playwright-ct]
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
@@ -145,7 +145,7 @@ jobs:
           zip_file: "build/chrome-mv3-prod.zip"
 
   release_firefox:
-    needs: [vitest, playwright]
+    needs: [vitest, playwright, playwright-ct]
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
@@ -176,7 +176,7 @@ jobs:
           jwt-secret: ${{ secrets.FIREFOX_API_SECRET }}
 
   release_github:
-    needs: [vitest, playwright]
+    needs: [vitest, playwright, playwright-ct]
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
