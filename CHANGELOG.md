@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.16](https://github.com/PawelGawlikDev/startify/compare/v0.0.15...v0.0.16) (2025-04-21)
+
+
+### Features
+
+* add many improvements ([b38fcde](https://github.com/PawelGawlikDev/startify/commit/b38fcdeb1fc605f6480288b2a153df01f8484979))
+* add weather widget ([304bd6a](https://github.com/PawelGawlikDev/startify/commit/304bd6aef17f4b6a4c198dff273ffbcb041062d5))
+
+
+### Bug Fixes
+
+* add missing automation workflow file ([a1c71c4](https://github.com/PawelGawlikDev/startify/commit/a1c71c4fc7629c652ae315a0664fe05577223e5b))
+* fix config and install only needed browsers ([50db724](https://github.com/PawelGawlikDev/startify/commit/50db724cf035fecbf18b3335d4bb1199c0227331))
+* fix storage area and add crx key ([f85a54e](https://github.com/PawelGawlikDev/startify/commit/f85a54e1bd37ed82d24380c418e1917e6011d9e8))
+* lint fixes ([7356ebd](https://github.com/PawelGawlikDev/startify/commit/7356ebd0f932df78ab31ed35da2872cd21f99a26))
+* missing package json ([bc968cb](https://github.com/PawelGawlikDev/startify/commit/bc968cbe624f25672dc087c5f084d05b1bb42fdb))
+* weather widget and rebase ([1b99cf2](https://github.com/PawelGawlikDev/startify/commit/1b99cf29988162837a2bb4cc2bb5399e3ec23a04))
+
 ### [0.0.15](https://github.com/PawelGawlikDev/startify/compare/v0.0.14...v0.0.15) (2025-04-11)
 
 
