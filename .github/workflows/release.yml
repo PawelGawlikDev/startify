@@ -106,6 +106,10 @@ jobs:
           cache: "pnpm"
       - name: Install Playwright Browsers
         run: pnpm playwright install --with-deps chromium
+      - name: Write .env.production file
+        run: |
+          echo "PLASMO_PUBLIC_WALLPAPER_API=${{ secrets.PLASMO_PUBLIC_WALLPAPER_API }}" >> .env.production
+          echo "PLASMO_PUBLIC_WEATHER_API_KEYS=${{ secrets.PLASMO_PUBLIC_WEATHER_API_KEYS }}" >> .env.production
       - name: Build Extension
         run: PARCEL_WORKER_BACKEND=process pnpm build
       - name: Run Playwright tests
@@ -132,6 +136,10 @@ jobs:
         with:
           node-version: 20.x
           cache: "pnpm"
+      - name: Write .env.production file
+        run: |
+          echo "PLASMO_PUBLIC_WALLPAPER_API=${{ secrets.PLASMO_PUBLIC_WALLPAPER_API }}" >> .env.production
+          echo "PLASMO_PUBLIC_WEATHER_API_KEYS=${{ secrets.PLASMO_PUBLIC_WEATHER_API_KEYS }}" >> .env.production
       - name: Build and zip Chrome extension
         run: PARCEL_WORKER_BACKEND=process pnpm build --zip --env=.env.chrome
       - name: Upload to Chrome Web Store
@@ -165,6 +173,10 @@ jobs:
         with:
           node-version: 20.x
           cache: "pnpm"
+      - name: Write .env.production file
+        run: |
+          echo "PLASMO_PUBLIC_WALLPAPER_API=${{ secrets.PLASMO_PUBLIC_WALLPAPER_API }}" >> .env.production
+          echo "PLASMO_PUBLIC_WEATHER_API_KEYS=${{ secrets.PLASMO_PUBLIC_WEATHER_API_KEYS }}" >> .env.production
       - name: Build and zip Firefox MV3 extension
         run: PARCEL_WORKER_BACKEND=process pnpm build --zip --target=firefox-mv3 --env=.env.firefox
       - name: Upload to Mozilla Add-ons
@@ -196,6 +208,10 @@ jobs:
         with:
           node-version: 20.x
           cache: "pnpm"
+      - name: Write .env.production file
+        run: |
+          echo "PLASMO_PUBLIC_WALLPAPER_API=${{ secrets.PLASMO_PUBLIC_WALLPAPER_API }}" >> .env.production
+          echo "PLASMO_PUBLIC_WEATHER_API_KEYS=${{ secrets.PLASMO_PUBLIC_WEATHER_API_KEYS }}" >> .env.production
       - name: Build and zip extensions
         run: |
           PARCEL_WORKER_BACKEND=process pnpm build --zip --env=.env.chrome
