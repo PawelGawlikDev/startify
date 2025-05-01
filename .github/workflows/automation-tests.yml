@@ -79,6 +79,10 @@ jobs:
           cache: "pnpm"
       - name: Install Playwright Browsers
         run: pnpm playwright install --with-deps chromium
+      - name: Write .env.production file
+        run: |
+          echo "PLASMO_PUBLIC_WALLPAPER_API=${{ secrets.PLASMO_PUBLIC_WALLPAPER_API }}" >> .env.production
+          echo "PLASMO_PUBLIC_WEATHER_API_KEYS=${{ secrets.PLASMO_PUBLIC_WEATHER_API_KEYS }}" >> .env.production
       - name: Build Extension
         run: PARCEL_WORKER_BACKEND=process pnpm build
       - name: Run Playwright tests
