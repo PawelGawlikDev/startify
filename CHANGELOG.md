@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.18](https://github.com/PawelGawlikDev/startify/compare/v0.0.17...v0.0.18) (2025-05-01)
+
+
+### Bug Fixes
+
+* fix release workflow ([925247b](https://github.com/PawelGawlikDev/startify/commit/925247b43fc7fdaafb1bda62f47c54bfb814fc7f))
+
 ### [0.0.17](https://github.com/PawelGawlikDev/startify/compare/v0.0.16...v0.0.17) (2025-04-21)
 
 ### [0.0.16](https://github.com/PawelGawlikDev/startify/compare/v0.0.15...v0.0.16) (2025-04-21)
