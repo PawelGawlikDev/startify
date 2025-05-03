@@ -52,13 +52,13 @@ jobs:
       - uses: actions/checkout@v4
       - name: Common Setup
         uses: ./.github/actions/common-setup
-      - name: env setup
+      - name: Setup env
         uses: ./.github/actions/setup-env
         env:
           PLASMO_PUBLIC_WALLPAPER_API: ${{ secrets.PLASMO_PUBLIC_WALLPAPER_API }}
           PLASMO_PUBLIC_WEATHER_API_KEYS: ${{ secrets.PLASMO_PUBLIC_WEATHER_API_KEYS }}
-      - name: Build and zip
-        run: PARCEL_WORKER_BACKEND=process pnpm plasmo build --zip --target=${{ matrix.target }}
+      - name: Build extension
+        run: PARCEL_WORKER_BACKEND=process pnpm plasmo build --target=${{ matrix.target }}
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.target }}-prod
@@ -80,8 +80,6 @@ jobs:
         with:
           name: chrome-mv3-prod
           path: build/
-      - name: Unzip extension
-        run: unzip build/chrome-mv3-prod.zip -d build/chrome-mv3-prod
       - name: Run Playwright tests
         run: pnpm e2e
 

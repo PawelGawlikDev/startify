@@ -54,7 +54,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Common Setup
         uses: ./.github/actions/common-setup
-      - name: env setup
+      - name: Setup env
         uses: ./.github/actions/setup-env
         env:
           PLASMO_PUBLIC_WALLPAPER_API: ${{ secrets.PLASMO_PUBLIC_WALLPAPER_API }}
@@ -82,8 +82,6 @@ jobs:
         with:
           name: chrome-mv3-prod
           path: build/
-      - name: Unzip extension
-        run: unzip build/chrome-mv3-prod.zip -d build/chrome-mv3-prod
       - name: Run Playwright tests
         run: pnpm e2e
 
@@ -100,6 +98,8 @@ jobs:
         with:
           name: chrome-mv3-prod
           path: build/
+      - name: Build package
+        run: PARCEL_WORKER_BACKEND=process pnpm plasmo package --target=chrome-mv3
       - name: Upload to Chrome Web Store
         uses: mobilefirstllc/cws-publish@latest
         with:
@@ -123,6 +123,8 @@ jobs:
         with:
           name: firefox-mv3-prod
           path: build/
+      - name: Build package
+        run: PARCEL_WORKER_BACKEND=process pnpm plasmo package --target=firfox-mv3
       - name: Upload to Mozilla Add-ons
         uses: wdzeng/firefox-addon@v1
         with:
@@ -143,6 +145,11 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: build/
+      - name: Build package
+        run: |
+          PARCEL_WORKER_BACKEND=process pnpm plasmo package --target=chrome-mv3
+          PARCEL_WORKER_BACKEND=process pnpm plasmo package --target=firefox-mv3
+          PARCEL_WORKER_BACKEND=process pnpm plasmo package --target=firefox-mv2
       - name: Release on GitHub
         uses: softprops/action-gh-release@v2
         with:
