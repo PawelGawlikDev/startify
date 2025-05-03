@@ -37,8 +37,6 @@ jobs:
         uses: ./.github/actions/common-setup
       - name: Install Playwright Browsers
         run: pnpm playwright install
-      - name: Build Extension
-        run: PARCEL_WORKER_BACKEND=process pnpm build
       - name: Run Playwright tests
         run: pnpm e2e:ct
 
@@ -66,7 +64,7 @@ jobs:
           retention-days: 1
 
   playwright:
-    needs: build
+    needs: [lint, vitest]
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -75,11 +73,8 @@ jobs:
         uses: ./.github/actions/common-setup
       - name: Install Playwright Browsers
         run: pnpm playwright install --with-deps chromium
-      - name: Download chrome extension artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: chrome-mv3-prod
-          path: build/
+      - name: Build extension
+        run: PARCEL_WORKER_BACKEND=process pnpm build
       - name: Run Playwright tests
         run: pnpm e2e
 
