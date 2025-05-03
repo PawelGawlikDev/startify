@@ -1,6 +1,8 @@
 import { motion } from "motion/react";
 import React from "react";
 
+import { getMessage } from "@/i18n";
+
 import BackgroundSection from "./sections/BackogrundSection";
 import QuickLinkSection from "./sections/QuickLinksSection";
 import RestartSection from "./sections/RestartSection";
@@ -19,7 +21,7 @@ export default function Settings() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0, transition: { duration: 0.4 } }}
         className="relative z-10 mx-[20%] h-full w-full text-4xl">
-        <h1>{chrome.i18n.getMessage("settingsHeader")}</h1>
+        <h1>{getMessage("settingsHeader")}</h1>
       </motion.div>
       <motion.div
         className="relative mx-[20%] my-5 flex flex-col items-center justify-center gap-16"

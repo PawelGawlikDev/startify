@@ -62,7 +62,7 @@ jobs:
           path: build/${{ matrix.target }}-prod
 
   playwright:
-    needs: [build]
+    needs: build
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -79,7 +79,7 @@ jobs:
         run: pnpm e2e
 
   release_chrome:
-    needs: [build]
+    needs: playwright
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -101,7 +101,7 @@ jobs:
           zip_file: "chrome-mv3-prod.zip"
 
   release_firefox:
-    needs: [build]
+    needs: playwright
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -121,7 +121,7 @@ jobs:
           jwt-secret: ${{ secrets.FIREFOX_API_SECRET }}
 
   release_github:
-    needs: [build]
+    needs: playwright
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:

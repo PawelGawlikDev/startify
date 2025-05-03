@@ -4,6 +4,7 @@ import React from "react";
 import { Storage } from "@plasmohq/storage";
 
 import { Button } from "@/components/Button";
+import { getMessage } from "@/i18n";
 import { db } from "@/indexdb";
 import {
   setDefaultColors,
@@ -35,18 +36,18 @@ export default function RestartSection() {
   return (
     <SettingsSection
       className="relative flex w-full flex-col gap-4"
-      sectionTitle={chrome.i18n.getMessage("restart")}>
+      sectionTitle={getMessage("restart")}>
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0, transition: { duration: 0.4 } }}
         className="flex flex-row items-center justify-between">
-        <p>{chrome.i18n.getMessage("deleteQuickLinks")}</p>
+        <p>{getMessage("deleteQuickLinks")}</p>
         <div className="z-2 flex min-w-32 cursor-default flex-row items-center justify-center gap-2">
           <Button
             onClick={handleDeleteQuickLinks}
             borderRadius="1.75rem"
             className="border-slate-800 bg-slate-900 text-white hover:bg-slate-700">
-            {chrome.i18n.getMessage("delete")}
+            {getMessage("delete")}
           </Button>
         </div>
       </motion.div>
@@ -54,13 +55,13 @@ export default function RestartSection() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0, transition: { duration: 0.4 } }}
         className="flex flex-row items-center justify-between">
-        <p>{chrome.i18n.getMessage("restoreToDefaultSettings")}</p>
+        <p>{getMessage("restoreToDefaultSettings")}</p>
         <div className="z-2 flex min-w-32 cursor-default flex-row items-center justify-center gap-2">
           <Button
             onClick={handleResetClick}
             borderRadius="1.75rem"
             className="border-slate-800 bg-slate-900 text-white hover:bg-slate-700">
-            {chrome.i18n.getMessage("reset")}
+            {getMessage("reset")}
           </Button>
         </div>
       </motion.div>

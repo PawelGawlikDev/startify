@@ -6,6 +6,7 @@ import type { QuickLinkSettings } from "@/types";
 
 import "./quickLink.css";
 
+import { getMessage } from "@/i18n";
 import { cn } from "@/utils/cn";
 
 import QuickLinkBackground from "./QuickLinkBackground";
@@ -112,7 +113,7 @@ export function QuickLink(props: QuickLinkProps) {
                   data-testid="DeleteQuickLink"
                   className="flex w-full items-center justify-center rounded-b-xl p-3 hover:bg-neutral-600"
                   onClick={handleDeleteClick}>
-                  {chrome.i18n.getMessage("delete")}
+                  {getMessage("delete")}
                 </span>
               </div>
             )}
@@ -156,7 +157,7 @@ export function AddQuickLinkButton(props: AddQuickLink) {
         <div className="z-10 flex h-full items-center justify-center gap-1">
           <AddButton />
           <p className="inline-block max-w-0 overflow-hidden text-nowrap text-white opacity-0 transition-all duration-500 group-hover:max-w-full group-hover:opacity-100">
-            {chrome.i18n.getMessage("addQuickLinkText")}
+            {getMessage("addQuickLinkText")}
           </p>
         </div>
       </QuickLinkBackground>
