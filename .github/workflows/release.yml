@@ -43,7 +43,7 @@ jobs:
         run: pnpm e2e:ct
 
   build:
-    needs: [playwright-ct, vitest]
+    needs: [playwright-ct, playwright, vitest]
     runs-on: ubuntu-24.04
     strategy:
       matrix:
@@ -66,7 +66,7 @@ jobs:
           retention-days: 1
 
   playwright:
-    needs: [lint, vitest]
+    needs: lint
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -81,7 +81,7 @@ jobs:
         run: pnpm e2e
 
   release_chrome:
-    needs: playwright
+    needs: build
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -106,7 +106,7 @@ jobs:
           zip_file: "chrome-mv3-prod.zip"
 
   release_firefox:
-    needs: playwright
+    needs: build
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -129,7 +129,7 @@ jobs:
           jwt-secret: ${{ secrets.FIREFOX_API_SECRET }}
 
   release_github:
-    needs: playwright
+    needs: build
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
