@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
-      - uses: ./.github/actions/common-setup.yml
+      - uses: ./.github/actions/common-setup
       - name: Run lint
         run: pnpm eslint .
 
@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
-      - uses: ./.github/actions/common-setup.yml
+      - uses: ./.github/actions/common-setup
       - name: Run vitest
         run: pnpm vitest
 
@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
-      - uses: ./.github/actions/common-setup.yml
+      - uses: ./.github/actions/common-setup
       - name: Install Playwright Browsers
         run: pnpm playwright install
       - name: Build Extension
@@ -42,8 +42,8 @@ jobs:
       matrix:
         target: [chrome-mv3, firefox-mv3, firefox-mv2]
     steps:
-      - uses: ./.github/actions/common-setup.yml
-      - uses: ./.github/actions/setup-env.yml
+      - uses: ./.github/actions/common-setup
+      - uses: ./.github/actions/setup-env
         env:
           PLASMO_PUBLIC_WALLPAPER_API: ${{ secrets.PLASMO_PUBLIC_WALLPAPER_API }}
           PLASMO_PUBLIC_WEATHER_API_KEYS: ${{ secrets.PLASMO_PUBLIC_WEATHER_API_KEYS }}
@@ -59,7 +59,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
-      - uses: ./.github/actions/common-setup.yml
+      - uses: ./.github/actions/common-setup
       - name: Install Playwright Browsers
         run: pnpm playwright install --with-deps chromium
       - name: Download chrome extension artifact
@@ -74,7 +74,7 @@ jobs:
     needs: [build]
     runs-on: ubuntu-24.04
     steps:
-      - uses: ./.github/actions/common-setup.yml
+      - uses: ./.github/actions/common-setup
 
       - name: Download all artifacts
         uses: actions/download-artifact@v4
