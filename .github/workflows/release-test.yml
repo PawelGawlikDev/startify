@@ -1,8 +1,6 @@
 name: "Release Startify Extension"
 on:
-  push:
-    tags:
-      - v*.*.*
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -53,7 +51,7 @@ jobs:
         run: pnpm plasmo build --zip --target=${{ matrix.target }}
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.target }}-prod
+          name: ${{ matrix.target }}
           path: build/${{ matrix.target }}-prod
 
   playwright:
@@ -67,66 +65,29 @@ jobs:
       - name: Download chrome extension artifact
         uses: actions/download-artifact@v4
         with:
-          name: chrome-mv3-prod
+          name: chrome-mv3
           path: build/
       - name: Run Playwright tests
         run: pnpm e2e
 
-  release_chrome:
+  check_artifacts:
     needs: [build]
     runs-on: ubuntu-24.04
-    timeout-minutes: 60
     steps:
       - uses: ./.github/actions/common-setup.yml
-      - name: Download chrome extension artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: chrome-mv3-prod
-          path: build/
-      - name: Upload to Chrome Web Store
-        uses: mobilefirstllc/cws-publish@latest
-        with:
-          action: "publish"
-          client_id: ${{ secrets.CHROME_CLIENT_ID }}
-          client_secret: ${{ secrets.CHROME_CLIENT_SECTER }}
-          refresh_token: ${{ secrets.CHROME_REFRESH_TOKEN }}
-          extension_id: "fjjipcmebaelmnkkbdjnhhjbgenecgbd"
-          zip_file: "chrome-mv3-prod.zip"
 
-  release_firefox:
-    needs: [build]
-    runs-on: ubuntu-24.04
-    timeout-minutes: 60
-    steps:
-      - uses: ./.github/actions/common-setup.yml
-      - name: Download chrome extension artifact
+      - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
-          name: firefox-mv3-prod
           path: build/
-      - name: Upload to Mozilla Add-ons
-        uses: wdzeng/firefox-addon@v1
-        with:
-          addon-guid: "{d5e5fe42-da08-4573-8ffd-6075ae68c834}"
-          xpi-path: firefox-mv3-prod.zip
-          jwt-issuer: ${{ secrets.FIREFOX_API_KEY }}
-          jwt-secret: ${{ secrets.FIREFOX_API_SECRET }}
 
-  release_github:
-    needs: [build]
-    runs-on: ubuntu-24.04
-    timeout-minutes: 60
-    steps:
-      - uses: ./.github/actions/common-setup.yml
-      - name: Download chrome extension artifact
-        uses: actions/download-artifact@v4
-        with:
-          path: build/
-      - name: Release on GitHub
-        uses: softprops/action-gh-release@v2
-        with:
-          draft: true
-          files: |
-            build/*.zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: List downloaded files
+        run: |
+          echo "Listing build output:"
+          ls -R build/
+
+      - name: Check specific paths
+        run: |
+          test -f build/chrome-mv3-prod.zip && echo "✅ chrome-mv3-prod.zip found"
+          test -f build/firefox-mv3-prod.zip && echo "✅ firefox-mv3-prod.zip found"
+          test -f build/firefox-mv2-prod.zip && echo "✅ firefox-mv2-prod.zip found"
