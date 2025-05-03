@@ -63,6 +63,7 @@ jobs:
         with:
           name: ${{ matrix.target }}-prod
           path: build/${{ matrix.target }}-prod
+          retention-days: 1
 
   playwright:
     needs: build
