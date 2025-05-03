@@ -4,6 +4,7 @@ import Arrow from "react:@/assets/icons/arrow.svg";
 
 import { useStorage } from "@plasmohq/storage/hook";
 
+import { getMessage } from "@/i18n";
 import type {
   Backgrounds,
   Engine,
@@ -23,7 +24,7 @@ const backgroundOptions: Record<Backgrounds, { name: string }> = {
 
 const quickLinkTypes: Record<QuickLinkTypes, string> = {
   gradient: "Gradient",
-  transparent: chrome.i18n.getMessage("transparent")
+  transparent: getMessage("transparent")
 };
 
 const wrapperVariants = {

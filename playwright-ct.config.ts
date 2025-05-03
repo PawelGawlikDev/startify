@@ -16,6 +16,7 @@ export default defineConfig({
     ctViteConfig: {
       resolve: {
         alias: {
+          "@/i18n": path.resolve(__dirname, "src/i18n"),
           "@/context": path.resolve(__dirname, "src/context"),
           "@/utils": path.resolve(__dirname, "src/utils"),
           "@/components": path.resolve(__dirname, "src/components"),

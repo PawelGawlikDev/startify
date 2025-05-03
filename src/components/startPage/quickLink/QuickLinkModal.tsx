@@ -2,6 +2,7 @@ import { motion } from "motion/react";
 import React, { useState } from "react";
 
 import { Button } from "@/components/Button";
+import { getMessage } from "@/i18n";
 import { db } from "@/indexdb/index";
 import type { QuickLinkSettings } from "@/types";
 import { cn } from "@/utils/cn";
@@ -63,19 +64,19 @@ const QuickLinkModal = (props: ModalProps) => {
         pageName={dialName}
       />
       <LabelInputContainer>
-        <Label htmlFor="name">{chrome.i18n.getMessage("name")}</Label>
+        <Label htmlFor="name">{getMessage("name")}</Label>
         <Input
           id="name"
-          placeholder={chrome.i18n.getMessage("name")}
+          placeholder={getMessage("name")}
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
       </LabelInputContainer>
       <LabelInputContainer>
-        <Label htmlFor="url">{chrome.i18n.getMessage("address")}</Label>
+        <Label htmlFor="url">{getMessage("address")}</Label>
         <Input
-          placeholder={chrome.i18n.getMessage("address")}
+          placeholder={getMessage("address")}
           id="url"
           type="text"
           value={url}
@@ -94,14 +95,14 @@ const QuickLinkModal = (props: ModalProps) => {
               ? "cursor-not-allowed bg-gray-700"
               : "bg-slate-900 hover:bg-slate-700"
           )}>
-          {chrome.i18n.getMessage("save")}
+          {getMessage("save")}
         </Button>
         <Button
           onClick={() => setShowModal(false)}
           borderRadius="1.75rem"
           borderClassName="bg-[radial-gradient(var(--red-500)_40%,transparent_60%)]"
           className="border-slate-800 bg-slate-900 text-white hover:bg-slate-700">
-          {chrome.i18n.getMessage("close")}
+          {getMessage("close")}
         </Button>
       </div>
     </motion.div>

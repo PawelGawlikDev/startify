@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 
 import { useStorage } from "@plasmohq/storage/hook";
 
+import { getMessage } from "@/i18n";
 import { db } from "@/indexdb";
 import type { Backgrounds, UserWallpaper } from "@/types";
 import { cn } from "@/utils/cn";
@@ -65,14 +66,14 @@ export default function BackgroundSection() {
 
   return (
     <SettingsSection
-      sectionTitle={chrome.i18n.getMessage("backgroundSettings")}
+      sectionTitle={getMessage("backgroundSettings")}
       className="relative z-40 flex w-full flex-col gap-4">
       <div className="flex flex-row">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0, transition: { duration: 0.4 } }}
           className="flex w-full flex-row items-center justify-between">
-          <p>{chrome.i18n.getMessage("chooseBackground")}</p>
+          <p>{getMessage("chooseBackground")}</p>
           <div className="flex flex-row gap-3">
             {background === "gradient" && (
               <motion.div
@@ -155,7 +156,7 @@ export default function BackgroundSection() {
 
                                 setStoredFiles(updatedFiles);
                               }}>
-                              {chrome.i18n.getMessage("delete")}
+                              {getMessage("delete")}
                             </motion.button>
                           </div>
                           <motion.p
