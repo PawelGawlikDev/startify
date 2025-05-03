@@ -40,7 +40,7 @@ jobs:
         uses: ./.github/actions/common-setup
       - name: Install Playwright Browsers
         run: pnpm playwright install --with-deps chromium
-      - name: env setup
+      - name: Setup env
         uses: ./.github/actions/setup-env
         env:
           PLASMO_PUBLIC_WALLPAPER_API: ${{ secrets.PLASMO_PUBLIC_WALLPAPER_API }}

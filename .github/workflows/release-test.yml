@@ -79,6 +79,8 @@ jobs:
         with:
           name: chrome-mv3-prod
           path: build/
+      - name: Unzip extension
+        run: unzip build/chrome-mv3-prod.zip -d build/chrome-mv3-prod
       - name: Run Playwright tests
         run: pnpm e2e
 
