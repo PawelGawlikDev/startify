@@ -11,8 +11,10 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/common-setup
-      - uses: ./.github/actions/setup-env
+      - name: Common Setup
+        uses: ./.github/actions/common-setup
+      - name: env setup
+        uses: ./.github/actions/setup-env
         env:
           PLASMO_PUBLIC_WALLPAPER_API: ${{ secrets.PLASMO_PUBLIC_WALLPAPER_API }}
           PLASMO_PUBLIC_WEATHER_API_KEYS: ${{ secrets.PLASMO_PUBLIC_WEATHER_API_KEYS }}
@@ -28,8 +30,10 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/common-setup
-      - uses: ./.github/actions/setup-env
+      - name: Common Setup
+        uses: ./.github/actions/common-setup
+      - name: env setup
+        uses: ./.github/actions/setup-env
         env:
           PLASMO_PUBLIC_WALLPAPER_API: ${{ secrets.PLASMO_PUBLIC_WALLPAPER_API }}
           PLASMO_PUBLIC_WEATHER_API_KEYS: ${{ secrets.PLASMO_PUBLIC_WEATHER_API_KEYS }}
@@ -45,8 +49,10 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/common-setup
-      - uses: ./.github/actions/setup-env
+      - name: Common Setup
+        uses: ./.github/actions/common-setup
+      - name: env setup
+        uses: ./.github/actions/setup-env
         env:
           PLASMO_PUBLIC_WALLPAPER_API: ${{ secrets.PLASMO_PUBLIC_WALLPAPER_API }}
           PLASMO_PUBLIC_WEATHER_API_KEYS: ${{ secrets.PLASMO_PUBLIC_WEATHER_API_KEYS }}
