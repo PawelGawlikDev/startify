@@ -1,4 +1,4 @@
-name: "Release Startify Extension"
+name: "Release Startify Extension test"
 on:
   workflow_dispatch:
 
@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/common-setup
       - name: Run lint
         run: pnpm eslint .
@@ -19,6 +20,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/common-setup
       - name: Run vitest
         run: pnpm vitest
@@ -28,6 +30,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/common-setup
       - name: Install Playwright Browsers
         run: pnpm playwright install
@@ -42,6 +45,7 @@ jobs:
       matrix:
         target: [chrome-mv3, firefox-mv3, firefox-mv2]
     steps:
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/common-setup
       - uses: ./.github/actions/setup-env
         env:
@@ -59,6 +63,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/common-setup
       - name: Install Playwright Browsers
         run: pnpm playwright install --with-deps chromium
@@ -74,6 +79,7 @@ jobs:
     needs: [build]
     runs-on: ubuntu-24.04
     steps:
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/common-setup
 
       - name: Download all artifacts

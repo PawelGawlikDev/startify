@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/common-setup
       - uses: ./.github/actions/setup-env
         env:
@@ -26,6 +27,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/common-setup
       - uses: ./.github/actions/setup-env
         env:
@@ -42,6 +44,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/common-setup
       - uses: ./.github/actions/setup-env
         env:
