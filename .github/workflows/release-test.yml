@@ -8,7 +8,7 @@ permissions:
 jobs:
   lint:
     runs-on: ubuntu-24.04
-    timeout-minutes: 60
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/common-setup
@@ -18,7 +18,7 @@ jobs:
   vitest:
     needs: lint
     runs-on: ubuntu-24.04
-    timeout-minutes: 60
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/common-setup
@@ -28,7 +28,7 @@ jobs:
   playwright-ct:
     needs: lint
     runs-on: ubuntu-24.04
-    timeout-minutes: 60
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/common-setup
@@ -61,7 +61,7 @@ jobs:
   playwright:
     needs: [build]
     runs-on: ubuntu-24.04
-    timeout-minutes: 60
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/common-setup

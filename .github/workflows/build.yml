@@ -8,7 +8,7 @@ permissions:
 jobs:
   build-chrome:
     runs-on: ubuntu-24.04
-    timeout-minutes: 60
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/common-setup
@@ -25,7 +25,7 @@ jobs:
 
   build-firefox-mv3:
     runs-on: ubuntu-24.04
-    timeout-minutes: 60
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/common-setup
@@ -42,7 +42,7 @@ jobs:
 
   build-firefox-mv2:
     runs-on: ubuntu-24.04
-    timeout-minutes: 60
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/common-setup
