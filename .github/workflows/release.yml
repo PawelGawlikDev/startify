@@ -10,7 +10,7 @@ permissions:
 jobs:
   lint:
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - name: Common Setup
@@ -21,7 +21,7 @@ jobs:
   vitest:
     needs: lint
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - name: Common Setup
@@ -32,7 +32,7 @@ jobs:
   playwright-ct:
     needs: lint
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - name: Common Setup
@@ -42,12 +42,30 @@ jobs:
       - name: Run Playwright tests
         run: pnpm e2e:ct
 
-  build:
-    needs: [playwright-ct, playwright, vitest]
+  playwright:
+    needs: lint
     runs-on: ubuntu-24.04
-    strategy:
-      matrix:
-        target: [chrome-mv3, firefox-mv3, firefox-mv2]
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Common Setup
+        uses: ./.github/actions/common-setup
+      - name: Install Playwright Browsers
+        run: pnpm playwright install --with-deps chromium
+      - name: Setup env
+        uses: ./.github/actions/setup-env
+        env:
+          PLASMO_PUBLIC_WALLPAPER_API: ${{ secrets.PLASMO_PUBLIC_WALLPAPER_API }}
+          PLASMO_PUBLIC_WEATHER_API_KEYS: ${{ secrets.PLASMO_PUBLIC_WEATHER_API_KEYS }}
+      - name: Build Extension
+        run: PARCEL_WORKER_BACKEND=process pnpm build
+      - name: Run Playwright tests
+        run: pnpm e2e
+
+  release_chrome:
+    needs: [vitest, playwright, playwright-ct]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - name: Common Setup
@@ -57,44 +75,8 @@ jobs:
         env:
           PLASMO_PUBLIC_WALLPAPER_API: ${{ secrets.PLASMO_PUBLIC_WALLPAPER_API }}
           PLASMO_PUBLIC_WEATHER_API_KEYS: ${{ secrets.PLASMO_PUBLIC_WEATHER_API_KEYS }}
-      - name: Build and zip
-        run: PARCEL_WORKER_BACKEND=process pnpm plasmo build --zip --target=${{ matrix.target }}
-      - uses: actions/upload-artifact@v4
-        with:
-          name: ${{ matrix.target }}-prod
-          path: build/${{ matrix.target }}-prod
-          retention-days: 1
-
-  playwright:
-    needs: lint
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@v4
-      - name: Common Setup
-        uses: ./.github/actions/common-setup
-      - name: Install Playwright Browsers
-        run: pnpm playwright install --with-deps chromium
-      - name: Build extension
-        run: PARCEL_WORKER_BACKEND=process pnpm build
-      - name: Run Playwright tests
-        run: pnpm e2e
-
-  release_chrome:
-    needs: build
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@v4
-      - name: Common Setup
-        uses: ./.github/actions/common-setup
-      - name: Download chrome extension artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: chrome-mv3-prod
-          path: build/
-      - name: Build package
-        run: PARCEL_WORKER_BACKEND=process pnpm plasmo package --target=chrome-mv3
+      - name: Build and zip Chrome extension
+        run: PARCEL_WORKER_BACKEND=process pnpm build --zip --env=.env.chrome
       - name: Upload to Chrome Web Store
         uses: mobilefirstllc/cws-publish@latest
         with:
@@ -103,49 +85,50 @@ jobs:
           client_secret: ${{ secrets.CHROME_CLIENT_SECTER }}
           refresh_token: ${{ secrets.CHROME_REFRESH_TOKEN }}
           extension_id: "fjjipcmebaelmnkkbdjnhhjbgenecgbd"
-          zip_file: "chrome-mv3-prod.zip"
+          zip_file: "build/chrome-mv3-prod.zip"
 
   release_firefox:
-    needs: build
+    needs: [vitest, playwright, playwright-ct]
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - name: Common Setup
         uses: ./.github/actions/common-setup
-      - name: Download chrome extension artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: firefox-mv3-prod
-          path: build/
-      - name: Build package
-        run: PARCEL_WORKER_BACKEND=process pnpm plasmo package --target=firfox-mv3
+      - name: Setup env
+        uses: ./.github/actions/setup-env
+        env:
+          PLASMO_PUBLIC_WALLPAPER_API: ${{ secrets.PLASMO_PUBLIC_WALLPAPER_API }}
+          PLASMO_PUBLIC_WEATHER_API_KEYS: ${{ secrets.PLASMO_PUBLIC_WEATHER_API_KEYS }}
+      - name: Build and zip Firefox MV3 extension
+        run: PARCEL_WORKER_BACKEND=process pnpm build --zip --target=firefox-mv3 --env=.env.firefox
       - name: Upload to Mozilla Add-ons
         uses: wdzeng/firefox-addon@v1
         with:
           addon-guid: "{d5e5fe42-da08-4573-8ffd-6075ae68c834}"
-          xpi-path: firefox-mv3-prod.zip
+          xpi-path: build/firefox-mv3-prod.zip
           jwt-issuer: ${{ secrets.FIREFOX_API_KEY }}
           jwt-secret: ${{ secrets.FIREFOX_API_SECRET }}
 
   release_github:
-    needs: build
+    needs: [vitest, playwright, playwright-ct]
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - name: Common Setup
         uses: ./.github/actions/common-setup
-      - name: Download chrome extension artifact
-        uses: actions/download-artifact@v4
-        with:
-          path: build/
-      - name: Build package
+      - name: Setup env
+        uses: ./.github/actions/setup-env
+        env:
+          PLASMO_PUBLIC_WALLPAPER_API: ${{ secrets.PLASMO_PUBLIC_WALLPAPER_API }}
+          PLASMO_PUBLIC_WEATHER_API_KEYS: ${{ secrets.PLASMO_PUBLIC_WEATHER_API_KEYS }}
+      - name: Build and zip extensions
         run: |
-          PARCEL_WORKER_BACKEND=process pnpm plasmo package --target=chrome-mv3
-          PARCEL_WORKER_BACKEND=process pnpm plasmo package --target=firefox-mv3
-          PARCEL_WORKER_BACKEND=process pnpm plasmo package --target=firefox-mv2
-      - name: Release on GitHub
+          PARCEL_WORKER_BACKEND=process pnpm build --zip --env=.env.chrome
+          PARCEL_WORKER_BACKEND=process pnpm build --zip --target=firefox-mv3 --env=.env.firefox
+          PARCEL_WORKER_BACKEND=process pnpm build --zip --target=firefox-mv2 --env=.env.firefox
+      - name: Release on GitHub (Firefox MV2)
         uses: softprops/action-gh-release@v2
         with:
           draft: true
