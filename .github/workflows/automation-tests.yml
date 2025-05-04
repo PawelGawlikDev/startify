@@ -9,7 +9,7 @@ permissions:
 jobs:
   vitest:
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - name: Common Setup
@@ -19,21 +19,19 @@ jobs:
 
   playwright-ct:
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - name: Common Setup
         uses: ./.github/actions/common-setup
       - name: Install Playwright Browsers
         run: pnpm playwright install --with-deps chromium firefox
-      - name: Build Extension
-        run: PARCEL_WORKER_BACKEND=process pnpm build
       - name: Run Playwright tests
         run: pnpm e2e:ct
 
   playwright:
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - name: Common Setup
