@@ -1,6 +1,6 @@
 {
   "*.{ts,tsx}": [
-    "pnpm prettier . --write --config .prettierrc.mjs",
-    "pnpm eslint . --fix"
+    "prettier . --write --config .prettierrc.mjs",
+    "eslint . --fix"
   ]
 }
