@@ -40,8 +40,7 @@ jobs:
       - name: Setup env
         uses: ./.github/actions/setup-env
         env:
-          PLASMO_PUBLIC_WALLPAPER_API: ${{ secrets.PLASMO_PUBLIC_WALLPAPER_API }}
-          PLASMO_PUBLIC_WEATHER_API_KEYS: ${{ secrets.PLASMO_PUBLIC_WEATHER_API_KEYS }}
+          VITE_WEATHER_KEYS: ${{ secrets.VITE_WEATHER_KEYS }}
       - name: Build and zip Chrome extension
         run: pnpm zip
       - name: Upload to Chrome Web Store
@@ -65,8 +64,7 @@ jobs:
       - name: Setup env
         uses: ./.github/actions/setup-env
         env:
-          PLASMO_PUBLIC_WALLPAPER_API: ${{ secrets.PLASMO_PUBLIC_WALLPAPER_API }}
-          PLASMO_PUBLIC_WEATHER_API_KEYS: ${{ secrets.PLASMO_PUBLIC_WEATHER_API_KEYS }}
+          VITE_WEATHER_KEYS: ${{ secrets.VITE_WEATHER_KEYS }}
       - name: Build and zip Firefox MV3 extension
         run: pnpm zip:firefox
       - name: Upload to Mozilla Add-ons
@@ -88,8 +86,7 @@ jobs:
       - name: Setup env
         uses: ./.github/actions/setup-env
         env:
-          PLASMO_PUBLIC_WALLPAPER_API: ${{ secrets.PLASMO_PUBLIC_WALLPAPER_API }}
-          PLASMO_PUBLIC_WEATHER_API_KEYS: ${{ secrets.PLASMO_PUBLIC_WEATHER_API_KEYS }}
+          VITE_WEATHER_KEYS: ${{ secrets.VITE_WEATHER_KEYS }}
       - name: Build and zip extensions
         run: |
           pnpm zip
