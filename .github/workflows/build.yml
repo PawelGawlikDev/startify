@@ -11,22 +11,15 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20.x
           cache: "pnpm"
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: latest
-      - name: Cache pnpm modules
-        uses: actions/cache@v4
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-
       - name: Install dependencies
         run: pnpm install
       - name: Run lint
@@ -38,6 +31,18 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: "pnpm"
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+
       - name: Cache pnpm modules
         uses: actions/cache@v4
         with:
@@ -45,20 +50,18 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-
-      - uses: pnpm/action-setup@v4
-        with:
-          version: latest
-          run_install: true
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20.x
-          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install
+
       - name: Setup env
         uses: ./.github/actions/setup-env
         env:
           VITE_WEATHER_KEYS: ${{ secrets.VITE_WEATHER_KEYS }}
+
       - name: Build and zip Chrome extension
         run: pnpm zip
+
       - uses: actions/upload-artifact@v4
         with:
           name: chrome-mv3
@@ -70,6 +73,18 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: "pnpm"
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+
       - name: Cache pnpm modules
         uses: actions/cache@v4
         with:
@@ -77,20 +92,18 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-
-      - uses: pnpm/action-setup@v4
-        with:
-          version: latest
-          run_install: true
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20.x
-          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install
+
       - name: Setup env
         uses: ./.github/actions/setup-env
         env:
           VITE_WEATHER_KEYS: ${{ secrets.VITE_WEATHER_KEYS }}
+
       - name: Build and zip Firefox extension
         run: pnpm zip:firefox
+
       - uses: actions/upload-artifact@v4
         with:
           name: firefox-mv3
