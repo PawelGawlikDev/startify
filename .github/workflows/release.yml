@@ -63,7 +63,7 @@ jobs:
           client_secret: ${{ secrets.CHROME_CLIENT_SECTER }}
           refresh_token: ${{ secrets.CHROME_REFRESH_TOKEN }}
           extension_id: "fjjipcmebaelmnkkbdjnhhjbgenecgbd"
-          zip_file: ".output/*-chrome.zip"
+          zip_file: "build/*-chrome.zip"
 
   release_firefox:
     needs: [vitest]
@@ -87,7 +87,7 @@ jobs:
         uses: wdzeng/firefox-addon@v1
         with:
           addon-guid: "{d5e5fe42-da08-4573-8ffd-6075ae68c834}"
-          xpi-path: .output/*-firefox.zip
+          xpi-path: build/*-firefox.zip
           jwt-issuer: ${{ secrets.FIREFOX_API_KEY }}
           jwt-secret: ${{ secrets.FIREFOX_API_SECRET }}
 
@@ -116,6 +116,6 @@ jobs:
         with:
           draft: true
           files: |
-            .output/*.zip
+            build/*.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

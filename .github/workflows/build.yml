@@ -46,7 +46,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: chrome-mv3
-          path: .output/*-chrome.zip
+          path: build/*-chrome.zip
 
   build-firefox:
     needs: lint
@@ -75,5 +75,5 @@ jobs:
         with:
           name: firefox-mv3
           path: |
-            .output/*-firefox.zip
-            .output/*-sources.zip
+            build/*-firefox.zip
+            build/*-sources.zip

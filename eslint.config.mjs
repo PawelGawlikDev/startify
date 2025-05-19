@@ -9,7 +9,7 @@ export default [
   {
     ignores: [
       ".wxt/",
-      ".output/",
+      "build/",
       "node_modules/",
       "pnpm-lock.yaml",
       "CHANGELOG.md",
