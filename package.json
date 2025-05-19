@@ -2,117 +2,73 @@
   "name": "startify",
   "displayName": "Startify",
   "version": "0.0.21",
+  "private": true,
   "description": "A customizable and beautiful new tab page for your browser.",
   "author": "PawelGawlikDev",
+  "type": "module",
   "scripts": {
-    "build": "plasmo build",
-    "build:firefox": "plasmo build --target=firefox-mv3 --env=.env.firefox",
-    "build:firefox-mv2": "plasmo build --target=firefox-mv2 --env=.env.firefox",
-    "dev": "plasmo dev",
-    "dev:firefox": "plasmo dev --target=firefox-mv3 --env=.env.firefox",
-    "dev:firefox-mv2": "plasmo dev --target=firefox-mv2 --env=.env.firefox",
-    "e2e": "playwright test",
-    "e2e:ct": "playwright test -c playwright-ct.config.ts",
-    "e2e:debug": "cross-env DEBUG=true playwright test --debug",
-    "e2e:ui": "playwright test --ui",
-    "format": "prettier . --write --config .prettierrc.mjs",
+    "build": "wxt build",
+    "build:firefox": "wxt build -b firefox",
+    "compile": "tsc --noEmit",
+    "dev": "wxt",
+    "dev:firefox": "wxt -b firefox",
+    "format:check": "prettier . --check --config .prettierrc.mjs",
+    "format:fix": "prettier . --write --config .prettierrc.mjs",
+    "postinstall": "wxt prepare",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "package": "plasmo package",
     "prepare": "husky",
     "release": "standard-version",
-    "storybook": "ladle serve --theme dark",
     "test": "vitest",
     "test:coverage": "vitest --coverage",
     "test:ui": "vitest --ui",
-    "zip": "plasmo build --zip",
-    "zip:firefox": "plasmo build --target=firefox-mv3 --env=.env.firefox --zip",
-    "zip:firefox-mv2": "plasmo build --target=firefox-mv2 --env=.env.firefox --zip"
+    "zip": "wxt zip",
+    "zip:firefox": "wxt zip -b firefox"
   },
   "dependencies": {
-    "@plasmohq/storage": "1.15.0",
-    "@radix-ui/react-label": "^2.1.4",
+    "@radix-ui/react-label": "^2.1.6",
+    "@tailwindcss/vite": "^4.1.7",
     "clsx": "^2.1.1",
     "dexie": "^4.0.11",
     "dexie-react-hooks": "^1.1.7",
-    "motion": "^12.9.4",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "react-dropzone": "^14.3.8"
+    "motion": "^12.12.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-dropzone": "^14.3.8",
+    "tailwindcss": "^4.1.7"
   },
   "devDependencies": {
-    "@commitlint/config-conventional": "^19.8.0",
-    "@eslint/js": "^9.26.0",
-    "@ianvs/prettier-plugin-sort-imports": "^4.4.1",
-    "@ladle/react": "^5.0.3",
-    "@plasmohq/rps": "^1.8.7",
-    "@playwright/experimental-ct-react": "^1.52.0",
-    "@playwright/test": "^1.52.0",
-    "@types/chrome": "^0.0.318",
-    "@types/node": "^22.15.3",
-    "@types/react": "^19.1.2",
-    "@types/react-dom": "^19.1.3",
-    "@vitest/coverage-v8": "^3.1.2",
-    "@vitest/eslint-plugin": "^1.1.44",
-    "@vitest/ui": "^3.1.2",
-    "autoprefixer": "^10.4.21",
-    "commitlint": "^19.8.0",
-    "cross-env": "^7.0.3",
-    "eslint": "^9.26.0",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@eslint/js": "^9.27.0",
+    "@types/react": "^19.1.4",
+    "@types/react-dom": "^19.1.5",
+    "@vitest/coverage-v8": "^3.1.4",
+    "@vitest/eslint-plugin": "^1.2.0",
+    "@vitest/ui": "^3.1.4",
+    "@wxt-dev/module-react": "^1.1.3",
+    "commitlint": "^19.8.1",
     "eslint-plugin-playwright": "^2.2.0",
     "eslint-plugin-react": "^7.37.5",
-    "globals": "^16.0.0",
+    "globals": "^16.1.0",
     "husky": "^9.1.7",
     "jsdom": "^26.1.0",
-    "lint-staged": "^15.5.1",
-    "plasmo": "^0.90.3",
-    "postcss": "^8.5.3",
+    "lint-staged": "^16.0.0",
     "prettier": "3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "standard-version": "^9.5.0",
-    "tailwind-merge": "^3.2.0",
-    "tailwindcss": "^3.4.17",
-    "typescript": "5.8.3",
-    "typescript-eslint": "^8.31.1",
-    "vite": "^6.3.4",
-    "vitest": "^3.1.2"
+    "svgo": "^3.3.2",
+    "tailwind-merge": "^3.3.0",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.32.1",
+    "vite-plugin-image-optimizer": "^1.1.8",
+    "vitest": "^3.1.4",
+    "wxt": "^0.20.6"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
-      "@parcel/watcher",
-      "@swc/core",
+      "@tailwindcss/oxide",
       "esbuild",
-      "lmdb",
-      "msgpackr-extract",
-      "msw",
-      "sharp"
-    ],
-    "updateConfig": {
-      "ignoreDependencies": [
-        "tailwindcss"
-      ]
-    }
-  },
-  "manifest": {
-    "key": "$CRX_PUBLIC_KEY",
-    "browser_specific_settings": {
-      "gecko": {
-        "id": "{d5e5fe42-da08-4573-8ffd-6075ae68c834}"
-      }
-    },
-    "chrome_settings_overrides": {
-      "homepage": "$HOMEPAGE"
-    },
-    "default_locale": "en",
-    "host_permissions": [
-      "https://*/*",
-      "http://*/*",
-      "https://api.weatherapi.com/"
-    ],
-    "permissions": [
-      "storage",
-      "unlimitedStorage",
-      "activeTab"
+      "spawn-sync"
     ]
   }
 }

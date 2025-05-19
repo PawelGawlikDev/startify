@@ -4,6 +4,5 @@ runs:
   using: "composite"
   steps:
     - run: |
-        echo "PLASMO_PUBLIC_WALLPAPER_API=${{ env.PLASMO_PUBLIC_WALLPAPER_API }}" >> .env.production
         echo "PLASMO_PUBLIC_WEATHER_API_KEYS=${{ env.PLASMO_PUBLIC_WEATHER_API_KEYS }}" >> .env.production
       shell: bash

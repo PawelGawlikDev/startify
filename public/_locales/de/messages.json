@@ -1,0 +1,74 @@
+{
+  "addQuickLink": {
+    "message": "Schnellverbindung hinzufügen",
+    "description": "Button or label for adding a new quick link on the start page"
+  },
+  "engineSettings": {
+    "message": "Suchmaschine",
+    "description": "Label for the section where the user can configure the default search engine"
+  },
+  "vanishAnimation": {
+    "message": "Verschwindeanimation",
+    "description": "Option to enable or configure an animation effect for disappearing elements"
+  },
+  "showClock": {
+    "message": "Uhr anzeigen",
+    "description": "Option to enable clock in main dashboard"
+  },
+  "quickLinks": {
+    "message": "Schnellverbindungen",
+    "description": "Option to enable QuickLinks in main dashboard"
+  },
+  "uploadWallpaper": {
+    "message": "Hintergrundbild hochladen",
+    "description": "Upload custom wallpaper"
+  },
+  "dropIt": {
+    "message": "Loslassen",
+    "description": "Drop custom wallpaper"
+  },
+  "mainSection": {
+    "message": "Hauptbereich",
+    "description": "Drop custom wallpaper"
+  },
+  "photosSection": {
+    "message": "Fotos",
+    "description": "Drop custom wallpaper"
+  },
+  "widgetsSection": {
+    "message": "Widgets",
+    "description": "Drop custom wallpaper"
+  },
+  "weatherWidget": {
+    "message": "Wetter",
+    "description": "Header or label related to weather features in the app"
+  },
+  "green": {
+    "message": "Grün",
+    "description": "Green Color"
+  },
+  "gray": {
+    "message": "Grau",
+    "description": "Gray Color"
+  },
+  "delete": {
+    "message": "Löschen",
+    "description": "Generic action to remove an item"
+  },
+  "save": {
+    "message": "Speichern",
+    "description": "Action button to confirm and save changes"
+  },
+  "address": {
+    "message": "Adresse",
+    "description": "Field label for entering a URL or physical address"
+  },
+  "name": {
+    "message": "Name",
+    "description": "Field label for entering a name or title"
+  },
+  "close": {
+    "message": "Schließen",
+    "description": "Action to close a dialog, modal, or window"
+  }
+}

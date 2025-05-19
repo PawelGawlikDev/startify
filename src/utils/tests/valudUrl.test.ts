@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 
-import isValidUrl from "@/utils/valudUrl";
+import isValidUrl from "../validUrl";
 
 describe("Valid url test", () => {
   test("should return true for a valid HTTP URL", () => {

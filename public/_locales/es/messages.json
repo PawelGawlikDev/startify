@@ -1,0 +1,74 @@
+{
+  "addQuickLink": {
+    "message": "Añadir enlace rápido",
+    "description": "Button or label for adding a new quick link on the start page"
+  },
+  "engineSettings": {
+    "message": "Motor de búsqueda",
+    "description": "Label for the section where the user can configure the default search engine"
+  },
+  "vanishAnimation": {
+    "message": "Animación de desaparición",
+    "description": "Option to enable or configure an animation effect for disappearing elements"
+  },
+  "showClock": {
+    "message": "Mostrar reloj",
+    "description": "Option to enable clock in main dashboard"
+  },
+  "quickLinks": {
+    "message": "Enlaces rápidos",
+    "description": "Option to enable QuickLinks in main dashboard"
+  },
+  "uploadWallpaper": {
+    "message": "Subir fondo de pantalla",
+    "description": "Upload custom wallpaper"
+  },
+  "dropIt": {
+    "message": "Suelta",
+    "description": "Drop custom wallpaper"
+  },
+  "mainSection": {
+    "message": "Principal",
+    "description": "Drop custom wallpaper"
+  },
+  "photosSection": {
+    "message": "Fotos",
+    "description": "Drop custom wallpaper"
+  },
+  "widgetsSection": {
+    "message": "Widgets",
+    "description": "Drop custom wallpaper"
+  },
+  "weatherWidget": {
+    "message": "Tiempo",
+    "description": "Header or label related to weather features in the app"
+  },
+  "green": {
+    "message": "Verde",
+    "description": "Green Color"
+  },
+  "gray": {
+    "message": "Gris",
+    "description": "Gray Color"
+  },
+  "delete": {
+    "message": "Eliminar",
+    "description": "Generic action to remove an item"
+  },
+  "save": {
+    "message": "Guardar",
+    "description": "Action button to confirm and save changes"
+  },
+  "address": {
+    "message": "Dirección",
+    "description": "Field label for entering a URL or physical address"
+  },
+  "name": {
+    "message": "Nombre",
+    "description": "Field label for entering a name or title"
+  },
+  "close": {
+    "message": "Cerrar",
+    "description": "Action to close a dialog, modal, or window"
+  }
+}

@@ -1,12 +1,5 @@
 import { afterEach, describe, expect, test, vi } from "vitest";
-
-import * as browserConstants from "@/constants/browser";
-import { SearchEngineEnum } from "@/utils/searchEngine";
-
-vi.mock("@/constants/browser", () => ({
-  isFirefox: false,
-  userLang: "en"
-}));
+import { SearchEngineEnum } from "../searchEngine";
 
 describe("Search engines", () => {
   afterEach(() => {
@@ -14,9 +7,12 @@ describe("Search engines", () => {
   });
 
   test("should return correct DuckDuckGo URL for Chrome", async () => {
-    browserConstants.isFirefox = false;
+    vi.doMock("../../constants/browser", () => ({
+      isFirefox: false,
+      userLang: "en"
+    }));
 
-    const { searchEngines } = await import("@/utils/searchEngine");
+    const { searchEngines } = await import("../searchEngine");
 
     expect(searchEngines[SearchEngineEnum.DuckDuckGo].searchURL).toContain(
       "t=chrome"
@@ -24,9 +20,12 @@ describe("Search engines", () => {
   });
 
   test("should return correct DuckDuckGo URL for Firefox", async () => {
-    browserConstants.isFirefox = true;
+    vi.doMock("../../constants/browser", () => ({
+      isFirefox: true,
+      userLang: "en"
+    }));
 
-    const { searchEngines } = await import("@/utils/searchEngine");
+    const { searchEngines } = await import("../searchEngine");
 
     expect(searchEngines[SearchEngineEnum.DuckDuckGo].searchURL).toContain(
       "t=firefox"
@@ -34,9 +33,12 @@ describe("Search engines", () => {
   });
 
   test("should use correct lang param for PrivacyWall (e.g. fr)", async () => {
-    browserConstants.userLang = "fr";
+    vi.doMock("../../constants/browser", () => ({
+      isFirefox: false,
+      userLang: "fr"
+    }));
 
-    const { searchEngines } = await import("@/utils/searchEngine");
+    const { searchEngines } = await import("../searchEngine");
 
     expect(searchEngines[SearchEngineEnum.PrivacyWall].searchURL).toContain(
       "cc=fr"
@@ -44,9 +46,12 @@ describe("Search engines", () => {
   });
 
   test("should use correct lang param for Google (e.g. de)", async () => {
-    browserConstants.userLang = "de";
+    vi.doMock("../../constants/browser", () => ({
+      isFirefox: false,
+      userLang: "de"
+    }));
 
-    const { searchEngines } = await import("@/utils/searchEngine");
+    const { searchEngines } = await import("../searchEngine");
 
     expect(searchEngines[SearchEngineEnum.Google].suggestionsURL).toContain(
       "hl=de"

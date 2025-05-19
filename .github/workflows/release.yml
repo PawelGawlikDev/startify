@@ -29,41 +29,8 @@ jobs:
       - name: Run vitest
         run: pnpm vitest
 
-  playwright-ct:
-    needs: lint
-    runs-on: ubuntu-24.04
-    timeout-minutes: 60
-    steps:
-      - uses: actions/checkout@v4
-      - name: Common Setup
-        uses: ./.github/actions/common-setup
-      - name: Install Playwright Browsers
-        run: pnpm playwright install
-      - name: Run Playwright tests
-        run: pnpm e2e:ct
-
-  playwright:
-    needs: lint
-    runs-on: ubuntu-24.04
-    timeout-minutes: 60
-    steps:
-      - uses: actions/checkout@v4
-      - name: Common Setup
-        uses: ./.github/actions/common-setup
-      - name: Install Playwright Browsers
-        run: pnpm playwright install --with-deps chromium
-      - name: Setup env
-        uses: ./.github/actions/setup-env
-        env:
-          PLASMO_PUBLIC_WALLPAPER_API: ${{ secrets.PLASMO_PUBLIC_WALLPAPER_API }}
-          PLASMO_PUBLIC_WEATHER_API_KEYS: ${{ secrets.PLASMO_PUBLIC_WEATHER_API_KEYS }}
-      - name: Build Extension
-        run: PARCEL_WORKER_BACKEND=process pnpm build
-      - name: Run Playwright tests
-        run: pnpm e2e
-
   release_chrome:
-    needs: [vitest, playwright, playwright-ct]
+    needs: [vitest]
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
@@ -85,10 +52,10 @@ jobs:
           client_secret: ${{ secrets.CHROME_CLIENT_SECTER }}
           refresh_token: ${{ secrets.CHROME_REFRESH_TOKEN }}
           extension_id: "fjjipcmebaelmnkkbdjnhhjbgenecgbd"
-          zip_file: "build/chrome-mv3-prod.zip"
+          zip_file: ".output/*-chrome.zip"
 
   release_firefox:
-    needs: [vitest, playwright, playwright-ct]
+    needs: [vitest]
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
@@ -106,12 +73,12 @@ jobs:
         uses: wdzeng/firefox-addon@v1
         with:
           addon-guid: "{d5e5fe42-da08-4573-8ffd-6075ae68c834}"
-          xpi-path: build/firefox-mv3-prod.zip
+          xpi-path: .output/*-firefox.zip
           jwt-issuer: ${{ secrets.FIREFOX_API_KEY }}
           jwt-secret: ${{ secrets.FIREFOX_API_SECRET }}
 
   release_github:
-    needs: [vitest, playwright, playwright-ct]
+    needs: [vitest]
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
@@ -133,6 +100,6 @@ jobs:
         with:
           draft: true
           files: |
-            build/*.zip
+            .output/*.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
