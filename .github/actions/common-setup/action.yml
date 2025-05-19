@@ -18,4 +18,3 @@ runs:
     - uses: pnpm/action-setup@v4
       with:
         version: latest
-        run_install: true
