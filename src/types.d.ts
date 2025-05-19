@@ -1,3 +1,11 @@
+export type Settings = {
+  searchEngine: Engine;
+  vanishAnimation: boolean;
+  showClock: boolean;
+  quickLink: QuickLinkSettings;
+  weather: WeatherWidgetSettings;
+};
+
 export type Engine = {
   name: string;
   searchURL: string;
@@ -20,41 +28,15 @@ export type UserWallpaper = {
   imageBlob: Blob;
 };
 
-export type Settings = {
-  engine: Engine;
-  vanishAnimation: boolean;
-};
-
-export type Backgrounds =
-  | "gradient"
-  | "beams"
-  | "image"
-  | "aurora"
-  | "random"
-  | "snakes";
-
-export type QuickLinkTypes = "gradient" | "transparent";
-
-export type QuickLinkSettings = {
-  bigQuickLinks: boolean;
-  type: QuickLinkTypes;
-};
-
-export type Point = {
-  x: number;
-  y: number;
-};
-
-export type ColorSettings = {
-  deg: number;
-  primary: string;
-  secondary: string;
-};
-
 export type WeatherWidgetSettings = {
   localizationType: "manual" | "auto" | "ip";
   location: string | "auto:ip";
   enable: boolean;
+};
+
+export type QuickLinkSettings = {
+  enable: boolean;
+  bigQuickLinks: boolean;
 };
 
 export type WeatherDataTypes = {

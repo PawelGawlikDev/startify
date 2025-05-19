@@ -1,0 +1,74 @@
+{
+  "addQuickLink": {
+    "message": "Dodaj QuickLink",
+    "description": "Button or label for adding a new quick link on the start page"
+  },
+  "engineSettings": {
+    "message": "Wyszukiwarka",
+    "description": "Label for the section where the user can configure the default search engine"
+  },
+  "vanishAnimation": {
+    "message": "Animacja znikania",
+    "description": "Option to enable or configure an animation effect for disappearing elements"
+  },
+  "showClock": {
+    "message": "Pokaż zegar",
+    "description": "Option to enable clock in main dashboard"
+  },
+  "quickLinks": {
+    "message": "Szybkie linki",
+    "description": "Option to enable QuickLinks in main dashboard"
+  },
+  "uploadWallpaper": {
+    "message": "Dodaj tapetę",
+    "description": "Upload custom wallpaper"
+  },
+  "dropIt": {
+    "message": "Upuść",
+    "description": "Drop custom wallpaper"
+  },
+  "mainSection": {
+    "message": "Główne",
+    "description": "Drop custom wallpaper"
+  },
+  "photosSection": {
+    "message": "Zdjęcia",
+    "description": "Drop custom wallpaper"
+  },
+  "widgetsSection": {
+    "message": "Widgety",
+    "description": "Drop custom wallpaper"
+  },
+  "weatherWidget": {
+    "message": "Pogoda",
+    "description": "Header or label related to weather features in the app"
+  },
+  "green": {
+    "message": "Zielony",
+    "description": "Green Color"
+  },
+  "gray": {
+    "message": "Szary",
+    "description": "Gray Color"
+  },
+  "delete": {
+    "message": "Usuń",
+    "description": "Generic action to remove an item"
+  },
+  "save": {
+    "message": "Zapisz",
+    "description": "Action button to confirm and save changes"
+  },
+  "address": {
+    "message": "Adres",
+    "description": "Field label for entering a URL or physical address"
+  },
+  "name": {
+    "message": "Nazwa",
+    "description": "Field label for entering a name or title"
+  },
+  "close": {
+    "message": "Zamknij",
+    "description": "Action to close a dialog, modal, or window"
+  }
+}

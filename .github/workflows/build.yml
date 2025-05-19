@@ -16,16 +16,15 @@ jobs:
       - name: Setup env
         uses: ./.github/actions/setup-env
         env:
-          PLASMO_PUBLIC_WALLPAPER_API: ${{ secrets.PLASMO_PUBLIC_WALLPAPER_API }}
           PLASMO_PUBLIC_WEATHER_API_KEYS: ${{ secrets.PLASMO_PUBLIC_WEATHER_API_KEYS }}
       - name: Build and zip Chrome extension
-        run: PARCEL_WORKER_BACKEND=process pnpm plasmo build --zip --env=.env.chrome
+        run: pnpm zip
       - uses: actions/upload-artifact@v4
         with:
           name: chrome-mv3
-          path: build/chrome-mv3-prod
+          path: .output/*-chrome.zip
 
-  build-firefox-mv3:
+  build-firefox:
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
@@ -35,30 +34,11 @@ jobs:
       - name: Setup env
         uses: ./.github/actions/setup-env
         env:
-          PLASMO_PUBLIC_WALLPAPER_API: ${{ secrets.PLASMO_PUBLIC_WALLPAPER_API }}
           PLASMO_PUBLIC_WEATHER_API_KEYS: ${{ secrets.PLASMO_PUBLIC_WEATHER_API_KEYS }}
-      - name: Build and zip Firefox MV3 extension
-        run: PARCEL_WORKER_BACKEND=process pnpm plasmo build --zip --target=firefox-mv3 --env=.env.firefox
+      - name: Build and zip Firefox extension
+        run: pnpm zip:firefox
       - uses: actions/upload-artifact@v4
         with:
           name: firefox-mv3
-          path: build/firefox-mv3-prod
-
-  build-firefox-mv2:
-    runs-on: ubuntu-24.04
-    timeout-minutes: 60
-    steps:
-      - uses: actions/checkout@v4
-      - name: Common Setup
-        uses: ./.github/actions/common-setup
-      - name: Setup env
-        uses: ./.github/actions/setup-env
-        env:
-          PLASMO_PUBLIC_WALLPAPER_API: ${{ secrets.PLASMO_PUBLIC_WALLPAPER_API }}
-          PLASMO_PUBLIC_WEATHER_API_KEYS: ${{ secrets.PLASMO_PUBLIC_WEATHER_API_KEYS }}
-      - name: Build and zip Firefox MV2 extension
-        run: PARCEL_WORKER_BACKEND=process pnpm plasmo build --zip --target=firefox-mv2 --env=.env.firefox
-      - uses: actions/upload-artifact@v4
-        with:
-          name: firefox-mv2
-          path: build/firefox-mv2-prod
+          path: .output/*-firefox.zip
+            .output/*-source.zip

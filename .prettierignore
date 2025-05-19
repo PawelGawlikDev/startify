@@ -1,8 +1,9 @@
-.plasmo/
-build/
+.wxt/
+.output/
 node_modules/
 pnpm-lock.yaml
 playwright-report/
 coverage/
 CHANGELOG.md
 playwright/.cache
+public/

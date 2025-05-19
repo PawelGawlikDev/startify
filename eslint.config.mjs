@@ -8,8 +8,8 @@ import tseslint from "typescript-eslint";
 export default [
   {
     ignores: [
-      "build/",
-      ".plasmo/",
+      ".wxt/",
+      ".output/",
       "node_modules/",
       "pnpm-lock.yaml",
       "CHANGELOG.md",
@@ -26,6 +26,8 @@ export default [
   {
     rules: {
       "no-console": "error",
+      "react/jsx-uses-react": "off",
+      "react/react-in-jsx-scope": "off",
       "@typescript-eslint/no-unused-expressions": [
         "error",
         { allowShortCircuit: true }
