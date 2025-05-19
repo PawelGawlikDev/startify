@@ -16,7 +16,7 @@ jobs:
       - name: Common Setup
         uses: ./.github/actions/common-setup
       - name: Run lint
-        run: pnpm eslint .
+        run: pnpm lint
 
   vitest:
     needs: lint
@@ -27,7 +27,7 @@ jobs:
       - name: Common Setup
         uses: ./.github/actions/common-setup
       - name: Run vitest
-        run: pnpm vitest
+        run: pnpm test
 
   release_chrome:
     needs: [vitest]
@@ -43,7 +43,7 @@ jobs:
           PLASMO_PUBLIC_WALLPAPER_API: ${{ secrets.PLASMO_PUBLIC_WALLPAPER_API }}
           PLASMO_PUBLIC_WEATHER_API_KEYS: ${{ secrets.PLASMO_PUBLIC_WEATHER_API_KEYS }}
       - name: Build and zip Chrome extension
-        run: PARCEL_WORKER_BACKEND=process pnpm build --zip --env=.env.chrome
+        run: pnpm zip
       - name: Upload to Chrome Web Store
         uses: mobilefirstllc/cws-publish@latest
         with:
@@ -68,7 +68,7 @@ jobs:
           PLASMO_PUBLIC_WALLPAPER_API: ${{ secrets.PLASMO_PUBLIC_WALLPAPER_API }}
           PLASMO_PUBLIC_WEATHER_API_KEYS: ${{ secrets.PLASMO_PUBLIC_WEATHER_API_KEYS }}
       - name: Build and zip Firefox MV3 extension
-        run: PARCEL_WORKER_BACKEND=process pnpm build --zip --target=firefox-mv3 --env=.env.firefox
+        run: pnpm zip:firefox
       - name: Upload to Mozilla Add-ons
         uses: wdzeng/firefox-addon@v1
         with:
@@ -92,9 +92,8 @@ jobs:
           PLASMO_PUBLIC_WEATHER_API_KEYS: ${{ secrets.PLASMO_PUBLIC_WEATHER_API_KEYS }}
       - name: Build and zip extensions
         run: |
-          PARCEL_WORKER_BACKEND=process pnpm build --zip --env=.env.chrome
-          PARCEL_WORKER_BACKEND=process pnpm build --zip --target=firefox-mv3 --env=.env.firefox
-          PARCEL_WORKER_BACKEND=process pnpm build --zip --target=firefox-mv2 --env=.env.firefox
+          pnpm zip
+          pnpm zip:firefox
       - name: Release on GitHub (Firefox MV2)
         uses: softprops/action-gh-release@v2
         with:
