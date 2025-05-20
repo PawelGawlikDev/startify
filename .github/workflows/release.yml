@@ -27,7 +27,7 @@ jobs:
         run: pnpm install
 
       - name: Lint
-        run: pnpm litn
+        run: pnpm lint
 
       # - name: Zip extensions
       #   run: |
