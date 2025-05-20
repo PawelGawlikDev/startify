@@ -18,6 +18,7 @@ export default defineConfig({
     }
   }),
   srcDir: "src",
+  outDir: "build",
   modules: ["@wxt-dev/module-react"],
   manifest: {
     default_locale: "en",
