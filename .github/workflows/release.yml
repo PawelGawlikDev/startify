@@ -1,9 +1,8 @@
 name: "Release Startify Extension"
 on:
-  # push:
-  #   tags:
-  #     - v*.*.*
-  workflow_dispatch:
+  push:
+    tags:
+      - v*.*.*
 
 permissions:
   contents: write
@@ -51,21 +50,21 @@ jobs:
       - name: Vitest
         run: pnpm vitest
 
-      # - name: Zip extensions
-      #   run: |
-      #     pnpm zip
-      #     pnpm zip:firefox
+      - name: Zip extensions
+        run: |
+          pnpm zip
+          pnpm zip:firefox
 
-      # - name: Submit to stores
-      #   run: |
-      #     pnpm wxt submit \
-      #       --chrome-zip .output/*-chrome.zip \
-      #       --firefox-zip .output/*-firefox.zip --firefox-sources-zip .output/*-sources.zip
-      #   env:
-      #     CHROME_EXTENSION_ID: ${{ secrets.CHROME_EXTENSION_ID }}
-      #     CHROME_CLIENT_ID: ${{ secrets.CHROME_CLIENT_ID }}
-      #     CHROME_CLIENT_SECRET: ${{ secrets.CHROME_CLIENT_SECTER }}
-      #     CHROME_REFRESH_TOKEN: ${{ secrets.CHROME_REFRESH_TOKEN }}
-      #     FIREFOX_EXTENSION_ID: ${{ secrets.FIREFOX_EXTENSION_ID }}
-      #     FIREFOX_JWT_ISSUER: ${{ secrets.FIREFOX_API_KEY }}
-      #     FIREFOX_JWT_SECRET: ${{ secrets.FIREFOX_API_SECRET }}
+      - name: Submit to stores
+        run: |
+          pnpm wxt submit \
+            --chrome-zip .output/*-chrome.zip \
+            --firefox-zip .output/*-firefox.zip --firefox-sources-zip .output/*-sources.zip
+        env:
+          CHROME_EXTENSION_ID: ${{ secrets.CHROME_EXTENSION_ID }}
+          CHROME_CLIENT_ID: ${{ secrets.CHROME_CLIENT_ID }}
+          CHROME_CLIENT_SECRET: ${{ secrets.CHROME_CLIENT_SECTER }}
+          CHROME_REFRESH_TOKEN: ${{ secrets.CHROME_REFRESH_TOKEN }}
+          FIREFOX_EXTENSION_ID: ${{ secrets.FIREFOX_EXTENSION_ID }}
+          FIREFOX_JWT_ISSUER: ${{ secrets.FIREFOX_API_KEY }}
+          FIREFOX_JWT_SECRET: ${{ secrets.FIREFOX_API_SECRET }}
