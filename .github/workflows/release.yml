@@ -67,6 +67,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Setup env
+        uses: ./.github/actions/setup-env
+        env:
+          VITE_WEATHER_KEYS: ${{ secrets.VITE_WEATHER_KEYS }}
+
       - name: Zip extensions
         run: |
           pnpm zip
@@ -85,3 +90,12 @@ jobs:
           FIREFOX_EXTENSION_ID: ${{ secrets.FIREFOX_EXTENSION_ID }}
           FIREFOX_JWT_ISSUER: ${{ secrets.FIREFOX_API_KEY }}
           FIREFOX_JWT_SECRET: ${{ secrets.FIREFOX_API_SECRET }}
+
+      - name: Submit to github
+        uses: softprops/action-gh-release@v2
+        with:
+          draft: true
+          files: |
+            .output/*.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
