@@ -1,20 +1,21 @@
 name: "Release Startify Extension"
 on:
-  # push:
-  #   tags:
-  #     - v*.*.*
-  workflow_dispatch:
+  push:
+    tags:
+      - v*.*.*
 
 permissions:
   contents: write
 
 jobs:
-  submit:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
       - uses: pnpm/action-setup@v4
+        with:
+          version: 10
 
       - uses: actions/setup-node@v4
         with:
@@ -23,6 +24,31 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
+
+      - name: Lint
+        run: pnpm lint
+
+  vitest:
+    needs: lint
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Vitest
+        run: pnpm vitest
 
       - name: Zip extensions
         run: |
