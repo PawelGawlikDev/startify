@@ -9,7 +9,7 @@ importers:
   .:
     dependencies:
       '@radix-ui/react-label':
-        specifier: ^2.1.6
+        specifier: ^2.1.7
         version: 2.1.7(@types/react-dom@19.1.5(@types/react@19.1.4))(@types/react@19.1.4)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@tailwindcss/vite':
         specifier: ^4.1.7
@@ -66,6 +66,9 @@ importers:
       commitlint:
         specifier: ^19.8.1
         version: 19.8.1(@types/node@22.15.20)(typescript@5.8.3)
+      eslint:
+        specifier: ^9.27.0
+        version: 9.27.0(jiti@2.4.2)
       eslint-plugin-playwright:
         specifier: ^2.2.0
         version: 2.2.0(eslint@9.27.0(jiti@2.4.2))
