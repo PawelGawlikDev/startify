@@ -1,9 +1,8 @@
 import { useWallpaper } from "@/context/BackgroundContext";
 import Dashboard from "@/components/Dashboard";
-import Settings from "@/components/Settings";
 import { useState, useEffect } from "react";
 
-function App() {
+export default function App() {
   const { backgroundImageUrl } = useWallpaper();
   const [imageLoaded, setImageLoaded] = useState(false);
 
@@ -31,13 +30,7 @@ function App() {
 
       <div className="relative z-1 h-full w-full overflow-auto">
         <Dashboard />
-
-        <div className="absolute bottom-[5px] left-[5px]">
-          <Settings />
-        </div>
       </div>
     </div>
   );
 }
-
-export default App;

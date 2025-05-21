@@ -5,8 +5,6 @@ import { useEffect, useState } from "react";
 import { useDragAndDrop } from "@/hooks/useDragAndDrop";
 import { db } from "@/indexdb";
 
-import { cn } from "@/utils/cn";
-
 import { AddQuickLinkButton, QuickLink } from "./QuickLink";
 import QuickLinkModal from "./QuickLinkModal";
 import { useSettings } from "@/context/SettingsContext";
@@ -42,7 +40,6 @@ export default function QuickLinkGrid() {
       const parsedOrder = JSON.parse(savedOrder);
 
       if (quickLinks) {
-        // Filter out deleted IDs from the order
         const validIds = quickLinks.map((link) => link.id);
         const filteredOrder = parsedOrder.filter((id: number) =>
           validIds.includes(id)
@@ -81,11 +78,7 @@ export default function QuickLinkGrid() {
   return (
     <div
       data-testid="QuickLinkGrid"
-      className={cn(
-        "grid w-full max-w-7xl gap-4 p-4",
-        quickLink?.bigQuickLinks ? "lg:grid-cols-6" : "lg:grid-cols-6",
-        "auto-rows-min grid-cols-2 sm:grid-cols-3 md:grid-cols-4"
-      )}>
+      className="mx-auto grid auto-rows-min grid-cols-2 place-items-center items-start gap-6 p-4 sm:max-w-screen-md sm:grid-cols-3 md:max-w-screen-lg md:grid-cols-4 lg:grid-cols-6">
       <AnimatePresence>
         {showModal && (
           <motion.div

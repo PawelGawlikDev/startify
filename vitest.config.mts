@@ -13,7 +13,8 @@ export default defineConfig({
     environment: "jsdom",
     coverage: {
       provider: "v8",
-      include: ["src/utils/*.ts"]
+      include: ["src/utils/*.ts"],
+      exclude: ["src/utils/getMessage.ts"]
     },
     maxConcurrency: 1,
     reporters: process.env.GITHUB_ACTIONS

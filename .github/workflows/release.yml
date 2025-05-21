@@ -25,7 +25,10 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Lint
+      - name: Check code
+        run: pnpm format:check
+
+      - name: Lint code
         run: pnpm lint
 
   vitest:
@@ -51,6 +54,7 @@ jobs:
         run: pnpm vitest
 
   release:
+    needs: vitest
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
