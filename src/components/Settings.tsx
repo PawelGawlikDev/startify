@@ -60,7 +60,7 @@ export default function Settings() {
       </button>
 
       {open && (
-        <div className="bg-default-bg shadow-input 0 absolute bottom-10 left-0 z-40 flex h-[500px] w-[400px] rounded-xl">
+        <div className="bg-default-bg shadow-input 0 absolute bottom-10 left-0 z-10 z-40 flex h-[500px] w-[400px] rounded-xl">
           <div className="border-secondary bg-surface w-1/3 border-r p-3">
             <ul className="space-y-2">
               {sections.map((section) => (

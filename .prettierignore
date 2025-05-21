@@ -1,5 +1,6 @@
 .wxt/
 build/
+.output/
 node_modules/
 pnpm-lock.yaml
 playwright-report/

@@ -1,5 +1,4 @@
-import { motion } from "motion/react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useWallpaper } from "@/context/BackgroundContext";
 
 export default function DigitalTime() {
@@ -24,18 +23,15 @@ export default function DigitalTime() {
   };
 
   return (
-    <motion.div
+    <div
       data-testid="DigitalTime"
       className="text-primary-text inline-block rounded-lg px-5 py-2 font-mono text-5xl"
-      initial={{ scale: 0 }}
-      animate={{ scale: 1 }}
-      transition={{ duration: 0.5 }}
       style={{
         backgroundColor: backgroundColor,
         borderRadius: "var(--radius-rounded-md)",
         boxShadow: "0 4px 10px rgba(0, 0, 0, 0.3)"
       }}>
       {formatTime(time)}
-    </motion.div>
+    </div>
   );
 }
