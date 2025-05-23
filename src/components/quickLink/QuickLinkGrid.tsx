@@ -1,10 +1,10 @@
 import { useLiveQuery } from "dexie-react-hooks";
 import { AnimatePresence, motion } from "motion/react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { useDragAndDrop } from "@/hooks/useDragAndDrop";
 import { db } from "@/indexdb";
-
+import { cn } from "@/utils/cn";
 import { AddQuickLinkButton, QuickLink } from "./QuickLink";
 import QuickLinkModal from "./QuickLinkModal";
 import { useSettings } from "@/context/SettingsContext";
@@ -23,62 +23,52 @@ export default function QuickLinkGrid() {
   } | null>(null);
   const quickLinks = useLiveQuery(async () => await db.quickLinks.toArray());
 
-  const handleAddQuickLink = (newId: number) => {
-    setQuickLinkOrder((prevOrder) => {
-      const updatedOrder = [...prevOrder, newId];
-
-      localStorage.setItem("speedLinkOrder", JSON.stringify(updatedOrder));
-
-      return updatedOrder;
-    });
-  };
-
   useEffect(() => {
     const savedOrder = localStorage.getItem("speedLinkOrder");
 
-    if (savedOrder) {
+    if (savedOrder && quickLinks) {
       const parsedOrder = JSON.parse(savedOrder);
+      const validIds = quickLinks.map((link) => link.id);
+      const filteredOrder = parsedOrder.filter((id: number) =>
+        validIds.includes(id)
+      );
 
-      if (quickLinks) {
-        const validIds = quickLinks.map((link) => link.id);
-        const filteredOrder = parsedOrder.filter((id: number) =>
-          validIds.includes(id)
-        );
+      setQuickLinkOrder(filteredOrder);
+    } else if (quickLinks) {
+      const defaultOrder = quickLinks.map((link) => link.id);
 
-        if (JSON.stringify(filteredOrder) !== JSON.stringify(quickLinkOrder)) {
-          setQuickLinkOrder(filteredOrder);
-          localStorage.setItem("speedLinkOrder", JSON.stringify(filteredOrder));
-        }
-      }
-    } else if (quickLinks && quickLinks.length > 0) {
-      const currentOrderIds = quickLinks.map((dial) => dial.id);
-
-      setQuickLinkOrder(currentOrderIds);
-      localStorage.setItem("speedLinkOrder", JSON.stringify(currentOrderIds));
+      setQuickLinkOrder(defaultOrder);
     }
   }, [quickLinks]);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
-      if (showModal && event.key === "Escape") {
-        setShowModal(false);
-      }
+      if (showModal && event.key === "Escape") setShowModal(false);
     };
 
     document.addEventListener("keydown", onKeyDown);
 
-    return () => {
-      document.removeEventListener("keydown", onKeyDown);
-    };
-  }, [showModal, setShowModal]);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [showModal]);
 
-  const { onDragEnter, onDragStart, onDragEnd, onDragOver, onDrop } =
+  const sortedQuickLinks = useMemo(() => {
+    if (!quickLinks) return [];
+
+    return quickLinkOrder
+      .map((id) => quickLinks.find((link) => link.id === id))
+      .filter((link): link is NonNullable<typeof link> => link !== undefined);
+  }, [quickLinks, quickLinkOrder]);
+
+  const { onDragStart, onDragEnter, onDragEnd, onDragOver, onDrop } =
     useDragAndDrop(quickLinkOrder, setQuickLinkOrder);
 
   return (
     <div
       data-testid="QuickLinkGrid"
-      className="mx-auto grid auto-rows-min grid-cols-2 place-items-center items-start gap-6 p-4 sm:max-w-screen-md sm:grid-cols-3 md:max-w-screen-lg md:grid-cols-4 lg:grid-cols-6">
+      className={cn(
+        "grid w-full max-w-7xl gap-4 p-4",
+        "auto-rows-min grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
+      )}>
       <AnimatePresence>
         {showModal && (
           <motion.div
@@ -93,38 +83,36 @@ export default function QuickLinkGrid() {
               id={editingLink?.id}
               dialName={editingLink?.name}
               dialUrl={editingLink?.url}
-              onAddLink={handleAddQuickLink}
+              onAddLink={(id) => {
+                const newOrder = [...quickLinkOrder, id];
+
+                setQuickLinkOrder(newOrder);
+              }}
             />
           </motion.div>
         )}
       </AnimatePresence>
-      {quickLinks &&
-        quickLinkOrder
-          .map((id: number) => quickLinks.find((dial) => dial.id === id))
-          .filter(
-            (dial): dial is (typeof quickLinks)[number] => dial !== undefined
-          )
-          .map((dial, index) => (
-            <div
-              data-testid="QuickLinkWrapper"
-              key={dial.id}
-              draggable
-              onDragStart={(e) => onDragStart(e, index)}
-              onDragOver={onDragOver}
-              onDragEnter={(e) => onDragEnter(e, index)}
-              onDragEnd={onDragEnd}
-              onDrop={onDrop}>
-              <QuickLink
-                quickLinkSettings={quickLink}
-                setEditingLink={setEditingLink}
-                setShowModal={setShowModal}
-                setQuickLinkOrder={setQuickLinkOrder}
-                id={dial.id}
-                pageName={dial.name}
-                url={dial.url}
-              />
-            </div>
-          ))}
+
+      {sortedQuickLinks.map((link, index) => (
+        <div
+          key={link.id}
+          draggable
+          onDragStart={(e) => onDragStart(e, index)}
+          onDragOver={onDragOver}
+          onDragEnter={(e) => onDragEnter(e, index)}
+          onDragEnd={onDragEnd}
+          onDrop={onDrop}>
+          <QuickLink
+            setEditingLink={setEditingLink}
+            setShowModal={setShowModal}
+            setQuickLinkOrder={setQuickLinkOrder}
+            id={link.id}
+            pageName={link.name}
+            url={link.url}
+          />
+        </div>
+      ))}
+
       <AddQuickLinkButton
         quickLinkSettings={quickLink}
         setShowModal={setShowModal}

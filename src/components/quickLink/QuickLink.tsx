@@ -1,9 +1,8 @@
 import { motion } from "motion/react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 
 import { db } from "@/indexdb";
 import type { QuickLinkSettings } from "@/types";
-import { cn } from "@/utils/cn";
 
 import QuickLinkBackground from "./QuickLinkBackground";
 
@@ -11,7 +10,6 @@ type QuickLinkProps = {
   pageName: string;
   url: string;
   id: number;
-  quickLinkSettings: QuickLinkSettings;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   setEditingLink: React.Dispatch<
     React.SetStateAction<{
@@ -32,15 +30,8 @@ type AddQuickLink = {
 };
 
 export function QuickLink(props: QuickLinkProps) {
-  const {
-    pageName,
-    url,
-    id,
-    quickLinkSettings,
-    setShowModal,
-    setEditingLink,
-    setQuickLinkOrder
-  } = props;
+  const { pageName, url, id, setShowModal, setEditingLink, setQuickLinkOrder } =
+    props;
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -58,7 +49,7 @@ export function QuickLink(props: QuickLinkProps) {
     };
   }, []);
 
-  const handleEditClick = async () => {
+  const handleEditClick = useCallback(async () => {
     const dialInfo = await db.quickLinks.get(id);
 
     if (dialInfo) {
@@ -70,9 +61,9 @@ export function QuickLink(props: QuickLinkProps) {
       setShowMenu(false);
       setShowModal(true);
     }
-  };
+  }, [id, setEditingLink, setShowModal]);
 
-  const handleDeleteClick = async () => {
+  const handleDeleteClick = useCallback(async () => {
     await db.quickLinks.delete(id);
 
     setQuickLinkOrder((prevOrder) => {
@@ -82,33 +73,27 @@ export function QuickLink(props: QuickLinkProps) {
 
       return updatedOrder;
     });
-  };
+  }, [id, setQuickLinkOrder]);
+
+  const toggleMenu = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    setShowMenu((prev) => !prev);
+  }, []);
 
   return (
     <motion.div
       data-testid="QuickLink"
       layout
-      transition={{ type: "spring", stiffness: 200, damping: 20 }}
-      className="group relative z-10 flex flex-col items-center justify-center"
-      draggable="true">
+      className="group relative z-10 flex flex-col items-center justify-center">
       <a draggable="false" href={url} tabIndex={0} aria-label={pageName}>
-        <QuickLinkBackground
-          className={cn(
-            "flex items-center justify-center",
-            quickLinkSettings?.bigQuickLinks
-              ? "h-28 w-[166px]"
-              : "h-[88px] w-[144px]"
-          )}>
+        <QuickLinkBackground className="flex h-[88px] w-[144px] items-center justify-center">
           <div
             data-testid="QuickLinkSettingsButton"
             ref={menuRef}
             className={`absolute top-1 h-5 w-5 ${
               showMenu ? "opacity-100" : "opacity-0"
             } right-2 rounded-full p-1 transition-all group-hover:opacity-100 hover:bg-neutral-800/75`}
-            onClick={(e) => {
-              e.preventDefault();
-              setShowMenu(!showMenu);
-            }}>
+            onClick={toggleMenu}>
             <EditDots />
             {showMenu && (
               <div

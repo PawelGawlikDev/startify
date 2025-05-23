@@ -18,7 +18,7 @@ export default function Dashboard() {
   if (!isSettingsLoaded) return null;
 
   return (
-    <div className="relative grid h-full auto-rows-auto [grid-template-columns:70px_minmax(auto,_1fr)_70px] gap-4 pt-2.5 md:[grid-template-columns:170px_minmax(auto,_1fr)_170px]">
+    <div className="relative grid h-full [grid-template-columns:70px_minmax(auto,_1fr)_70px] [grid-template-rows:70px_110px_auto] gap-4 pt-2.5 md:[grid-template-columns:170px_minmax(auto,_1fr)_170px]">
       {!isFirefox && (
         <div className="col-span-1 flex items-start pl-2">
           <button
@@ -54,14 +54,13 @@ export default function Dashboard() {
         </div>
       )}
 
-      <div className="row -start-2 col-span-1 col-start-2 flex items-center justify-center md:col-span-1 md:col-start-2">
+      <div className="col-span-1 col-start-2 row-start-2 flex items-start md:col-span-1 md:col-start-2">
         <SearchBox />
       </div>
 
       {quickLinkGrid && (
         <Suspense>
-          <div
-            className={`col-span-3 row-start-3 flex items-center justify-center transition-opacity ${quickLinkGrid ? "opacity-100" : "opacity-0"}`}>
+          <div className="col-span-1 col-start-2 row-start-3 flex justify-center">
             <QuickLinkGrid />
           </div>
         </Suspense>

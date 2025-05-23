@@ -5,8 +5,7 @@ export const useDragAndDrop = (
   updateOrder: (order: number[]) => void
 ) => {
   const [draggingIndex, setDraggingIndex] = useState<number | null>(null);
-  const isThrottleActive = useRef(false);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const lastDragTime = useRef<number>(0);
 
   const updateLocalStorage = useCallback(
     (order: number[]) => {
@@ -27,10 +26,12 @@ export const useDragAndDrop = (
 
   const onDragEnter = useCallback(
     (event: React.DragEvent<HTMLDivElement>, targetIndex: number) => {
+      const now = Date.now();
+
       if (
         draggingIndex === null ||
         draggingIndex === targetIndex ||
-        isThrottleActive.current
+        now - lastDragTime.current < 200
       ) {
         return;
       }
@@ -43,15 +44,7 @@ export const useDragAndDrop = (
       updateLocalStorage(updatedOrder);
       setDraggingIndex(targetIndex);
 
-      isThrottleActive.current = true;
-
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-
-      timeoutRef.current = setTimeout(() => {
-        isThrottleActive.current = false;
-      }, 250);
+      lastDragTime.current = now;
     },
     [draggingIndex, quickLinkOrder, updateLocalStorage]
   );
@@ -75,6 +68,7 @@ export const useDragAndDrop = (
     onDragEnter,
     onDragEnd,
     onDragOver,
-    onDrop
+    onDrop,
+    draggingIndex
   };
 };
