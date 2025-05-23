@@ -33,7 +33,7 @@ export default function QuickLinkBackground({
           zIndex: 1
         }}></div>
 
-      <div className={cn("relative z-20", className)}>{children}</div>
+      <div className={cn("relative z-[1]", className)}>{children}</div>
     </div>
   );
 }
