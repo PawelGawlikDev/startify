@@ -60,7 +60,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Install Playwright Browsers
-        run: pnpm exec playwright install --with-deps
+        run: pnpm playwright install --with-deps chromium
+      - name: Setup env
+        uses: ./.github/actions/setup-env
+        env:
+          VITE_WEATHER_KEYS: ${{ secrets.VITE_WEATHER_KEYS }}
+      - name: Build extension for tests
+        run: pnpm build
       - name: Run Playwright tests
         run: pnpm e2e
       - uses: actions/upload-artifact@v4
