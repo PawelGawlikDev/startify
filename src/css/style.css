@@ -1,0 +1,22 @@
+@import "./tailwind.css";
+
+.dragging {
+  opacity: 0;
+}
+
+.hide-scrollbar {
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--color-dark-bg);
+}

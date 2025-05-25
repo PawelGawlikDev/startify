@@ -18,7 +18,7 @@ export default defineConfig({
     }
   }),
   srcDir: "src",
-  modules: ["@wxt-dev/module-react"],
+  modules: ["@wxt-dev/module-react", "@wxt-dev/auto-icons"],
   manifest: {
     default_locale: "en",
     browser_specific_settings: {

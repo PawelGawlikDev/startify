@@ -60,7 +60,7 @@ export default function Dashboard() {
 
       {quickLinkGrid && (
         <Suspense>
-          <div className="col-span-1 col-start-2 row-start-3 flex justify-center">
+          <div className="col-span-1 col-start-2 row-start-3 flex justify-center md:col-span-3 md:col-start-1">
             <QuickLinkGrid />
           </div>
         </Suspense>

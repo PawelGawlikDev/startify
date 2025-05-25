@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.js";
-import "./style.css";
+import "../../css/style.css";
 import { WallpaperProvider } from "@/context/BackgroundContext.js";
 import { SettingsProvider } from "@/context/SettingsContext.js";
 
