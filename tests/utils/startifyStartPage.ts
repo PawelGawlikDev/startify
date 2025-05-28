@@ -42,9 +42,15 @@ export class StartifyStartPage {
       message: "Modal should be visible after click add buton"
     }).toBeVisible();
 
+    const saveButton = addModal.getByTestId("SaveButton");
+
+    await expect(saveButton).toBeDisabled();
+
     await this.fillInput(addModal.locator("#name"), linkName);
 
     await this.fillInput(addModal.locator("#url"), url);
+
+    await expect(saveButton).toBeEnabled();
 
     await addModal.getByTestId("SaveButton").click();
 

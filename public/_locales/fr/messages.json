@@ -43,6 +43,14 @@
     "message": "Météo",
     "description": "Header or label related to weather features in the app"
   },
+  "imagePreview": {
+    "message": "Aperçu de l'image",
+    "description": "Image preview text"
+  },
+  "color": {
+    "message": "Couleur",
+    "description": "Widgets Color"
+  },
   "green": {
     "message": "Vert",
     "description": "Green Color"
@@ -50,6 +58,10 @@
   "gray": {
     "message": "Gris",
     "description": "Gray Color"
+  },
+  "transparent": {
+    "message": "Transparent",
+    "description": "Transparent Color"
   },
   "delete": {
     "message": "Supprimer",

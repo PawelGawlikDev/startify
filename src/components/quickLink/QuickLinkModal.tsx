@@ -5,7 +5,6 @@ import { db } from "@/indexdb/index";
 import { cn } from "@/utils/cn";
 import isValidUrl from "@/utils/validUrl";
 
-import { Input, Label, LabelInputContainer } from "./Form";
 import { QuickLinkPreview } from "./QuickLink";
 import { Button } from "../Button";
 
@@ -62,26 +61,40 @@ const QuickLinkModal = (props: ModalProps) => {
       exit={{ scale: 0.8, opacity: 0 }}
       transition={{ duration: 0.3 }}>
       <QuickLinkPreview pageName={name ?? ""} />
-      <LabelInputContainer>
-        <Label htmlFor="name">{browser.i18n.getMessage("name")}</Label>
-        <Input
+      <div className={"flex w-full flex-col space-y-2"}>
+        <label
+          className={
+            "text-primary-text text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          }
+          htmlFor="name">
+          {browser.i18n.getMessage("name")}
+        </label>
+        <input
           id="name"
-          placeholder={browser.i18n.getMessage("name")}
           type="text"
           value={name}
+          placeholder={browser.i18n.getMessage("name")}
+          className="placeholder-text-neutral-600 text-primary-text bg-secondary-900 flex h-10 w-full rounded-md border-none px-3 py-2 text-sm focus:ring-0 focus:outline-none"
           onChange={(e) => setName(e.target.value)}
         />
-      </LabelInputContainer>
-      <LabelInputContainer>
-        <Label htmlFor="url">{browser.i18n.getMessage("address")}</Label>
-        <Input
-          placeholder={browser.i18n.getMessage("address")}
+      </div>
+      <div className={"flex w-full flex-col space-y-2"}>
+        <label
+          className={
+            "text-primary-text text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          }
+          htmlFor="url">
+          {browser.i18n.getMessage("address")}
+        </label>
+        <input
           id="url"
           type="text"
           value={url}
+          placeholder={browser.i18n.getMessage("address")}
+          className="placeholder-text-neutral-600 text-primary-text bg-secondary-900 flex h-10 w-full rounded-md border-none px-3 py-2 text-sm focus:ring-0 focus:outline-none"
           onChange={(e) => setUrl(e.target.value)}
         />
-      </LabelInputContainer>
+      </div>
       <div className="mt-4 flex gap-3">
         <Button
           onClick={addQuickLink}

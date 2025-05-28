@@ -10,7 +10,7 @@ export const useDragAndDrop = (
   const updateLocalStorage = useCallback(
     (order: number[]) => {
       updateOrder(order);
-      localStorage.setItem("speedLinkOrder", JSON.stringify(order));
+      localStorage.setItem("quickLinkOrder", JSON.stringify(order));
     },
     [updateOrder]
   );

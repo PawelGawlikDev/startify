@@ -4,6 +4,7 @@ import { db } from "@/indexdb";
 import { UserWallpaper } from "@/types";
 import { useWallpaper } from "@/context/BackgroundContext";
 import { FileUpload } from "../FileUpload";
+import { getMessage } from "@/utils/getMessage";
 
 export default function PhotosSettings() {
   const { setBackgroundImageUrl } = useWallpaper();
@@ -32,9 +33,7 @@ export default function PhotosSettings() {
       const blob = new Blob([file], { type: file.type });
 
       try {
-        const existingWallpaper = await db.wallpaper
-          .filter((wallpaper) => wallpaper.name !== "daily")
-          .toArray();
+        const existingWallpaper = await db.wallpaper.toArray();
 
         if (existingWallpaper.length > 0) {
           await db.wallpaper.delete(existingWallpaper[0].id);
@@ -53,9 +52,7 @@ export default function PhotosSettings() {
         localStorage.setItem("userWallpaper", imageUrl);
         localStorage.setItem("userWallpaperCustom", "true");
 
-        const wallpapers = await db.wallpaper
-          .filter((wallpaper) => wallpaper.name !== "daily")
-          .toArray();
+        const wallpapers = await db.wallpaper.toArray();
 
         setStoredFiles(wallpapers);
       } catch {
@@ -79,7 +76,7 @@ export default function PhotosSettings() {
           <button
             className="shadow-input bg-surface-100 text-primary-text hover:bg-surface-50 w-fit rounded-lg px-3 py-2 text-sm"
             onClick={() => setPreview(!preview)}>
-            Image preview
+            {getMessage("imagePreview")}
           </button>
 
           {storedFiles.map(

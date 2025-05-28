@@ -114,8 +114,9 @@ export const EngineOptions = () => {
 
 export const ColorOptions = () => {
   const predefinedColors = [
-    { name: "Green", value: "#a3be8c" },
-    { name: "Gray", value: "#2e303a" }
+    { name: "Green", value: "var(--color-primary-900)" },
+    { name: "Gray", value: "var(--color-surface-900)" },
+    { name: "Transparent", value: "var(--color-transparent)" }
   ];
 
   const { setBackgroundColor } = useWallpaper();
@@ -142,7 +143,7 @@ export const ColorOptions = () => {
           }`}
           style={{
             backgroundColor:
-              selectedColor === color.value ? color.value : "transparent"
+              selectedColor === color.value ? color.value : "Transparent"
           }}>
           <p>{getMessage(color.name.toLowerCase())}</p>
         </motion.li>

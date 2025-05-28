@@ -66,13 +66,11 @@ export function QuickLink(props: QuickLinkProps) {
   const handleDeleteClick = useCallback(async () => {
     await db.quickLinks.delete(id);
 
-    setQuickLinkOrder((prevOrder) => {
-      const updatedOrder = prevOrder.filter((linkId) => linkId !== id);
+    const updatedLinks = await db.quickLinks.toArray();
+    const updatedOrder = updatedLinks.map((link) => link.id);
 
-      localStorage.setItem("speedLinkOrder", JSON.stringify(updatedOrder));
-
-      return updatedOrder;
-    });
+    setQuickLinkOrder(updatedOrder);
+    localStorage.setItem("quickLinkOrder", JSON.stringify(updatedOrder));
   }, [id, setQuickLinkOrder]);
 
   const toggleMenu = useCallback((e: React.MouseEvent) => {
@@ -92,22 +90,22 @@ export function QuickLink(props: QuickLinkProps) {
             ref={menuRef}
             className={`absolute top-1 h-5 w-5 ${
               showMenu ? "opacity-100" : "opacity-0"
-            } right-2 rounded-full p-1 transition-all group-hover:opacity-100 hover:bg-neutral-800/75`}
+            } hover:bg-dark-bg/75 right-2 rounded-full p-1 transition-all group-hover:opacity-100`}
             onClick={toggleMenu}>
             <EditDots />
             {showMenu && (
               <div
                 data-testid="QuickLinkMenu"
-                className="absolute z-1 flex flex-col items-center rounded-xl bg-neutral-950 text-white">
+                className="bg-dark-bg text-primary-text absolute z-1 flex flex-col items-center rounded-xl">
                 <span
                   data-testid="EditQuickLink"
-                  className="flex w-full items-center justify-center rounded-t-xl p-3 hover:bg-neutral-600"
+                  className="hover:bg-secondary-900 flex w-full items-center justify-center rounded-t-xl p-3"
                   onClick={handleEditClick}>
                   Edit
                 </span>
                 <span
                   data-testid="DeleteQuickLink"
-                  className="flex w-full items-center justify-center rounded-b-xl p-3 hover:bg-neutral-600"
+                  className="hover:bg-secondary-900 flex w-full items-center justify-center rounded-b-xl p-3"
                   onClick={handleDeleteClick}>
                   {browser.i18n.getMessage("delete")}
                 </span>
