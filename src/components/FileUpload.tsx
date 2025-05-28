@@ -68,7 +68,7 @@ export const FileUpload = ({
       <motion.div
         onClick={handleClick}
         whileHover="animate"
-        className="group/file relative block w-full cursor-pointer overflow-hidden rounded-lg p-10">
+        className="group/file relative block w-full cursor-pointer overflow-hidden rounded-lg pb-3">
         <input
           ref={fileInputRef}
           id="file-upload-handle"
@@ -80,7 +80,7 @@ export const FileUpload = ({
           <p className="text-primary-text relative z-20 font-sans text-base font-bold">
             {browser.i18n.getMessage("uploadWallpaper")}
           </p>
-          <div className="relative mx-auto mt-10 w-full max-w-xl">
+          <div className="relative mx-auto mt-6 w-full max-w-xl">
             <motion.div
               layoutId="file-upload"
               variants={mainVariant}
@@ -97,7 +97,7 @@ export const FileUpload = ({
                 <motion.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="text-secondary-text flex flex-col items-center">
+                  className="text-primary-text flex flex-col items-center">
                   {browser.i18n.getMessage("dropIt")}
                   <IconUpload />
                 </motion.p>

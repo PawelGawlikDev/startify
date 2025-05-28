@@ -24,21 +24,31 @@ export default function QuickLinkGrid() {
   const quickLinks = useLiveQuery(async () => await db.quickLinks.toArray());
 
   useEffect(() => {
-    const savedOrder = localStorage.getItem("speedLinkOrder");
+    if (!quickLinks) return;
 
-    if (savedOrder && quickLinks) {
-      const parsedOrder = JSON.parse(savedOrder);
-      const validIds = quickLinks.map((link) => link.id);
-      const filteredOrder = parsedOrder.filter((id: number) =>
-        validIds.includes(id)
-      );
+    const savedOrder = localStorage.getItem("quickLinkOrder");
+    const allIds = quickLinks.map((link) => link.id);
+    let newOrder: number[] = [];
 
-      setQuickLinkOrder(filteredOrder);
-    } else if (quickLinks) {
-      const defaultOrder = quickLinks.map((link) => link.id);
+    if (savedOrder) {
+      const parsedOrder: number[] = JSON.parse(savedOrder);
+      const savedSet = new Set(parsedOrder);
+      const missing = allIds.filter((id) => !savedSet.has(id));
 
-      setQuickLinkOrder(defaultOrder);
+      newOrder = [
+        ...parsedOrder.filter((id) => allIds.includes(id)),
+        ...missing
+      ];
+    } else {
+      newOrder = allIds;
     }
+
+    setQuickLinkOrder((prev) => {
+      const sameLength = prev.length === newOrder.length;
+      const sameValues = prev.every((id, i) => id === newOrder[i]);
+
+      return sameLength && sameValues ? prev : newOrder;
+    });
   }, [quickLinks]);
 
   useEffect(() => {
@@ -50,6 +60,10 @@ export default function QuickLinkGrid() {
 
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [showModal]);
+
+  useEffect(() => {
+    localStorage.setItem("quickLinkOrder", JSON.stringify(quickLinkOrder));
+  }, [quickLinkOrder]);
 
   const sortedQuickLinks = useMemo(() => {
     if (!quickLinks) return [];
@@ -84,9 +98,18 @@ export default function QuickLinkGrid() {
               dialName={editingLink?.name}
               dialUrl={editingLink?.url}
               onAddLink={(id) => {
-                const newOrder = [...quickLinkOrder, id];
+                setQuickLinkOrder((prevOrder) => {
+                  if (prevOrder.includes(id)) return prevOrder;
 
-                setQuickLinkOrder(newOrder);
+                  const newOrder = [...prevOrder, id];
+
+                  localStorage.setItem(
+                    "quickLinkOrder",
+                    JSON.stringify(newOrder)
+                  );
+
+                  return newOrder;
+                });
               }}
             />
           </motion.div>

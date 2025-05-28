@@ -5,11 +5,12 @@ export default defineConfig({
   fullyParallel: true,
   testMatch: [/.*\.spec\.(ts)/],
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
+  retries: process.env.CI ? 2 : 1,
   workers: process.env.CI ? 1 : undefined,
   reporter: process.env.CI ? [["github"], ["list"]] : "html",
   use: {
-    trace: "on-first-retry"
+    trace: "retain-on-first-failure",
+    screenshot: "on-first-failure"
   },
 
   projects: [
