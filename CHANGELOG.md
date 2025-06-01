@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/PawelGawlikDev/startify/compare/v1.2.1...v1.3.0) (2025-06-01)
+
+
+### Features
+
+* improve workflows ([#86](https://github.com/PawelGawlikDev/startify/issues/86)) ([53f5e8d](https://github.com/PawelGawlikDev/startify/commit/53f5e8d7b2c6dbc06877bac2697a363d74b89547))
+
+
+### Bug Fixes
+
+* add new colors and small fixes ([#84](https://github.com/PawelGawlikDev/startify/issues/84)) ([daa4c80](https://github.com/PawelGawlikDev/startify/commit/daa4c806ae4dc71f2fba801f9b6f05f7d8354745))
+* fix workflow ([#87](https://github.com/PawelGawlikDev/startify/issues/87)) ([ac95340](https://github.com/PawelGawlikDev/startify/commit/ac953400f2d092cde83c4518e3e683a0ea311762))
+
 ### [1.2.1](https://github.com/PawelGawlikDev/startify/compare/v1.2.0...v1.2.1) (2025-05-25)
 
 
