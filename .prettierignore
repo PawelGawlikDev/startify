@@ -8,3 +8,4 @@ coverage/
 CHANGELOG.md
 playwright/.cache
 public/
+chrome/

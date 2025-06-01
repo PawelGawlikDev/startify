@@ -25,6 +25,7 @@ export default function App() {
           style={{
             backgroundImage: `url(${backgroundImageUrl})`
           }}
+          data-testid="wallpaper"
         />
       )}
 

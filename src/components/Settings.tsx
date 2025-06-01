@@ -1,8 +1,11 @@
-import { useState, useRef, useEffect } from "react";
-import MainSettings from "./settings/MainSettings";
-import PhotosSettings from "./settings/PhostosSettings";
-import WidgetSettings from "./settings/WidgetSettings";
+import React, { useState, useRef, useEffect, Suspense } from "react";
 import { getMessage } from "@/utils/getMessage";
+import SettingsPlaceholder from "./settings/Placeholder";
+import { motion, AnimatePresence } from "motion/react";
+
+const MainSettings = React.lazy(() => import("./settings/MainSettings"));
+const PhotosSettings = React.lazy(() => import("./settings/PhostosSettings"));
+const WidgetSettings = React.lazy(() => import("./settings/WidgetSettings"));
 
 const Gear = () => {
   return (
@@ -40,28 +43,50 @@ export default function Settings() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const sectionComponents: Record<
+    string,
+    React.LazyExoticComponent<() => React.JSX.Element>
+  > = {
+    Main: MainSettings,
+    Photos: PhotosSettings,
+    Widgets: WidgetSettings
+  };
+
   const renderSection = () => {
-    switch (activeSection) {
-      case "Main":
-        return <MainSettings />;
-      case "Photos":
-        return <PhotosSettings />;
-      case "Widgets":
-        return <WidgetSettings />;
-    }
+    const SectionComponent = sectionComponents[activeSection];
+
+    return (
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={activeSection}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}>
+          <Suspense fallback={<SettingsPlaceholder />}>
+            <SectionComponent />
+          </Suspense>
+        </motion.div>
+      </AnimatePresence>
+    );
   };
 
   return (
     <div className="relative" ref={popupRef}>
       <button
         className="text-primary-text hover:text-secondary cursor-pointer"
+        data-testid="SettingsGear"
         onClick={() => setOpen((prev) => !prev)}>
         <Gear />
       </button>
 
       {open && (
-        <div className="bg-default-bg shadow-input 0 absolute bottom-10 left-0 z-10 z-40 flex h-[500px] w-[400px] rounded-xl">
-          <div className="border-secondary bg-surface w-1/3 border-r p-3">
+        <div
+          className="bg-default-bg shadow-input absolute bottom-10 left-0 z-40 flex h-[500px] w-[550px] rounded-xl"
+          data-testid="SettingsPanel">
+          <div
+            className="border-secondary bg-surface w-1/3 border-r p-3"
+            data-testid="SectionList">
             <ul className="space-y-2">
               {sections.map((section) => (
                 <li key={section}>
@@ -71,7 +96,8 @@ export default function Settings() {
                         ? "bg-surface-900"
                         : "hover:bg-surface-900"
                     }`}
-                    onClick={() => setActiveSection(section)}>
+                    onClick={() => setActiveSection(section)}
+                    data-testid={`${section}`}>
                     {getMessage(`${section.toLowerCase()}Section`)}
                   </button>
                 </li>
@@ -79,7 +105,9 @@ export default function Settings() {
             </ul>
           </div>
 
-          <div className="text-primary-text hide-scrollbar w-2/3 overflow-y-auto p-4">
+          <div
+            className="text-primary-text hide-scrollbar w-2/3 overflow-y-auto p-4"
+            data-testid={`${activeSection}Settings`}>
             <h3 className="text-md mb-2 font-semibold">{activeSection}</h3>
             {renderSection()}
           </div>

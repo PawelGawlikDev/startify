@@ -2,6 +2,7 @@ import { motion } from "motion/react";
 import { useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { cn } from "@/utils/cn";
+import { getMessage } from "@/utils/getMessage";
 
 const mainVariant = {
   initial: {
@@ -78,7 +79,7 @@ export const FileUpload = ({
         />
         <div className="flex flex-col items-center justify-center">
           <p className="text-primary-text relative z-20 font-sans text-base font-bold">
-            {browser.i18n.getMessage("uploadWallpaper")}
+            {getMessage("uploadWallpaper")}
           </p>
           <div className="relative mx-auto mt-6 w-full max-w-xl">
             <motion.div
@@ -92,13 +93,14 @@ export const FileUpload = ({
               className={cn(
                 "bg-surface-500 relative z-40 mx-auto mt-4 flex h-32 w-full max-w-[8rem] items-center justify-center rounded-md group-hover/file:shadow-2xl",
                 "shadow-[0px_10px_50px_rgba(0,0,0,0.1)]"
-              )}>
+              )}
+              data-testid="uploadWallpaper">
               {isDragActive ? (
                 <motion.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   className="text-primary-text flex flex-col items-center">
-                  {browser.i18n.getMessage("dropIt")}
+                  {getMessage("dropIt")}
                   <IconUpload />
                 </motion.p>
               ) : (

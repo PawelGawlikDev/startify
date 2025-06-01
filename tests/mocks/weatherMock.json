@@ -1,0 +1,47 @@
+{
+  "location": {
+    "name": "Rokytnice Nad Jizerou",
+    "region": "Jihomoravsky kraj",
+    "country": "Czech Republic",
+    "lat": 50.725,
+    "lon": 15.45,
+    "tz_id": "Europe/Prague",
+    "localtime_epoch": 1748770376,
+    "localtime": "2025-06-01 11:32"
+  },
+  "current": {
+    "last_updated_epoch": 1748770200,
+    "last_updated": "2025-06-01 11:30",
+    "temp_c": 100,
+    "temp_f": 68.7,
+    "is_day": 1,
+    "condition": {
+      "text": "Light rain shower",
+      "icon": "//cdn.weatherapi.com/weather/64x64/day/353.png",
+      "code": 1240
+    },
+    "wind_mph": 8.3,
+    "wind_kph": 13.3,
+    "wind_degree": 211,
+    "wind_dir": "SSW",
+    "pressure_mb": 1016,
+    "pressure_in": 30.01,
+    "precip_mm": 0.55,
+    "precip_in": 0.02,
+    "humidity": 70,
+    "cloud": 50,
+    "feelslike_c": 20.4,
+    "feelslike_f": 68.7,
+    "windchill_c": 20.4,
+    "windchill_f": 68.7,
+    "heatindex_c": 20.4,
+    "heatindex_f": 68.7,
+    "dewpoint_c": 14.8,
+    "dewpoint_f": 58.6,
+    "vis_km": 10,
+    "vis_miles": 6,
+    "uv": 4.7,
+    "gust_mph": 9.8,
+    "gust_kph": 15.8
+  }
+}
