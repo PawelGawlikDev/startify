@@ -15,7 +15,8 @@ export default [
       "CHANGELOG.md",
       "coverage/",
       "playwright-report/",
-      "playwright/.cache"
+      "playwright/.cache",
+      "chrome"
     ]
   },
   { files: ["**/*.{ts,tsx}"] },

@@ -118,7 +118,7 @@ export default function PhotosSettings() {
 
                           setStoredFiles(updatedFiles);
                         }}>
-                        {browser.i18n.getMessage("delete")}
+                        {getMessage("delete")}
                       </motion.button>
 
                       <motion.button

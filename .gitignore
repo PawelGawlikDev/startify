@@ -34,3 +34,6 @@ coverage
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+#Chrome for testing
+chrome

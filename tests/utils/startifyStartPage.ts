@@ -15,6 +15,28 @@ export class StartifyStartPage {
     await this.page.waitForLoadState("domcontentloaded");
   }
 
+  async openSettings() {
+    const settingsGear = this.page.getByTestId("SettingsGear");
+
+    await expect
+      .poll(async () => {
+        return await settingsGear.isVisible();
+      })
+      .toBeTruthy();
+
+    await settingsGear.click();
+
+    const settingsPanel = this.page.getByTestId("SettingsPanel");
+
+    await expect
+      .poll(async () => {
+        return settingsPanel.isVisible();
+      })
+      .toBeTruthy();
+
+    return settingsPanel;
+  }
+
   async fillInput(input: Locator, text: string) {
     await expect(input, {
       message: "Input need to be visible before fill"

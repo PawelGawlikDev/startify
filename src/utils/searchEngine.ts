@@ -9,12 +9,12 @@ export enum SearchEngineEnum {
   Qwant = "Qwant",
   Yandex = "Yandex",
   Brave = "Brave",
-  PrivacyWall = "PrivacyWall "
+  PrivacyWall = "PrivacyWall"
 }
 
 export const searchEngines = {
   [SearchEngineEnum.DuckDuckGo]: {
-    name: "DuckDuck",
+    name: "DuckDuckGo",
     searchURL: `https://duckduckgo.com/?q=%s&t=${isFirefox ? "firefox" : "chrome"}`,
     suggestionsURL: `https://ac.duckduckgo.com/ac/?q=%s&type=list&t=${isFirefox ? "firefox" : "chrome"}`,
     queryParam: "q",

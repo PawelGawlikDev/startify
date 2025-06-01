@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { db } from "@/indexdb/index";
 import { cn } from "@/utils/cn";
 import isValidUrl from "@/utils/validUrl";
+import { getMessage } from "@/utils/getMessage";
 
 import { QuickLinkPreview } from "./QuickLink";
 import { Button } from "../Button";
@@ -67,13 +68,13 @@ const QuickLinkModal = (props: ModalProps) => {
             "text-primary-text text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           }
           htmlFor="name">
-          {browser.i18n.getMessage("name")}
+          {getMessage("name")}
         </label>
         <input
           id="name"
           type="text"
           value={name}
-          placeholder={browser.i18n.getMessage("name")}
+          placeholder={getMessage("name")}
           className="placeholder-text-neutral-600 text-primary-text bg-secondary-900 flex h-10 w-full rounded-md border-none px-3 py-2 text-sm focus:ring-0 focus:outline-none"
           onChange={(e) => setName(e.target.value)}
         />
@@ -84,13 +85,13 @@ const QuickLinkModal = (props: ModalProps) => {
             "text-primary-text text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           }
           htmlFor="url">
-          {browser.i18n.getMessage("address")}
+          {getMessage("address")}
         </label>
         <input
           id="url"
           type="text"
           value={url}
-          placeholder={browser.i18n.getMessage("address")}
+          placeholder={getMessage("address")}
           className="placeholder-text-neutral-600 text-primary-text bg-secondary-900 flex h-10 w-full rounded-md border-none px-3 py-2 text-sm focus:ring-0 focus:outline-none"
           onChange={(e) => setUrl(e.target.value)}
         />
@@ -107,14 +108,14 @@ const QuickLinkModal = (props: ModalProps) => {
               ? "bg-surface-100 text-secondary-text cursor-not-allowed"
               : "hover:bg-surface bg-surface-900 text-primary-text"
           )}>
-          {browser.i18n.getMessage("save")}
+          {getMessage("save")}
         </Button>
         <Button
           onClick={() => setShowModal(false)}
           borderRadius="1.75rem"
           borderClassName="bg-[radial-gradient(#ff5555_40%,transparent_60%)]"
           className="text-primary-text hover:bg-surface bg-surface-900 border-surface">
-          {browser.i18n.getMessage("close")}
+          {getMessage("close")}
         </Button>
       </div>
     </motion.div>

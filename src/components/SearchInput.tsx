@@ -218,9 +218,10 @@ export default function SearchInput({
         />
         <div className="absolute inset-0 top-0 right-0 bottom-0 left-0 flex h-full w-10 items-center justify-center">
           <img
-            src={engine?.favicon}
+            src={engine.favicon}
+            data-testid={engine.name}
             className="z-40 h-8 cursor-pointer rounded-full pl-2"
-            alt={engine?.name}
+            alt={engine.name}
           />
         </div>
         <input
@@ -256,7 +257,7 @@ export default function SearchInput({
         <button
           disabled={!value}
           type="submit"
-          className="absolute top-1/2 right-2 z-50 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-black transition duration-200 disabled:bg-gray-100">
+          className="absolute top-1/2 right-2 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-black transition duration-200 disabled:bg-gray-100">
           <motion.svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"

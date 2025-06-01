@@ -39,6 +39,10 @@
     "message": "Widgets",
     "description": "Drop custom wallpaper"
   },
+  "widgetsSettings": {
+    "message": "Widgets-Farbe",
+    "description": "Label for widgets color settings"
+  },
   "weatherWidget": {
     "message": "Wetter",
     "description": "Header or label related to weather features in the app"

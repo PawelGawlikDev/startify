@@ -23,6 +23,7 @@ export default function Dashboard() {
         <div className="col-span-1 flex items-start pl-2">
           <button
             className="cursor-pointer"
+            data-testid="ChromeIcon"
             onClick={async () => {
               browser.tabs.update({
                 url: "chrome://new-tab-page/"

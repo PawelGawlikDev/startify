@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { weatherApiKeys } from "@/config";
+import { weatherApiKeys, weatherApi } from "@/config";
 import { userLang } from "@/constants/browser";
 import type { WeatherDataTypes } from "@/types";
 
@@ -24,7 +24,7 @@ export default function WeatherWidget(props: WeatherWidgetProps) {
   useEffect(() => {
     const getWeatherData = async () => {
       const res = await fetch(
-        `https://api.weatherapi.com/v1/current.json?key=${getRandomKey()}&q=${geolocation ? `${geolocation?.coords.latitude},${geolocation?.coords.longitude}` : location}&aqi=no&lang=${userLang}`
+        `${weatherApi}/current.json?key=${getRandomKey()}&q=${geolocation ? `${geolocation?.coords.latitude},${geolocation?.coords.longitude}` : location}&aqi=no&lang=${userLang}`
       );
 
       if (res.ok) {
@@ -56,7 +56,9 @@ export default function WeatherWidget(props: WeatherWidgetProps) {
   return (
     <>
       {weatherData && (
-        <div className="bg-surface-900 flex h-full w-full flex-col items-center justify-center rounded-md">
+        <div
+          className="bg-surface-900 flex h-full w-full flex-col items-center justify-center rounded-md"
+          data-testid="WeatherWidget">
           <WidgetInfo
             resolveWeatherData={resolveWeatherData}
             weatherData={weatherData}

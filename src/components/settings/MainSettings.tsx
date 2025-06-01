@@ -1,6 +1,7 @@
 import { Dropdown, EngineOptions } from "../Dropdown";
 import { useSettings } from "@/context/SettingsContext";
 import Toggle from "../Toggle";
+import SettingRow from "./SettingRow";
 
 export default function MainSettings() {
   const { getSetting, updateSetting } = useSettings();
@@ -13,54 +14,43 @@ export default function MainSettings() {
 
   return (
     <div className="bg-default-bg flex flex-col gap-4 rounded-md p-4">
-      <div className="bg-surface flex items-center justify-between rounded-md p-2">
-        <p className="text-primary-text">
-          {browser.i18n.getMessage("engineSettings")}
-        </p>
-        <Dropdown title={engine?.name ?? ""}>
+      <SettingRow labelKey="engineSettings">
+        <Dropdown title={engine?.name ?? ""} dataTestId="EngineSettings">
           <EngineOptions />
         </Dropdown>
-      </div>
-      <div className="bg-surface flex flex-row items-center justify-between rounded-md p-2">
-        <p className="text-primary-text">
-          {browser.i18n.getMessage("vanishAnimation")}
-        </p>
-        {vanishAnimation !== undefined && (
+      </SettingRow>
+
+      {vanishAnimation !== undefined && (
+        <SettingRow labelKey="vanishAnimation">
           <Toggle
             toggled={vanishAnimation}
             onToggle={() => updateSetting("vanishAnimation", !vanishAnimation)}
           />
-        )}
-      </div>
-      <div className="bg-surface flex flex-row items-center justify-between rounded-md p-2">
-        <p className="text-primary-text">
-          {browser.i18n.getMessage("weatherWidget")}
-        </p>
-        {weather !== undefined && (
+        </SettingRow>
+      )}
+
+      {weather !== undefined && (
+        <SettingRow labelKey="weatherWidget" dataTestId="Warther">
           <Toggle
             toggled={weather.enable}
             onToggle={() =>
               updateSetting("weather", { ...weather, enable: !weather.enable })
             }
           />
-        )}
-      </div>
-      <div className="bg-surface flex flex-row items-center justify-between rounded-md p-2">
-        <p className="text-primary-text">
-          {browser.i18n.getMessage("showClock")}
-        </p>
-        {showClock !== undefined && (
+        </SettingRow>
+      )}
+
+      {showClock !== undefined && (
+        <SettingRow labelKey="showClock">
           <Toggle
             toggled={showClock}
             onToggle={() => updateSetting("showClock", !showClock)}
           />
-        )}
-      </div>
-      <div className="bg-surface flex flex-row items-center justify-between rounded-md p-2">
-        <p className="text-primary-text">
-          {browser.i18n.getMessage("quickLinks")}
-        </p>
-        {quickLink?.enable !== undefined && (
+        </SettingRow>
+      )}
+
+      {quickLink?.enable !== undefined && (
+        <SettingRow labelKey="quickLinks">
           <Toggle
             toggled={quickLink.enable}
             onToggle={() =>
@@ -70,8 +60,8 @@ export default function MainSettings() {
               })
             }
           />
-        )}
-      </div>
+        </SettingRow>
+      )}
     </div>
   );
 }

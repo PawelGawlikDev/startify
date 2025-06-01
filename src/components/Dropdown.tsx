@@ -4,6 +4,7 @@ import { Engine } from "@/types";
 import { motion } from "motion/react";
 import { getMessage } from "@/utils/getMessage";
 import { ReactNode, useState } from "react";
+import { predefinedColors } from "@/constants/colors";
 
 const itemVariants = {
   open: {
@@ -42,9 +43,11 @@ const Arrow = () => {
 
 export const Dropdown = ({
   children,
+  dataTestId,
   title
 }: {
   children: ReactNode;
+  dataTestId?: string;
   title: string;
 }) => {
   const [open, setOpen] = useState(false);
@@ -74,8 +77,9 @@ export const Dropdown = ({
           event.stopPropagation();
           setOpen((prevOpen) => !prevOpen);
         }}
-        className="text-primaty-text flex items-center gap-2 rounded-md px-3 py-2 transition-colors">
-        <span className="text-sm font-medium">{title}</span>
+        className="text-primaty-text flex items-center gap-2 rounded-md px-3 py-2 transition-colors"
+        data-testid={dataTestId}>
+        <span className="truncate text-sm font-medium">{title}</span>
         <span
           className={`transition-transform duration-200 ${
             open ? "rotate-180" : ""
@@ -84,7 +88,9 @@ export const Dropdown = ({
         </span>
       </button>
       {open && (
-        <ul className="bg-surface absolute top-full left-1/2 z-50 mt-2 min-w-20 -translate-x-1/2 overflow-hidden rounded-md shadow-xl">
+        <ul
+          data-testid="Dropdown"
+          className="bg-surface absolute top-full left-1/2 z-50 mt-2 min-w-20 -translate-x-1/2 overflow-hidden rounded-md shadow-xl">
           {children}
         </ul>
       )}
@@ -106,19 +112,17 @@ export const EngineOptions = () => {
       onClick={() => handleEngineClick(engine)}
       className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-md p-2 text-xs font-medium whitespace-nowrap text-black">
       <span>
-        <img className="h-4 w-4" src={engine.favicon} />
+        <img
+          className="h-4 w-4"
+          data-testid={engine.name}
+          src={engine.favicon}
+        />
       </span>
     </motion.li>
   ));
 };
 
 export const ColorOptions = () => {
-  const predefinedColors = [
-    { name: "Green", value: "var(--color-primary-900)" },
-    { name: "Gray", value: "var(--color-surface-900)" },
-    { name: "Transparent", value: "var(--color-transparent)" }
-  ];
-
   const { setBackgroundColor } = useWallpaper();
   const [selectedColor, setSelectedColor] = useState<string>("");
 
@@ -126,7 +130,6 @@ export const ColorOptions = () => {
     setSelectedColor(color);
     setBackgroundColor(color);
     localStorage.setItem("userWallpaperColor", color);
-    localStorage.setItem("userWallpaperCustom", "true");
   };
 
   return (
@@ -135,12 +138,11 @@ export const ColorOptions = () => {
         <motion.li
           key={color.value}
           variants={itemVariants}
+          data-testid={color.name}
           onClick={() => handleColorChange(color.value)}
-          className={`flex w-full cursor-pointer items-center justify-center gap-2 rounded-md p-2 text-xs font-medium whitespace-nowrap ${
-            selectedColor === color.value
-              ? "bg-surface-300"
-              : "text-primary-text"
-          }`}
+          className={
+            "flex w-full cursor-pointer items-center justify-center gap-2 rounded-md p-2 text-xs font-medium whitespace-nowrap"
+          }
           style={{
             backgroundColor:
               selectedColor === color.value ? color.value : "Transparent"
