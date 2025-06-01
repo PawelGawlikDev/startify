@@ -4,18 +4,11 @@ import { getMessage } from "@/utils/getMessage";
 type SettingRowProps = {
   labelKey: string;
   children: React.ReactNode;
-  dataTestId?: string;
 };
 
-export default function SettingRow({
-  labelKey,
-  children,
-  dataTestId
-}: SettingRowProps) {
+export default function SettingRow({ labelKey, children }: SettingRowProps) {
   return (
-    <div
-      className="bg-surface flex items-center justify-between rounded-md p-2"
-      data-testid={dataTestId}>
+    <div className="bg-surface flex items-center justify-between rounded-md p-2">
       <p className="text-primary-text">{getMessage(labelKey)}</p>
       {children}
     </div>

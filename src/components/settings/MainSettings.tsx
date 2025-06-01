@@ -30,8 +30,9 @@ export default function MainSettings() {
       )}
 
       {weather !== undefined && (
-        <SettingRow labelKey="weatherWidget" dataTestId="Warther">
+        <SettingRow labelKey="weatherWidget">
           <Toggle
+            dataTestId="Warther"
             toggled={weather.enable}
             onToggle={() =>
               updateSetting("weather", { ...weather, enable: !weather.enable })
