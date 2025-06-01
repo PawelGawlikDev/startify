@@ -1,0 +1,17 @@
+name: "Lint Check"
+on:
+  push:
+    branches:
+      - "**"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Common Setup
+        uses: ./.github/actions/common-setup
+      - name: Check code
+        run: pnpm format:check
+      - name: Lint code
+        run: pnpm lint
