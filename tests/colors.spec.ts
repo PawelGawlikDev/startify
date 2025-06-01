@@ -1,5 +1,5 @@
 import { expect, test } from "./fixtures/fixtures";
-import { predefinedColors } from "@/constants/colors";
+import { predefinedColors } from "../src/constants/colors";
 
 test.describe("Test widgest colors", () => {
   for (const color of predefinedColors) {
