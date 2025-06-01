@@ -1,8 +1,8 @@
 name: "Lint Check"
 on:
   push:
-    branches:
-      - "**"
+    branches-ignore:
+      - master
 
 jobs:
   lint:
