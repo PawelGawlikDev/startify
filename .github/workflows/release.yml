@@ -12,15 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: "pnpm"
-      - name: Install dependencies
-        run: pnpm install
+      - name: Common Setup
+        uses: ./.github/actions/common-setup
       - name: Check code
         run: pnpm format:check
       - name: Lint code
@@ -32,15 +25,8 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: "pnpm"
-      - name: Install dependencies
-        run: pnpm install
+      - name: Common Setup
+        uses: ./.github/actions/common-setup
       - name: Vitest
         run: pnpm vitest
 
@@ -50,15 +36,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: "pnpm"
-      - name: Install dependencies
-        run: pnpm install
+      - name: Common Setup
+        uses: ./.github/actions/common-setup
       - name: Install Playwright Browsers
         run: pnpm playwright install --with-deps chromium
       - name: Setup env
@@ -81,15 +60,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: "pnpm"
-      - name: Install dependencies
-        run: pnpm install
+      - name: Common Setup
+        uses: ./.github/actions/common-setup
       - name: Setup env
         uses: ./.github/actions/setup-env
         env:

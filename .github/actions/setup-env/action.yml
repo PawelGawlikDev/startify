@@ -5,4 +5,5 @@ runs:
   steps:
     - run: |
         echo "VITE_WEATHER_KEYS=${{ env.VITE_WEATHER_KEYS }}" >> .env.production
+        echo "VITE_WEATHER_API=${{ env.VITE_WEATHER_API }}" >> .env.production
       shell: bash
