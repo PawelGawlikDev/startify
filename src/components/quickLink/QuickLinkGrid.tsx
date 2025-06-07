@@ -136,11 +136,13 @@ export default function QuickLinkGrid() {
         </div>
       ))}
 
-      <AddQuickLinkButton
-        quickLinkSettings={quickLink}
-        setShowModal={setShowModal}
-        setEditingLink={setEditingLink}
-      />
+      {(quickLinkOrder.length > 0 || quickLinks?.length === 0) && (
+        <AddQuickLinkButton
+          quickLinkSettings={quickLink}
+          setShowModal={setShowModal}
+          setEditingLink={setEditingLink}
+        />
+      )}
     </div>
   );
 }

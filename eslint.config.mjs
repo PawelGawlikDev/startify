@@ -4,6 +4,7 @@ import playwright from "eslint-plugin-playwright";
 import pluginReact from "eslint-plugin-react";
 import globals from "globals";
 import tseslint from "typescript-eslint";
+import eslintPluginUnicorn from "eslint-plugin-unicorn";
 
 export default [
   {
@@ -19,113 +20,36 @@ export default [
       "chrome"
     ]
   },
-  { files: ["**/*.{ts,tsx}"] },
-  { languageOptions: { globals: globals.browser } },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
   {
+    languageOptions: {
+      globals: globals.browser
+    },
+    plugins: {
+      unicorn: eslintPluginUnicorn
+    },
     rules: {
       "no-console": "error",
-      "react/jsx-uses-react": "off",
-      "react/react-in-jsx-scope": "off",
-      "@typescript-eslint/no-unused-expressions": [
-        "error",
-        { allowShortCircuit: true }
-      ],
-      "padding-line-between-statements": [
-        "error",
-        { blankLine: "always", prev: "import", next: "*" },
-        { blankLine: "any", prev: "import", next: "import" },
-        { blankLine: "always", prev: "*", next: ["const", "let", "var"] },
-        { blankLine: "always", prev: ["const", "let", "var"], next: "*" },
-        {
-          blankLine: "any",
-          prev: ["const", "let", "var"],
-          next: ["const", "let", "var"]
-        },
-        {
-          blankLine: "always",
-          prev: "*",
-          next: ["class", "if", "while", "switch", "try"]
-        },
-        {
-          blankLine: "always",
-          prev: ["class", "if", "while", "switch", "try"],
-          next: "*"
-        },
-        { blankLine: "always", prev: "*", next: "return" }
-      ]
-    }
-  },
-  {
+      "react/react-in-jsx-scope": "off"
+    },
     settings: {
-      react: {
-        version: "detect"
-      }
+      react: { version: "detect" }
     }
   },
   {
     files: ["**/*.test.ts"],
-    plugins: {
-      vitest
-    },
+    plugins: { vitest },
     rules: {
-      ...vitest.configs.recommended.rules,
-      "padding-line-between-statements": [
-        "error",
-        { blankLine: "always", prev: "import", next: "*" },
-        { blankLine: "any", prev: "import", next: "import" },
-        { blankLine: "always", prev: "*", next: ["const", "let", "var"] },
-        { blankLine: "always", prev: ["const", "let", "var"], next: "*" },
-        {
-          blankLine: "any",
-          prev: ["const", "let", "var"],
-          next: ["const", "let", "var"]
-        },
-        {
-          blankLine: "always",
-          prev: "*",
-          next: ["class", "if", "while", "switch", "try"]
-        },
-        {
-          blankLine: "always",
-          prev: ["class", "if", "while", "switch", "try"],
-          next: "*"
-        },
-        { blankLine: "always", prev: "*", next: "return" }
-      ]
-    },
-    ...vitest.configs.recommended
+      ...vitest.configs.recommended.rules
+    }
   },
   {
     ...playwright.configs["flat/recommended"],
     files: ["tests/**/*.ts", "tests/**/*.tsx"],
     rules: {
-      ...playwright.configs["flat/recommended"].rules,
-      "padding-line-between-statements": [
-        "error",
-        { blankLine: "always", prev: "import", next: "*" },
-        { blankLine: "any", prev: "import", next: "import" },
-        { blankLine: "always", prev: "*", next: ["const", "let", "var"] },
-        { blankLine: "always", prev: ["const", "let", "var"], next: "*" },
-        {
-          blankLine: "any",
-          prev: ["const", "let", "var"],
-          next: ["const", "let", "var"]
-        },
-        {
-          blankLine: "always",
-          prev: "*",
-          next: ["class", "if", "while", "switch", "try"]
-        },
-        {
-          blankLine: "always",
-          prev: ["class", "if", "while", "switch", "try"],
-          next: "*"
-        },
-        { blankLine: "always", prev: "*", next: "return" }
-      ]
+      ...playwright.configs["flat/recommended"].rules
     }
   }
 ];

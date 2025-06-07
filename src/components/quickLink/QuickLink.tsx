@@ -132,7 +132,8 @@ export function AddQuickLinkButton(props: AddQuickLink) {
   const { setShowModal, setEditingLink, quickLinkSettings } = props;
 
   return (
-    <button
+    <motion.div
+      layout
       data-testid="AddQuickLink"
       onClick={() => {
         setShowModal(true);
@@ -153,7 +154,7 @@ export function AddQuickLinkButton(props: AddQuickLink) {
           </p>
         </div>
       </QuickLinkBackground>
-    </button>
+    </motion.div>
   );
 }
 

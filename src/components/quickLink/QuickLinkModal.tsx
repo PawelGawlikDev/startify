@@ -112,6 +112,7 @@ const QuickLinkModal = (props: ModalProps) => {
         </Button>
         <Button
           onClick={() => setShowModal(false)}
+          data-testid={"CloseButton"}
           borderRadius="1.75rem"
           borderClassName="bg-[radial-gradient(#ff5555_40%,transparent_60%)]"
           className="text-primary-text hover:bg-surface bg-surface-900 border-surface">
