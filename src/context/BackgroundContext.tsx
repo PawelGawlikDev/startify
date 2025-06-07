@@ -34,33 +34,52 @@ export const WallpaperProvider = ({
 
     if (saved && isCustom) {
       setBackgroundImageUrl(saved);
-
       if (savedColor) setBackgroundColor(savedColor);
-    } else {
-      const lastChange = localStorage.getItem("wallpaperLastChange");
-      const now = Date.now();
-      const oneDay = 24 * 60 * 60 * 1000;
+      return;
+    }
 
-      if (!lastChange || now - Number(lastChange) > oneDay) {
-        const allBackgrounds = backgrounds.backgrounds;
-        const bgIndex = Math.floor(Math.random() * allBackgrounds.length);
-        const randomBg = allBackgrounds[bgIndex];
+    const lastChange = localStorage.getItem("wallpaperLastChange");
+    const now = Date.now();
+    const oneDay = 24 * 60 * 60 * 1000;
 
-        setBackgroundImageUrl(randomBg.filename);
+    if (!lastChange || now - Number(lastChange) > oneDay) {
+      const allBackgrounds = backgrounds.backgrounds;
+      const usedWallpapers: string[] = JSON.parse(
+        localStorage.getItem("usedWallpapers") || "[]"
+      );
+      const unusedBackgrounds = allBackgrounds.filter(
+        (bg) => !usedWallpapers.includes(bg.filename)
+      );
 
-        const color =
-          randomBg.colors?.backgroundColor || "var(--color-surface-900)";
+      let selectedBg;
+      let updatedUsed = [...usedWallpapers];
 
-        setBackgroundColor(color);
-
-        localStorage.setItem("userWallpaper", randomBg.filename);
-        localStorage.setItem("userWallpaperColor", color);
-        localStorage.setItem("userWallpaperCustom", "false");
-        localStorage.setItem("wallpaperLastChange", String(now));
+      if (unusedBackgrounds.length === 0) {
+        selectedBg =
+          allBackgrounds[Math.floor(Math.random() * allBackgrounds.length)];
+        updatedUsed = [selectedBg.filename];
       } else {
-        setBackgroundImageUrl(saved);
-        setBackgroundColor(savedColor || "var(--color-surface-900)");
+        selectedBg =
+          unusedBackgrounds[
+            Math.floor(Math.random() * unusedBackgrounds.length)
+          ];
+        updatedUsed.push(selectedBg.filename);
       }
+
+      setBackgroundImageUrl(selectedBg.filename);
+
+      const color =
+        selectedBg.colors?.backgroundColor || "var(--color-surface-900)";
+      setBackgroundColor(color);
+
+      localStorage.setItem("userWallpaper", selectedBg.filename);
+      localStorage.setItem("userWallpaperColor", color);
+      localStorage.setItem("userWallpaperCustom", "false");
+      localStorage.setItem("wallpaperLastChange", String(now));
+      localStorage.setItem("usedWallpapers", JSON.stringify(updatedUsed));
+    } else {
+      setBackgroundImageUrl(saved);
+      setBackgroundColor(savedColor || "var(--color-surface-900)");
     }
   }, []);
 

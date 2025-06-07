@@ -26,6 +26,7 @@ export default defineConfig({
   },
   modules: ["@wxt-dev/module-react", "@wxt-dev/auto-icons"],
   manifest: {
+    name: "Startify",
     default_locale: "en",
     browser_specific_settings: {
       gecko: {

@@ -1,9 +1,15 @@
 import { AnimatePresence, motion } from "motion/react";
-import React, { useCallback, useEffect, useRef, useState } from "react";
-
+import React, {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useMemo
+} from "react";
 import type { Engine } from "@/types";
 import { calculateAnimationDuration } from "@/utils/calculateTimeout";
 import { cn } from "@/utils/cn";
+import debounce from "@/utils/debounce";
 
 type PixelData = {
   x: number;
@@ -31,33 +37,37 @@ export default function SearchInput({
   vanishAnimation: boolean;
   engine: Engine;
 }) {
-  let maxX: number;
-
   const [active, setActive] = useState(false);
+  const [value, setValue] = useState("");
+  const [animating, setAnimating] = useState(false);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const newDataRef = useRef<PixelData[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
-  const [value, setValue] = useState("");
-  const [animating, setAnimating] = useState(false);
+  const animationRef = useRef<number>(0);
+  const maxXRef = useRef<number>(0);
+
+  const debouncedOnChange = useMemo(() => debounce(onChange, 200), [onChange]);
+
+  useEffect(() => {
+    return () => {
+      debouncedOnChange.cancel?.();
+    };
+  }, []);
 
   const draw = useCallback(() => {
-    if (!inputRef.current) return;
+    if (!inputRef.current || !canvasRef.current) return;
 
-    const canvas = canvasRef.current;
-
-    if (!canvas) return;
-
-    const ctx = canvas.getContext("2d", { willReadFrequently: true });
-
+    const ctx = canvasRef.current.getContext("2d", {
+      willReadFrequently: true
+    });
     if (!ctx) return;
 
-    canvas.width = 800;
-    canvas.height = 800;
+    canvasRef.current.width = 800;
+    canvasRef.current.height = 800;
     ctx.clearRect(0, 0, 800, 800);
 
     const computedStyles = getComputedStyle(inputRef.current);
-
     const fontSize = parseFloat(computedStyles.getPropertyValue("font-size"));
 
     ctx.font = `${fontSize * 2}px ${computedStyles.fontFamily}`;
@@ -70,10 +80,8 @@ export default function SearchInput({
 
     for (let t = 0; t < 800; t++) {
       const i = 4 * t * 800;
-
       for (let n = 0; n < 800; n++) {
         const e = i + 4 * n;
-
         if (
           pixelData[e] !== 0 &&
           pixelData[e + 1] !== 0 &&
@@ -102,13 +110,19 @@ export default function SearchInput({
   }, [value]);
 
   useEffect(() => {
-    draw();
-  }, [value, draw]);
+    if (!animating) draw();
+  }, [value, draw, animating]);
+
+  useEffect(() => {
+    return () => {
+      cancelAnimationFrame(animationRef.current);
+    };
+  }, []);
 
   const animate = (start: number) => {
     const animateFrame = (pos: number = 0) => {
-      requestAnimationFrame(() => {
-        const newArr = [];
+      animationRef.current = requestAnimationFrame(() => {
+        const newArr: PixelData[] = [];
 
         for (let i = 0; i < newDataRef.current.length; i++) {
           const current = newDataRef.current[i];
@@ -127,18 +141,17 @@ export default function SearchInput({
             newArr.push(current);
           }
         }
+
         newDataRef.current = newArr;
 
         const ctx = canvasRef.current?.getContext("2d");
 
         if (ctx) {
           ctx.clearRect(pos, 0, 800, 800);
-          newDataRef.current.forEach((t) => {
-            const { x: n, y: i, r: s, color: color } = t;
-
-            if (n > pos) {
+          newDataRef.current.forEach(({ x, y, r, color }) => {
+            if (x > pos) {
               ctx.beginPath();
-              ctx.rect(n, i, s, s);
+              ctx.rect(x, y, r, r);
               ctx.fillStyle = color;
               ctx.strokeStyle = color;
               ctx.stroke();
@@ -149,6 +162,8 @@ export default function SearchInput({
         if (newDataRef.current.length > 0) {
           animateFrame(pos - 8);
         } else {
+          ctx?.clearRect(0, 0, 800, 800);
+          newDataRef.current = [];
           setValue("");
           setAnimating(false);
         }
@@ -158,26 +173,14 @@ export default function SearchInput({
     animateFrame(start);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && !animating) {
-      if (vanishAnimation) {
-        vanishAndSubmit();
-      }
-    }
-  };
-
   const vanishAndSubmit = () => {
     setAnimating(true);
     draw();
 
-    const value = inputRef.current?.value || "";
-
-    if (value && inputRef.current) {
-      maxX = newDataRef.current.reduce(
-        (prev, current) => (current.x > prev ? current.x : prev),
-        0
-      );
-      animate(maxX);
+    const inputValue = inputRef.current?.value || "";
+    if (inputValue) {
+      maxXRef.current = Math.max(...newDataRef.current.map((p) => p.x));
+      animate(maxXRef.current);
     }
   };
 
@@ -192,31 +195,38 @@ export default function SearchInput({
 
     setTimeout(
       () => {
-        if (onSubmit) {
-          onSubmit(submitValue);
-        }
+        onSubmit?.(submitValue);
       },
-      calculateAnimationDuration(vanishAnimation ? maxX : 0)
+      calculateAnimationDuration(vanishAnimation ? maxXRef.current : 0)
     );
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && !animating) {
+      if (vanishAnimation) vanishAndSubmit();
+    }
+  };
+
+  const canvasStyles = useMemo(
+    () =>
+      cn(
+        "pointer-events-none absolute top-[30%] left-2 origin-top-left scale-50 transform pr-20 text-base invert filter sm:left-10",
+        !animating ? "opacity-0" : "opacity-100"
+      ),
+    [animating]
+  );
+
   return (
-    <div className="w-full" data-testid="SearchInput">
+    <div className="relative w-full" data-testid="SearchInput">
       <form
         className={cn(
-          `relative mx-auto h-16 w-full max-w-2xl overflow-hidden rounded-full rounded-b-full bg-white shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] transition duration-200 hover:scale-105`,
+          `relative mx-auto h-16 w-full max-w-2xl overflow-hidden rounded-full bg-white shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] transition duration-200 hover:scale-105`,
           value && "bg-gray-50",
-          `${active ? "scale-105" : ""}`
+          active && "scale-105"
         )}
         onSubmit={handleSubmit}>
-        <canvas
-          className={cn(
-            "pointer-events-none absolute top-[30%] left-2 origin-top-left scale-50 transform pr-20 text-base invert filter sm:left-10",
-            !animating ? "opacity-0" : "opacity-100"
-          )}
-          ref={canvasRef}
-        />
-        <div className="absolute inset-0 top-0 right-0 bottom-0 left-0 flex h-full w-10 items-center justify-center">
+        <canvas className={canvasStyles} ref={canvasRef} />
+        <div className="absolute inset-0 flex h-full w-10 items-center justify-center">
           <img
             src={engine.favicon}
             data-testid={engine.name}
@@ -225,20 +235,14 @@ export default function SearchInput({
           />
         </div>
         <input
-          onFocus={() => {
-            setActive(true);
-          }}
-          onBlur={() => {
-            setActive(false);
-          }}
+          onFocus={() => setActive(true)}
+          onBlur={() => setActive(false)}
           placeholder="Search"
           onChange={(e) => {
             if (!animating) {
-              setValue(e.target.value);
-
-              if (onChange && inputRef.current) {
-                onChange(inputRef.current.value);
-              }
+              const val = e.target.value;
+              setValue(val);
+              debouncedOnChange(val);
             }
           }}
           onKeyDown={handleKeyDown}
@@ -253,11 +257,13 @@ export default function SearchInput({
             animating && "text-transparent"
           )}
         />
-
         <button
           disabled={!value}
           type="submit"
-          className="absolute top-1/2 right-2 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-black transition duration-200 disabled:bg-gray-100">
+          className={cn(
+            "absolute top-1/2 right-2 z-50 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-black transition duration-200 disabled:bg-gray-100",
+            value ? "cursor-pointer" : "cursor-default"
+          )}>
           <motion.svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -312,12 +318,8 @@ export default function SearchInput({
                 key={index}
                 onClick={() => {
                   setValue(suggestion);
-                  inputRef.current!.value = suggestion;
-
-                  if (onChange) {
-                    onChange(suggestion);
-                  }
-
+                  if (inputRef.current) inputRef.current.value = suggestion;
+                  onChange?.(suggestion);
                   setAnimating(false);
                   inputRef.current?.focus();
                 }}
