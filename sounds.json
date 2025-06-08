@@ -1,6 +1,34 @@
 {
-    "Camp": {
-        "Fire": "/sounds/fire.mp3",
-        "Crickets": "/sounds/fire.mp3"
-    }
+    "categories": [
+        {
+            "name": "camp",
+            "sounds": [
+                {
+                    "id": "fire",
+                    "label": "Fire Crackling",
+                    "src": "/sounds/fire.mp3"
+                },
+                {
+                    "id": "crickets",
+                    "label": "Crickets",
+                    "src": "/sounds/crickets.mp3"
+                }
+            ]
+        },
+        {
+            "name": "rainfall",
+            "sounds": [
+                {
+                    "id": "rain",
+                    "label": "Rain",
+                    "src": "/sounds/rain_on_window.mp3"
+                },
+                {
+                    "id": "wind",
+                    "label": "Wind",
+                    "src": "/sounds/wind.mp3"
+                }
+            ]
+        }
+    ]
 }
