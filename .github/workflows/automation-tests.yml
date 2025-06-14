@@ -26,9 +26,7 @@ jobs:
           pnpm zip:firefox
       - uses: actions/upload-artifact@v4
         with:
-          path: |
-            .output/chrome-mv3
-            .output/*.zip
+          path: .output/chrome-mv3
           retention-days: 1
   playwright:
     needs: build
@@ -43,9 +41,7 @@ jobs:
         run: pnpm playwright install --with-deps chromium
       - uses: actions/download-artifact@v4
         with:
-          path: |
-            .output/chrome-mv3
-            .output/*.zip
+          path: .output/chrome-mv3
       - name: Run Playwright tests
         run: pnpm e2e
       - uses: actions/upload-artifact@v4
