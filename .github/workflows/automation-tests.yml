@@ -15,22 +15,22 @@ jobs:
         uses: ./.github/actions/common-setup
       - name: Install dependencies
         run: pnpm install
-      - name: Install Playwright Browsers
-        run: pnpm playwright install --with-deps chromium
       - name: Setup env
         uses: ./.github/actions/setup-env
         env:
           VITE_WEATHER_KEYS: ${{ secrets.VITE_WEATHER_KEYS }}
           VITE_WEATHER_API: ${{ secrets.VITE_WEATHER_API }}
       - name: Build extension for tests
-        run: pnpm build
+        run: |
+          pnpm zip
+          pnpm zip:firefox
       - uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
         with:
-          name: chrome-mv3
-          path: .output/chrome-mv3
+          name: extension-output
+          path: .output/**
           retention-days: 1
   playwright:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -42,8 +42,8 @@ jobs:
         run: pnpm playwright install --with-deps chromium
       - uses: actions/download-artifact@v4
         with:
-          name: chrome-mv3
-          path: .output/chrome-mv3
+          name: extension-output
+          path: .output/
       - name: Run Playwright tests
         run: pnpm e2e
       - uses: actions/upload-artifact@v4
