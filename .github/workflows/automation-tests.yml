@@ -26,8 +26,7 @@ jobs:
           pnpm zip:firefox
       - uses: actions/upload-artifact@v4
         with:
-          name: extension-output
-          path: .output/
+          path: .output
           retention-days: 1
   playwright:
     needs: build
@@ -42,7 +41,6 @@ jobs:
         run: pnpm playwright install --with-deps chromium
       - uses: actions/download-artifact@v4
         with:
-          name: extension-output
           path: .output/
       - name: Run Playwright tests
         run: pnpm e2e
