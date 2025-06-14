@@ -6,10 +6,15 @@ export type Settings = {
   weather: WeatherWidgetSettings;
 };
 
+export type Suggestion = {
+  text: string;
+  desc?: string;
+  image?: string;
+};
+
 export type Engine = {
   name: string;
   searchURL: string;
-  suggestionsURL: string;
   queryParam: string;
   favicon: string;
 };

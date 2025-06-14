@@ -18,12 +18,6 @@ export default defineConfig({
     }
   }),
   srcDir: "src",
-  webExt: {
-    binaries: {
-      chrome: "./chrome/chrome.exe"
-    },
-    chromiumArgs: ["--disable-infobars"]
-  },
   modules: ["@wxt-dev/module-react", "@wxt-dev/auto-icons"],
   manifest: {
     name: "Startify",

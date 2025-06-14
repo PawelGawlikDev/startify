@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import debounce from "../debounce";
 
-describe("debounce", () => {
+describe("Debounce tests", () => {
   beforeEach(() => {
     vi.useFakeTimers();
   });
@@ -10,7 +10,7 @@ describe("debounce", () => {
     vi.useRealTimers();
   });
 
-  it("should delay the callback execution", () => {
+  it("Delay the callback execution", () => {
     const callback = vi.fn();
     const debounced = debounce(callback, 200);
 
@@ -25,7 +25,7 @@ describe("debounce", () => {
     expect(callback).toHaveBeenCalledTimes(1);
   });
 
-  it("should reset the timer if called again before wait time", () => {
+  it("Reset the timer if called again before wait time", () => {
     const callback = vi.fn();
     const debounced = debounce(callback, 200);
 
@@ -40,7 +40,7 @@ describe("debounce", () => {
     expect(callback).toHaveBeenCalledTimes(1);
   });
 
-  it("should cancel the scheduled callback with .cancel()", () => {
+  it("Cancel the scheduled callback with .cancel()", () => {
     const callback = vi.fn();
     const debounced = debounce(callback, 200);
 

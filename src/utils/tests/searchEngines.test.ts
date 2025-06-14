@@ -1,15 +1,60 @@
-import { afterEach, describe, expect, test, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import { SearchEngineEnum } from "../searchEngine";
+import { getEngineEnumKey } from "../searchEngine";
+
+const searchEnginesList = Object.values(SearchEngineEnum);
+const searchEngineSuggestionsMap = new Map([
+  ["DuckDuckGo", "https://duckduckgo.com/ac/?q=test&kl=en"],
+  [
+    "Google",
+    "https://www.google.com/complete/search?q=test&hl=en&client=gws-wiz"
+  ],
+  [
+    "Bing",
+    "https://www.bing.com/AS/Suggestions?qry=test&mkt=en&cp=5&csr=1&msbqf=false&cvid=7AE3B40123C74FFF87EF8A5ED4FAF455"
+  ],
+  [
+    "Yahoo",
+    "https://search.yahoo.com/sugg/gossip/gossip-us-fastbreak/?command=test&output=sd1"
+  ],
+  ["Ecosia", "https://ac.ecosia.org/autocomplete?q=test&type=list"],
+  ["Qwant", "https://api.qwant.com/v3/suggest?q=test&locale=en"],
+  ["Yandex", "https://suggest.yandex.com/suggest-ff.cgi?part=test"],
+  ["Brave", "https://search.brave.com/api/suggest?q=test&rich=true"],
+  [
+    "PrivacyWall",
+    "https://www.privacywall.org/search/secure/suggestions.php?q=%s&cc=en"
+  ],
+  ["Ghostery", "https://ghosterysearch.com/suggest?q=test"]
+]);
 
 describe("Search engines", () => {
   afterEach(() => {
     vi.resetModules();
   });
 
-  test("should return correct DuckDuckGo URL for Chrome", async () => {
+  beforeEach(() => {
+    vi.resetModules();
+  });
+
+  for (const searchEngine of searchEnginesList) {
+    test(`Get ${searchEngine} suggestions URL`, async () => {
+      const { searchEngines } = await import("../searchEngine");
+      const { getSuggestUrl } = await import("../searchEngine");
+
+      const suggestionsUrl = getSuggestUrl(
+        getEngineEnumKey(searchEngines[SearchEngineEnum[searchEngine]]),
+        "test"
+      );
+
+      expect(suggestionsUrl).toBe(searchEngineSuggestionsMap.get(searchEngine));
+    });
+  }
+
+  test("Return correct DuckDuckGo URL for Chrome", async () => {
     vi.doMock("../../constants/browser", () => ({
       isFirefox: false,
-      userLang: "en"
+      getUserLang: () => "en"
     }));
 
     const { searchEngines } = await import("../searchEngine");
@@ -19,10 +64,10 @@ describe("Search engines", () => {
     );
   });
 
-  test("should return correct DuckDuckGo URL for Firefox", async () => {
+  test("Return correct DuckDuckGo URL for Firefox", async () => {
     vi.doMock("../../constants/browser", () => ({
       isFirefox: true,
-      userLang: "en"
+      getUserLang: () => "en"
     }));
 
     const { searchEngines } = await import("../searchEngine");
@@ -32,10 +77,10 @@ describe("Search engines", () => {
     );
   });
 
-  test("should use correct lang param for PrivacyWall (e.g. fr)", async () => {
+  test("Use correct lang param for PrivacyWall", async () => {
     vi.doMock("../../constants/browser", () => ({
       isFirefox: false,
-      userLang: "fr"
+      getUserLang: () => "fr"
     }));
 
     const { searchEngines } = await import("../searchEngine");
@@ -45,16 +90,21 @@ describe("Search engines", () => {
     );
   });
 
-  test("should use correct lang param for Google (e.g. de)", async () => {
+  test("Use correct lang param for Google", async () => {
     vi.doMock("../../constants/browser", () => ({
       isFirefox: false,
-      userLang: "de"
+      getUserLang: () => "de"
     }));
 
     const { searchEngines } = await import("../searchEngine");
 
-    expect(searchEngines[SearchEngineEnum.Google].suggestionsURL).toContain(
-      "hl=de"
+    const { getSuggestUrl } = await import("../searchEngine");
+
+    const suggestionsUrl = getSuggestUrl(
+      getEngineEnumKey(searchEngines[SearchEngineEnum.Google]),
+      "test"
     );
+
+    expect(suggestionsUrl).toContain("hl=de");
   });
 });
