@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { weatherApiKeys, weatherApi } from "@/config";
-import { userLang } from "@/constants/browser";
+import { getUserLang } from "@/constants/browser";
 import type { WeatherDataTypes } from "@/types";
 
 type WeatherWidgetProps = {
@@ -24,7 +24,7 @@ export default function WeatherWidget(props: WeatherWidgetProps) {
   useEffect(() => {
     const getWeatherData = async () => {
       const res = await fetch(
-        `${weatherApi}/current.json?key=${getRandomKey()}&q=${geolocation ? `${geolocation?.coords.latitude},${geolocation?.coords.longitude}` : location}&aqi=no&lang=${userLang}`
+        `${weatherApi}/current.json?key=${getRandomKey()}&q=${geolocation ? `${geolocation?.coords.latitude},${geolocation?.coords.longitude}` : location}&aqi=no&lang=${getUserLang()}`
       );
 
       if (res.ok) {

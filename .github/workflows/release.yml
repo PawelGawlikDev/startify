@@ -23,7 +23,7 @@ jobs:
 
   vitest:
     needs: lint
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4

@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from "motion/react";
+import { motion } from "motion/react";
 import React, {
   useCallback,
   useEffect,
@@ -6,10 +6,11 @@ import React, {
   useState,
   useMemo
 } from "react";
-import type { Engine } from "@/types";
+import type { Engine, Suggestion } from "@/types";
 import { calculateAnimationDuration } from "@/utils/calculateTimeout";
 import { cn } from "@/utils/cn";
 import debounce from "@/utils/debounce";
+import Suggestions from "./Suggestions";
 
 type PixelData = {
   x: number;
@@ -27,19 +28,24 @@ type NewData = {
 export default function SearchInput({
   onChange,
   onSubmit,
+  setSuggestions,
   suggestions,
   vanishAnimation,
   engine
 }: {
   onChange: (value: string) => void;
   onSubmit: (value: string) => void;
-  suggestions: string[];
+  setSuggestions: (value: React.SetStateAction<Suggestion[]>) => void;
+  suggestions: Suggestion[];
   vanishAnimation: boolean;
   engine: Engine;
 }) {
   const [active, setActive] = useState(false);
   const [value, setValue] = useState("");
   const [animating, setAnimating] = useState(false);
+  const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState<
+    number | null
+  >(null);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const newDataRef = useRef<PixelData[]>([]);
@@ -205,7 +211,33 @@ export default function SearchInput({
     if (e.key === "Enter" && !animating) {
       if (vanishAnimation) vanishAndSubmit();
     }
+    if (e.key === "Escape") {
+      e.preventDefault();
+      if (inputRef.current) inputRef.current.value = "";
+      setValue("");
+      setSuggestions([]);
+      setSelectedSuggestionIndex(null);
+    }
+    if (e.key === "ArrowDown" && suggestions.length > 0) {
+      if (selectedSuggestionIndex === null) {
+        setSelectedSuggestionIndex(0);
+      } else {
+        setSelectedSuggestionIndex((index) => (index! += 1));
+      }
+    }
+    if (e.key === "ArrowUp" && suggestions.length > 0) {
+      if (selectedSuggestionIndex !== null && selectedSuggestionIndex >= 1) {
+        setSelectedSuggestionIndex((index) => (index! -= 1));
+      }
+    }
   };
+
+  useEffect(() => {
+    if (selectedSuggestionIndex !== null && inputRef.current !== null) {
+      setValue(suggestions[selectedSuggestionIndex].text);
+      inputRef.current.value = suggestions[selectedSuggestionIndex].text;
+    }
+  }, [selectedSuggestionIndex]);
 
   const canvasStyles = useMemo(
     () =>
@@ -296,39 +328,11 @@ export default function SearchInput({
         </button>
       </form>
       {suggestions.length > 0 && (
-        <AnimatePresence>
-          <motion.ul
-            data-testid="Suggestions"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto", overflow: "hidden" }}
-            exit={{
-              opacity: 0,
-              height: 0,
-              overflow: "hidden",
-              transform: "scaleY(0.95)"
-            }}
-            transition={{
-              opacity: { duration: 0.2 },
-              height: { duration: 0.3, ease: "easeInOut" },
-              transform: { duration: 0.3 }
-            }}
-            className="absolute right-0 left-0 z-40 mx-auto max-h-60 w-full max-w-2xl overflow-y-auto rounded-lg border border-gray-300 bg-white shadow-lg">
-            {suggestions.map((suggestion, index) => (
-              <motion.li
-                key={index}
-                onClick={() => {
-                  setValue(suggestion);
-                  if (inputRef.current) inputRef.current.value = suggestion;
-                  onChange?.(suggestion);
-                  setAnimating(false);
-                  inputRef.current?.focus();
-                }}
-                className="cursor-pointer px-4 py-2 hover:bg-gray-100">
-                {suggestion}
-              </motion.li>
-            ))}
-          </motion.ul>
-        </AnimatePresence>
+        <Suggestions
+          suggestions={suggestions}
+          selectedSuggestionIndex={selectedSuggestionIndex}
+          submit={onSubmit}
+        />
       )}
     </div>
   );
