@@ -7,29 +7,7 @@ permissions:
   contents: write
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Common Setup
-        uses: ./.github/actions/common-setup
-      - name: Install dependencies
-        run: pnpm install
-      - name: Setup env
-        uses: ./.github/actions/setup-env
-        env:
-          VITE_WEATHER_KEYS: ${{ secrets.VITE_WEATHER_KEYS }}
-          VITE_WEATHER_API: ${{ secrets.VITE_WEATHER_API }}
-      - name: Build extension for tests
-        run: |
-          pnpm zip
-          pnpm zip:firefox
-      - uses: actions/upload-artifact@v4
-        with:
-          path: .output/chrome-mv3
-          retention-days: 1
   playwright:
-    needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -39,9 +17,13 @@ jobs:
         run: pnpm install
       - name: Install Playwright Browsers
         run: pnpm playwright install --with-deps chromium
-      - uses: actions/download-artifact@v4
-        with:
-          path: .output/chrome-mv3
+      - name: Setup env
+        uses: ./.github/actions/setup-env
+        env:
+          VITE_WEATHER_KEYS: ${{ secrets.VITE_WEATHER_KEYS }}
+          VITE_WEATHER_API: ${{ secrets.VITE_WEATHER_API }}
+      - name: Build extension for tests
+        run: pnpm build
       - name: Run Playwright tests
         run: pnpm e2e
       - uses: actions/upload-artifact@v4
