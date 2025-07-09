@@ -441,7 +441,7 @@ test.describe("Quick Links tests", () => {
     await expect(name).toHaveValue("example");
     await expect(url).toHaveValue("https://example.com");
   });
-  test("Quick links sync between tabs", async ({
+  test("Quicklinks sync between tabs", async ({
     dashboard,
     context,
     page,
@@ -450,11 +450,10 @@ test.describe("Quick Links tests", () => {
     await dashboard.addQuickLink("1", "https://1");
     await dashboard.addQuickLink("2", "https://2");
     await dashboard.addQuickLink("3", "https://3");
-    const quickLinks: string[] = [];
-    const newPageQuickLinks: string[] = [];
 
     await expect
       .poll(async () => {
+        const quickLinks: string[] = [];
         const links = await page.getByTestId("QuickLink").all();
         for (const link of links) {
           const text = await link.getByTestId("QuickLinkName").textContent();
@@ -471,6 +470,7 @@ test.describe("Quick Links tests", () => {
 
     await expect
       .poll(async () => {
+        const newPageQuickLinks: string[] = [];
         const links = await newPage.getByTestId("QuickLink").all();
         for (const link of links) {
           const text = await link.getByTestId("QuickLinkName").textContent();
@@ -479,6 +479,19 @@ test.describe("Quick Links tests", () => {
         return newPageQuickLinks.length;
       })
       .toBe(3);
-    expect(quickLinks).toEqual(newPageQuickLinks);
+
+    const pageLinks = await page.getByTestId("QuickLink").all();
+    const pageLinkNames = await Promise.all(
+      pageLinks.map((link) => link.getByTestId("QuickLinkName").textContent())
+    );
+
+    const newPageLinks = await newPage.getByTestId("QuickLink").all();
+    const newPageLinkNames = await Promise.all(
+      newPageLinks.map((link) =>
+        link.getByTestId("QuickLinkName").textContent()
+      )
+    );
+
+    expect(pageLinkNames).toEqual(newPageLinkNames);
   });
 });

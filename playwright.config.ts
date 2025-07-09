@@ -9,7 +9,7 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 1,
   workers: process.env.CI ? 1 : undefined,
-  reporter: process.env.CI ? [["github"], ["list"]] : "html",
+  reporter: process.env.CI ? [["github"], ["list"], ["html"]] : "html",
   use: {
     trace: "retain-on-first-failure",
     screenshot: "on-first-failure"

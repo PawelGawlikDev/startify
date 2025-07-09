@@ -113,6 +113,10 @@ test.describe("Dashboard elements tests", () => {
 });
 
 test.describe("Test chrome icon", () => {
+  test.beforeEach(async ({ extensionId, dashboard }) => {
+    await dashboard.goToExtensionPage(extensionId, dashboard.newTab);
+  });
+
   test("Open chrome default tab", async ({ page }) => {
     const chromeIcon = page.getByTestId("ChromeIcon");
 
