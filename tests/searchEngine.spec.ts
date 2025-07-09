@@ -4,10 +4,12 @@ import { SearchEngineEnum } from "@/utils/searchEngine";
 const searchEnginesList = Object.values(SearchEngineEnum);
 
 test.describe("Test search engines", () => {
-  for (const searchEngine of searchEnginesList) {
-    test(`Test ${searchEngine}`, async ({ page, extensionId, dashboard }) => {
-      await dashboard.goToExtensionPage(extensionId, dashboard.newTab);
+  test.beforeEach(async ({ extensionId, dashboard }) => {
+    await dashboard.goToExtensionPage(extensionId, dashboard.newTab);
+  });
 
+  for (const searchEngine of searchEnginesList) {
+    test(`Test ${searchEngine}`, async ({ page, dashboard }) => {
       const settings = await dashboard.openSettings();
       const engineButon = settings.getByTestId("EngineSettings");
 

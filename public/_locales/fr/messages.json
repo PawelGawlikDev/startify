@@ -67,6 +67,10 @@
     "message": "Transparent",
     "description": "Transparent Color"
   },
+  "wallpaper": {
+    "message": "Papier peint",
+    "description": "Wallpaper Color"
+  },
   "delete": {
     "message": "Supprimer",
     "description": "Generic action to remove an item"

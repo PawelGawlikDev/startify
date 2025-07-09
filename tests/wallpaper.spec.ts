@@ -7,9 +7,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 test.describe("Wallpaper tests", () => {
-  test(`Custom wallpaper`, async ({ page, extensionId, dashboard }) => {
+  test.beforeEach(async ({ extensionId, dashboard }) => {
     await dashboard.goToExtensionPage(extensionId, dashboard.newTab);
+  });
 
+  test(`Custom wallpaper`, async ({ page, dashboard }) => {
     let wallpaper = page.getByTestId("wallpaper");
 
     let customWallpaper = await page.evaluate(() => {

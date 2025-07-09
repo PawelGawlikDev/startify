@@ -2,9 +2,11 @@ import { expect, test } from "./fixtures/fixtures";
 import weatherMock from "./mocks/weatherMock.json" with { type: "json" };
 
 test.describe("Dashboard elements tests", () => {
-  test("Digital timer visible", async ({ page, extensionId, dashboard }) => {
+  test.beforeEach(async ({ extensionId, dashboard }) => {
     await dashboard.goToExtensionPage(extensionId, dashboard.newTab);
+  });
 
+  test("Digital timer visible", async ({ page }) => {
     const digitalTime = page.getByTestId("DigitalTime");
 
     await expect
@@ -14,9 +16,7 @@ test.describe("Dashboard elements tests", () => {
       .toBeTruthy();
   });
 
-  test("Search Input visible", async ({ page, extensionId, dashboard }) => {
-    await dashboard.goToExtensionPage(extensionId, dashboard.newTab);
-
+  test("Search Input visible", async ({ page }) => {
     const searchInput = page.getByTestId("SearchInput");
 
     await expect(searchInput).toBeVisible();
@@ -28,13 +28,7 @@ test.describe("Dashboard elements tests", () => {
       .toBeTruthy();
   });
 
-  test("Add Quick Link button visible", async ({
-    page,
-    extensionId,
-    dashboard
-  }) => {
-    await dashboard.goToExtensionPage(extensionId, dashboard.newTab);
-
+  test("Add Quick Link button visible", async ({ page }) => {
     const addQuickLInkButton = page.getByTestId("AddQuickLink");
 
     await expect(addQuickLInkButton).toBeVisible();
@@ -46,9 +40,7 @@ test.describe("Dashboard elements tests", () => {
       .toBeTruthy();
   });
 
-  test("Quick Link grid visible", async ({ page, extensionId, dashboard }) => {
-    await dashboard.goToExtensionPage(extensionId, dashboard.newTab);
-
+  test("Quick Link grid visible", async ({ page }) => {
     const quickLinkGrid = page.getByTestId("QuickLinkGrid");
 
     await expect
@@ -58,9 +50,7 @@ test.describe("Dashboard elements tests", () => {
       .toBeTruthy();
   });
 
-  test("Wallpaper visible", async ({ page, extensionId, dashboard }) => {
-    await dashboard.goToExtensionPage(extensionId, dashboard.newTab);
-
+  test("Wallpaper visible", async ({ page }) => {
     const wallpaper = page.getByTestId("wallpaper");
 
     await expect
@@ -70,9 +60,7 @@ test.describe("Dashboard elements tests", () => {
       .toBeTruthy();
   });
 
-  test("Settings gear visible", async ({ page, extensionId, dashboard }) => {
-    await dashboard.goToExtensionPage(extensionId, dashboard.newTab);
-
+  test("Settings gear visible", async ({ page }) => {
     const settingsGear = page.getByTestId("SettingsGear");
 
     await expect
@@ -82,9 +70,7 @@ test.describe("Dashboard elements tests", () => {
       .toBeTruthy();
   });
 
-  test("Chrome icon visible", async ({ page, extensionId, dashboard }) => {
-    await dashboard.goToExtensionPage(extensionId, dashboard.newTab);
-
+  test("Chrome icon visible", async ({ page }) => {
     const chromeIcon = page.getByTestId("ChromeIcon");
 
     await expect
@@ -94,9 +80,7 @@ test.describe("Dashboard elements tests", () => {
       .toBeTruthy();
   });
 
-  test("Weather widget visible", async ({ page, extensionId, dashboard }) => {
-    await dashboard.goToExtensionPage(extensionId, dashboard.newTab);
-
+  test("Weather widget visible", async ({ page, dashboard }) => {
     const settings = await dashboard.openSettings();
     const weatherToggle = settings.getByTestId("Warther");
 
@@ -129,9 +113,7 @@ test.describe("Dashboard elements tests", () => {
 });
 
 test.describe("Test chrome icon", () => {
-  test("Open chrome default tab", async ({ page, extensionId, dashboard }) => {
-    await dashboard.goToExtensionPage(extensionId, dashboard.newTab);
-
+  test("Open chrome default tab", async ({ page }) => {
     const chromeIcon = page.getByTestId("ChromeIcon");
 
     await chromeIcon.click();

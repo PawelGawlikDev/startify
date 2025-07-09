@@ -2,13 +2,10 @@ import { Locator } from "@playwright/test";
 import { expect, test } from "./fixtures/fixtures";
 
 test.describe("Quick Links tests", () => {
-  test("Add and delete quick link test", async ({
-    page,
-    extensionId,
-    dashboard
-  }) => {
+  test.beforeEach(async ({ extensionId, dashboard }) => {
     await dashboard.goToExtensionPage(extensionId, dashboard.newTab);
-
+  });
+  test("Add and delete quick link test", async ({ page, dashboard }) => {
     let quickLinks: Array<Locator> = [];
 
     await expect
@@ -50,9 +47,7 @@ test.describe("Quick Links tests", () => {
       .toBe(0);
   });
 
-  test("Add quick link test", async ({ page, extensionId, dashboard }) => {
-    await dashboard.goToExtensionPage(extensionId, dashboard.newTab);
-
+  test("Add quick link test", async ({ page, dashboard }) => {
     let quickLinks: Array<Locator> = [];
 
     await expect
@@ -74,9 +69,7 @@ test.describe("Quick Links tests", () => {
       .toBe(1);
   });
 
-  test("Reorder Quick links", async ({ page, extensionId, dashboard }) => {
-    await dashboard.goToExtensionPage(extensionId, dashboard.newTab);
-
+  test("Reorder Quick links", async ({ page, dashboard }) => {
     let quickLinks: Array<Locator> = [];
 
     await expect
@@ -131,13 +124,7 @@ test.describe("Quick Links tests", () => {
       .toStrictEqual(quickLinksOrder.reverse());
   });
 
-  test("Drag quick link without change order", async ({
-    page,
-    extensionId,
-    dashboard
-  }) => {
-    await dashboard.goToExtensionPage(extensionId, dashboard.newTab);
-
+  test("Drag quick link without change order", async ({ page, dashboard }) => {
     let quickLinks: Array<Locator> = [];
 
     await expect
@@ -191,11 +178,9 @@ test.describe("Quick Links tests", () => {
 
   test("Delete quick link and reorder", async ({
     dashboard,
-    extensionId,
+
     page
   }) => {
-    await dashboard.goToExtensionPage(extensionId, dashboard.newTab);
-
     let quickLinks: Array<Locator> = [];
 
     await expect
@@ -273,11 +258,9 @@ test.describe("Quick Links tests", () => {
 
   test("Reorder and delete quick link", async ({
     dashboard,
-    extensionId,
+
     page
   }) => {
-    await dashboard.goToExtensionPage(extensionId, dashboard.newTab);
-
     let quickLinks: Array<Locator> = [];
 
     await expect
@@ -353,8 +336,7 @@ test.describe("Quick Links tests", () => {
       .toBe(2);
   });
 
-  test("Edit quick link name", async ({ dashboard, extensionId, page }) => {
-    await dashboard.goToExtensionPage(extensionId, dashboard.newTab);
+  test("Edit quick link name", async ({ dashboard, page }) => {
     await dashboard.addQuickLink("example", "https://example.com");
 
     let quickLinks: Array<Locator> = [];
@@ -409,12 +391,7 @@ test.describe("Quick Links tests", () => {
     await expect(url).toHaveValue("https://newExample.com");
   });
 
-  test("Open and colse edit modal", async ({
-    dashboard,
-    extensionId,
-    page
-  }) => {
-    await dashboard.goToExtensionPage(extensionId, dashboard.newTab);
+  test("Open and colse edit modal", async ({ dashboard, page }) => {
     await dashboard.addQuickLink("example", "https://example.com");
 
     let quickLinks: Array<Locator> = [];
@@ -463,5 +440,45 @@ test.describe("Quick Links tests", () => {
 
     await expect(name).toHaveValue("example");
     await expect(url).toHaveValue("https://example.com");
+  });
+  test("Quick links sync between tabs", async ({
+    dashboard,
+    context,
+    page,
+    extensionId
+  }) => {
+    await dashboard.addQuickLink("1", "https://1");
+    await dashboard.addQuickLink("2", "https://2");
+    await dashboard.addQuickLink("3", "https://3");
+    const quickLinks: string[] = [];
+    const newPageQuickLinks: string[] = [];
+
+    await expect
+      .poll(async () => {
+        const links = await page.getByTestId("QuickLink").all();
+        for (const link of links) {
+          const text = await link.getByTestId("QuickLinkName").textContent();
+          quickLinks.push(text!);
+        }
+        return quickLinks.length;
+      })
+      .toBe(3);
+    const pagePromise = context.waitForEvent("page");
+    await context.newPage();
+    const newPage = await pagePromise;
+
+    await dashboard.goToExtensionPage(extensionId, dashboard.newTab, newPage);
+
+    await expect
+      .poll(async () => {
+        const links = await newPage.getByTestId("QuickLink").all();
+        for (const link of links) {
+          const text = await link.getByTestId("QuickLinkName").textContent();
+          newPageQuickLinks.push(text!);
+        }
+        return newPageQuickLinks.length;
+      })
+      .toBe(3);
+    expect(quickLinks).toEqual(newPageQuickLinks);
   });
 });

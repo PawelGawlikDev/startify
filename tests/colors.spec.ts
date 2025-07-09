@@ -2,10 +2,11 @@ import { expect, test } from "./fixtures/fixtures";
 import { predefinedColors } from "../src/constants/colors";
 
 test.describe("Test widgest colors", () => {
-  for (const color of predefinedColors) {
-    test(`Test ${color.name}`, async ({ page, extensionId, dashboard }) => {
-      await dashboard.goToExtensionPage(extensionId, dashboard.newTab);
-
+  test.beforeEach(async ({ extensionId, dashboard }) => {
+    await dashboard.goToExtensionPage(extensionId, dashboard.newTab);
+  });
+  for (const color of predefinedColors.filter((color) => color.value)) {
+    test(`Test ${color.name}`, async ({ page, dashboard }) => {
       const settings = await dashboard.openSettings();
 
       await settings.getByTestId("Widgets").click();
