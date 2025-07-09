@@ -4,6 +4,7 @@ import backgrounds from "~/assets/backgrounds.json";
 interface WallpaperContextProps {
   backgroundImageUrl: string | null;
   backgroundColor: string;
+  defaultBgColor: string | null;
   setBackgroundImageUrl: (url: string | null) => void;
   setBackgroundColor: (color: string) => void;
 }
@@ -11,6 +12,7 @@ interface WallpaperContextProps {
 const WallpaperContext = createContext<WallpaperContextProps>({
   backgroundImageUrl: null,
   backgroundColor: "var(--color-surface-900)",
+  defaultBgColor: null,
   setBackgroundImageUrl: () => {},
   setBackgroundColor: () => {}
 });
@@ -23,6 +25,7 @@ export const WallpaperProvider = ({
   const [backgroundImageUrl, setBackgroundImageUrl] = useState<string | null>(
     null
   );
+  const [defaultBgColor, setDefaultBgColor] = useState<string | null>(null);
   const [backgroundColor, setBackgroundColor] = useState<string>(
     "var(--color-surface-900)"
   );
@@ -43,6 +46,10 @@ export const WallpaperProvider = ({
     const oneDay = 24 * 60 * 60 * 1000;
 
     if (!lastChange || now - Number(lastChange) > oneDay) {
+      const customColor = localStorage.getItem("customColor");
+      if (!customColor) {
+        localStorage.setItem("customColor", "false");
+      }
       const allBackgrounds = backgrounds.backgrounds;
       const usedWallpapers: string[] = JSON.parse(
         localStorage.getItem("usedWallpapers") || "[]"
@@ -68,12 +75,16 @@ export const WallpaperProvider = ({
 
       setBackgroundImageUrl(selectedBg.filename);
 
-      const color =
-        selectedBg.colors?.backgroundColor || "var(--color-surface-900)";
-      setBackgroundColor(color);
+      setDefaultBgColor(
+        selectedBg.colors?.backgroundColor || "var(--color-surface-900)"
+      );
+
+      if (defaultBgColor) {
+        setBackgroundColor(defaultBgColor);
+        localStorage.setItem("userWallpaperColor", defaultBgColor);
+      }
 
       localStorage.setItem("userWallpaper", selectedBg.filename);
-      localStorage.setItem("userWallpaperColor", color);
       localStorage.setItem("userWallpaperCustom", "false");
       localStorage.setItem("wallpaperLastChange", String(now));
       localStorage.setItem("usedWallpapers", JSON.stringify(updatedUsed));
@@ -95,6 +106,7 @@ export const WallpaperProvider = ({
       value={{
         backgroundImageUrl,
         backgroundColor,
+        defaultBgColor,
         setBackgroundImageUrl,
         setBackgroundColor
       }}>

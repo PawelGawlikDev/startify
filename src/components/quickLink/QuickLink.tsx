@@ -67,11 +67,11 @@ export function QuickLink(props: QuickLinkProps) {
   const handleDeleteClick = useCallback(async () => {
     await db.quickLinks.delete(id);
 
-    const updatedLinks = await db.quickLinks.toArray();
-    const updatedOrder = updatedLinks.map((link) => link.id);
-
-    setQuickLinkOrder(updatedOrder);
-    localStorage.setItem("quickLinkOrder", JSON.stringify(updatedOrder));
+    setQuickLinkOrder((prevOrder) => {
+      const newOrder = prevOrder.filter((linkId) => linkId !== id);
+      localStorage.setItem("quickLinkOrder", JSON.stringify(newOrder));
+      return newOrder;
+    });
   }, [id, setQuickLinkOrder]);
 
   const toggleMenu = useCallback((e: React.MouseEvent) => {

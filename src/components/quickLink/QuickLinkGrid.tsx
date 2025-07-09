@@ -13,7 +13,7 @@ import { defaultSettings } from "@/constants/defaultSettings";
 export default function QuickLinkGrid() {
   const { getSetting } = useSettings();
   const quickLink = getSetting("quickLink") ?? defaultSettings.quickLink;
-
+  const [isOrderInitialized, setIsOrderInitialized] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [quickLinkOrder, setQuickLinkOrder] = useState<number[]>([]);
   const [editingLink, setEditingLink] = useState<{
@@ -62,8 +62,40 @@ export default function QuickLinkGrid() {
   }, [showModal]);
 
   useEffect(() => {
-    localStorage.setItem("quickLinkOrder", JSON.stringify(quickLinkOrder));
-  }, [quickLinkOrder]);
+    if (!quickLinks || isOrderInitialized) return;
+
+    const savedOrder = localStorage.getItem("quickLinkOrder");
+    const allIds = quickLinks.map((link) => link.id);
+    let newOrder: number[] = [];
+
+    if (savedOrder) {
+      const parsedOrder: number[] = JSON.parse(savedOrder);
+      const savedSet = new Set(parsedOrder);
+      const missing = allIds.filter((id) => !savedSet.has(id));
+
+      newOrder = [
+        ...parsedOrder.filter((id) => allIds.includes(id)),
+        ...missing
+      ];
+    } else {
+      newOrder = allIds;
+    }
+
+    setQuickLinkOrder(newOrder);
+    setIsOrderInitialized(true);
+  }, [quickLinks, isOrderInitialized]);
+
+  useEffect(() => {
+    const handleStorage = (event: StorageEvent) => {
+      if (event.key === "quickLinkOrder") {
+        const newOrder = event.newValue ? JSON.parse(event.newValue) : [];
+        setQuickLinkOrder(newOrder);
+      }
+    };
+
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
+  }, []);
 
   const sortedQuickLinks = useMemo(() => {
     if (!quickLinks) return [];

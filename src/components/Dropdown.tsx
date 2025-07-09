@@ -123,14 +123,21 @@ export const EngineOptions = () => {
 };
 
 export const ColorOptions = () => {
-  const { setBackgroundColor } = useWallpaper();
-  const [selectedColor, setSelectedColor] = useState<string>("");
+  const { setBackgroundColor, defaultBgColor } = useWallpaper();
 
-  const handleColorChange = (color: string) => {
-    setSelectedColor(color);
-    setBackgroundColor(color);
-    localStorage.setItem("userWallpaperColor", color);
+  const handleColorChange = (color: string | null) => {
+    if (color) {
+      setBackgroundColor(color);
+      localStorage.setItem("userWallpaperColor", color);
+      localStorage.setItem("customColor", "true");
+    } else if (defaultBgColor) {
+      localStorage.setItem("customColor", "false");
+      localStorage.setItem("userWallpaperColor", defaultBgColor);
+      setBackgroundColor(defaultBgColor);
+    }
   };
+
+  const currentColor = localStorage.getItem("userWallpaperColor");
 
   return (
     <>
@@ -145,7 +152,9 @@ export const ColorOptions = () => {
           }
           style={{
             backgroundColor:
-              selectedColor === color.value ? color.value : "Transparent"
+              currentColor === color.value && color.value
+                ? color.value
+                : "Transparent"
           }}>
           <p>{getMessage(color.name.toLowerCase())}</p>
         </motion.li>

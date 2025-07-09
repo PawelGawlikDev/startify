@@ -9,10 +9,11 @@ export class StartifyStartPage {
     this.newTab = "newtab.html";
   }
 
-  async goToExtensionPage(extensionId: string, page: string) {
-    await this.page.goto(`chrome-extension://${extensionId}/${page}`);
+  async goToExtensionPage(extensionId: string, pageName: string, page?: Page) {
+    const currentPage = page ?? this.page;
+    await currentPage.goto(`chrome-extension://${extensionId}/${pageName}`);
 
-    await this.page.waitForLoadState("domcontentloaded");
+    await currentPage.waitForLoadState("domcontentloaded");
   }
 
   async openSettings() {
