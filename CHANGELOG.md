@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.4](https://github.com/PawelGawlikDev/startify/compare/v1.3.3...v1.3.4) (2025-07-09)
+
+
+### Bug Fixes
+
+* fix quicklinks and custom color ([#93](https://github.com/PawelGawlikDev/startify/issues/93)) ([c0fb760](https://github.com/PawelGawlikDev/startify/commit/c0fb760fef81e3573389783ca6a91ba64bb99a80))
+
 ### [1.3.3](https://github.com/PawelGawlikDev/startify/compare/v1.3.2...v1.3.3) (2025-06-14)
 
 ### [1.3.2](https://github.com/PawelGawlikDev/startify/compare/v1.3.1...v1.3.2) (2025-06-01)
