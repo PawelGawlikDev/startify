@@ -34,6 +34,7 @@ export const WallpaperProvider = ({
     const saved = localStorage.getItem("userWallpaper");
     const isCustom = localStorage.getItem("userWallpaperCustom") === "true";
     const savedColor = localStorage.getItem("userWallpaperColor");
+    const customColor = localStorage.getItem("customColor") === "true";
 
     if (saved && isCustom) {
       setBackgroundImageUrl(saved);
@@ -46,7 +47,6 @@ export const WallpaperProvider = ({
     const oneDay = 24 * 60 * 60 * 1000;
 
     if (!lastChange || now - Number(lastChange) > oneDay) {
-      const customColor = localStorage.getItem("customColor");
       if (!customColor) {
         localStorage.setItem("customColor", "false");
       }
@@ -75,13 +75,13 @@ export const WallpaperProvider = ({
 
       setBackgroundImageUrl(selectedBg.filename);
 
-      setDefaultBgColor(
-        selectedBg.colors?.backgroundColor || "var(--color-surface-900)"
-      );
+      const selectedBgColor =
+        selectedBg.colors?.backgroundColor || "var(--color-surface-900)";
+      setDefaultBgColor(selectedBgColor);
 
-      if (defaultBgColor) {
-        setBackgroundColor(defaultBgColor);
-        localStorage.setItem("userWallpaperColor", defaultBgColor);
+      if (!customColor) {
+        setBackgroundColor(selectedBgColor);
+        localStorage.setItem("userWallpaperColor", selectedBgColor);
       }
 
       localStorage.setItem("userWallpaper", selectedBg.filename);
