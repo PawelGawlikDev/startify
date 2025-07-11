@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.7](https://github.com/PawelGawlikDev/startify/compare/v1.3.6...v1.3.7) (2025-07-11)
+
+
+### Bug Fixes
+
+* fix custom colors for prod builds ([#96](https://github.com/PawelGawlikDev/startify/issues/96)) ([a3ea2b7](https://github.com/PawelGawlikDev/startify/commit/a3ea2b7007aa777fcdaddc07887c6daab9378c50))
+
 ### [1.3.6](https://github.com/PawelGawlikDev/startify/compare/v1.3.5...v1.3.6) (2025-07-10)
 
 
