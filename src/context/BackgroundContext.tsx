@@ -42,6 +42,10 @@ export const WallpaperProvider = ({
       return;
     }
 
+    if (customColor && savedColor) {
+      setBackgroundColor(savedColor);
+    }
+
     const lastChange = localStorage.getItem("wallpaperLastChange");
     const now = Date.now();
     const oneDay = 24 * 60 * 60 * 1000;
@@ -73,10 +77,9 @@ export const WallpaperProvider = ({
         updatedUsed.push(selectedBg.filename);
       }
 
-      setBackgroundImageUrl(selectedBg.filename);
-
       const selectedBgColor =
         selectedBg.colors?.backgroundColor || "var(--color-surface-900)";
+      setBackgroundImageUrl(selectedBg.filename);
       setDefaultBgColor(selectedBgColor);
 
       if (!customColor) {
@@ -95,9 +98,13 @@ export const WallpaperProvider = ({
   }, []);
 
   useEffect(() => {
+    const customColor = localStorage.getItem("customColor") === "true";
+
     if (backgroundImageUrl) {
       localStorage.setItem("userWallpaper", backgroundImageUrl);
-      localStorage.setItem("userWallpaperColor", backgroundColor);
+      if (!customColor) {
+        localStorage.setItem("userWallpaperColor", backgroundColor);
+      }
     }
   }, [backgroundImageUrl, backgroundColor]);
 
