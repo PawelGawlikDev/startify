@@ -1,18 +1,52 @@
-## Startify new tab extension
+# Startify new tab extension
 
-<table cellspacing="0" cellpadding="0">
-  <tr>
-    <td valign="center">
-      <a align="center" href="https://chromewebstore.google.com/detail/startify/fjjipcmebaelmnkkbdjnhhjbgenecgbd">
-        <img src="https://user-images.githubusercontent.com/22908993/166417152-f870bfbd-1770-4c28-b69d-a7303aebc9a6.png" alt="Chrome web store" />
-        <p align="center">Chrome Web Store</p>
-      </a>
-    </td>
-    <td valign="center">
-      <a href="https://addons.mozilla.org/pl/firefox/addon/startify_new_tab/">
-        <img src="https://user-images.githubusercontent.com/22908993/166417727-3481fef4-00e5-4cf0-bb03-27fb880d993c.png" alt="Firefox add-ons" />
-        <p align="center">Firefox Add-ons</p>
-      </a>
-    </td>
-  </tr>
-</table>
+## Overview
+
+A fast, open and free-to-use browser extension that gives a new, fresh and customisable tab page to modern browsers.
+
+## Development
+Prefers package manager is [PNPM](https://pnpm.io)
+
+Create .env file in root of project with variables.
+```
+VITE_WEATHER_KEYS=<Array or sinle weather API key>
+VITE_WEATHER_API=<Weather API endpoint>
+```
+By default Startify use [WeatherAPI](https://www.weatherapi.com) to as weather service.
+
+Install dependency
+``` bash
+pnpm install
+```
+
+Then you can run extension in development mode
+``` bash
+pnpm dev
+```
+
+To build production version run 
+``` bash
+pnpm build
+```
+
+## Testing
+
+Startify have autoamtion tests using playwright to make testing process easier. To run tests follow steps.
+
+Build production build.
+``` bash
+pnpm build
+```
+and run 
+``` bash
+pnpm e2e
+```
+On first time you need to install playwright browsers.
+
+
+<div align="center">
+
+[![Chrome](./docs/chrome.svg)](https://chromewebstore.google.com/detail/startify/fjjipcmebaelmnkkbdjnhhjbgenecgbd)
+[![Firefox](./docs/firefox.svg)](https://addons.mozilla.org/pl/firefox/addon/startify_new_tab/)
+
+</div>
