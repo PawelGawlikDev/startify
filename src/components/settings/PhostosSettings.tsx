@@ -13,7 +13,7 @@ export default function PhotosSettings() {
   const [preview, setPreview] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchStoredWallpapers = async () => {
+    const getStoredWallpapers = async () => {
       try {
         const wallpapers = await db.wallpaper
           .filter((wallpaper) => wallpaper.name !== "daily")
@@ -25,7 +25,7 @@ export default function PhotosSettings() {
       }
     };
 
-    fetchStoredWallpapers();
+    getStoredWallpapers();
   }, []);
 
   const handleFileUpload = async (files: File[]) => {
