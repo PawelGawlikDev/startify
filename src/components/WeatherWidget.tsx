@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-
-import { weatherApiKeys, weatherApi } from "@/config";
-import { getUserLang } from "@/constants/browser";
+import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getWeatherData } from "@/api/getWeatherData";
+import { weatherApiKeys } from "@/config";
 import type { WeatherDataTypes } from "@/types";
 
 type WeatherWidgetProps = {
@@ -9,127 +9,58 @@ type WeatherWidgetProps = {
   location: string | "auto:ip";
 };
 
-export default function WeatherWidget(props: WeatherWidgetProps) {
-  const { location, localizationType } = props;
+export default function WeatherWidget({
+  location,
+  localizationType
+}: WeatherWidgetProps) {
+  const [geolocation, setGeolocation] = useState<GeolocationPosition | null>(
+    null
+  );
 
-  const getRandomKey = () => {
-    return weatherApiKeys[Math.floor(Math.random() * weatherApiKeys.length)];
-  };
-  const [weatherData, setWeatherData] = useState<WeatherDataTypes | null>(null);
-  const [resolveWeatherData, setResolveWeatherData] = useState<boolean>(false);
-  const [geolocation, setGeolocation] = useState<
-    GeolocationPosition | undefined
-  >(undefined);
+  const getRandomKey = () =>
+    weatherApiKeys[Math.floor(Math.random() * weatherApiKeys.length)];
 
   useEffect(() => {
-    const getWeatherData = async () => {
-      const res = await fetch(
-        `${weatherApi}/current.json?key=${getRandomKey()}&q=${geolocation ? `${geolocation?.coords.latitude},${geolocation?.coords.longitude}` : location}&aqi=no&lang=${getUserLang()}`
-      );
+    if (localizationType === "auto") {
+      navigator.geolocation.getCurrentPosition((loc) => setGeolocation(loc));
+    }
+  }, [localizationType]);
 
-      if (res.ok) {
-        const data = await res.json();
+  const queryLocation =
+    geolocation && localizationType === "auto"
+      ? `${geolocation.coords.latitude},${geolocation.coords.longitude}`
+      : location;
 
-        setWeatherData(data);
-      } else {
-        setWeatherData(null);
-      }
-
-      setResolveWeatherData(true);
-    };
-
-    const getLocation = async (localizationType: "manual" | "auto" | "ip") => {
-      if (localizationType === "auto") {
-        new Promise((resolve, reject) => {
-          navigator.geolocation.getCurrentPosition(
-            (loc) => resolve(setGeolocation(loc)),
-            (err) => reject(err)
-          );
-        });
-      }
-    };
-
-    getLocation(localizationType);
-    getWeatherData();
-  }, []);
+  const { data: weatherData } = useQuery<WeatherDataTypes>({
+    queryKey: ["weather", queryLocation],
+    queryFn: () => getWeatherData(getRandomKey(), queryLocation),
+    enabled: !!queryLocation
+  });
 
   return (
-    <>
-      {weatherData && (
-        <div
-          className="bg-surface-900 flex h-full w-full flex-col items-center justify-center rounded-md"
-          data-testid="WeatherWidget">
-          <WidgetInfo
-            resolveWeatherData={resolveWeatherData}
-            weatherData={weatherData}
-          />
-        </div>
-      )}
-    </>
+    <div
+      className="bg-surface-900 flex h-full w-full flex-col items-center justify-center rounded-md"
+      data-testid="WeatherWidget">
+      {weatherData && <WidgetInfo weatherData={weatherData} />}
+    </div>
   );
 }
 
-const WidgetInfo = (props: {
-  resolveWeatherData: boolean;
-  weatherData: WeatherDataTypes;
-}) => {
-  const { resolveWeatherData, weatherData } = props;
-
+const WidgetInfo = ({ weatherData }: { weatherData: WeatherDataTypes }) => {
   return (
     <>
-      <WeatherImage
-        resolveWeatherData={resolveWeatherData}
-        imageUrl={weatherData?.current.condition.icon}
-      />
-      <WeatherTemperature
-        resolveWeatherData={resolveWeatherData}
-        temperature={weatherData?.current.temp_c}
-      />
+      <WeatherImage imageUrl={weatherData.current.condition.icon} />
+      <WeatherTemperature temperature={weatherData.current.temp_c} />
     </>
   );
 };
 
-const WeatherImage = ({
-  resolveWeatherData,
-  imageUrl
-}: {
-  resolveWeatherData: boolean;
-  imageUrl: string;
-}) => {
-  return (
-    <div className="flex justify-end px-2">
-      {resolveWeatherData ? (
-        <img
-          className=""
-          src={`https:${imageUrl}`}
-          alt="WeatherIcon"
-          height={40}
-          width={40}
-        />
-      ) : (
-        <div className="bg-surface-500 h-10 w-10 animate-pulse rounded"></div>
-      )}
-    </div>
-  );
-};
+const WeatherImage = ({ imageUrl }: { imageUrl: string }) => (
+  <div className="flex justify-end px-2">
+    <img src={`https:${imageUrl}`} alt="WeatherIcon" height={40} width={40} />
+  </div>
+);
 
-const WeatherTemperature = ({
-  resolveWeatherData,
-  temperature
-}: {
-  resolveWeatherData: boolean;
-  temperature: number;
-}) => {
-  return (
-    <>
-      {resolveWeatherData ? (
-        <div
-          className={`text-primary-text transition-opacity ${resolveWeatherData ? "opacity-100" : "opacity-0"}`}>
-          {temperature}°C
-        </div>
-      ) : (
-        <div className="bg-surface-500 h-6 w-[70%] animate-pulse rounded"></div>
-      )}
-    </>
-  );
-};
+const WeatherTemperature = ({ temperature }: { temperature: number }) => (
+  <div className="text-primary-text">{temperature}°C</div>
+);
