@@ -1,5 +1,5 @@
 import { useLiveQuery } from "dexie-react-hooks";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence } from "motion/react";
 import { useEffect, useMemo, useState } from "react";
 
 import { useDragAndDrop } from "@/hooks/useDragAndDrop";
@@ -9,6 +9,7 @@ import { AddQuickLinkButton, QuickLink } from "./QuickLink";
 import QuickLinkModal from "./QuickLinkModal";
 import { useSettings } from "@/context/SettingsContext";
 import { defaultSettings } from "@/constants/defaultSettings";
+import { Overlay } from "../Overlay";
 
 export default function QuickLinkGrid() {
   const { getSetting } = useSettings();
@@ -117,13 +118,7 @@ export default function QuickLinkGrid() {
       )}>
       <AnimatePresence>
         {showModal && (
-          <motion.div
-            data-testid="QuickLinkModal"
-            className="bg-opacity-50 fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}>
+          <Overlay dataTestId="QuickLinkModal">
             <QuickLinkModal
               setShowModal={setShowModal}
               id={editingLink?.id}
@@ -144,7 +139,7 @@ export default function QuickLinkGrid() {
                 });
               }}
             />
-          </motion.div>
+          </Overlay>
         )}
       </AnimatePresence>
 

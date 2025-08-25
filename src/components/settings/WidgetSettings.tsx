@@ -1,14 +1,12 @@
 import { Dropdown, ColorOptions } from "../Dropdown";
+import SettingRow from "./SettingRow";
 
 export default function WidgetSettings() {
   return (
-    <div className="bg-surface flex items-center justify-between rounded-md p-2">
-      <p className="text-primary-text text-nowrap">
-        {getMessage("widgetsSettings")}
-      </p>
+    <SettingRow labelKey="widgetsSettings">
       <Dropdown title="Colors" dataTestId="WidgetSettings">
         <ColorOptions />
       </Dropdown>
-    </div>
+    </SettingRow>
   );
 }
