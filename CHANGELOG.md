@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/PawelGawlikDev/startify/compare/v1.3.7...v1.4.0) (2025-08-25)
+
+
+### Features
+
+* add overlay and small fixes ([#99](https://github.com/PawelGawlikDev/startify/issues/99)) ([0b8a919](https://github.com/PawelGawlikDev/startify/commit/0b8a919881fe725135c6eebdb1a7bf6da9f4a747))
+* use tanstackquery ([#98](https://github.com/PawelGawlikDev/startify/issues/98)) ([ca7e4a4](https://github.com/PawelGawlikDev/startify/commit/ca7e4a44c9e10177db41a960c5fd0707a081f9f5))
+
 ### [1.3.7](https://github.com/PawelGawlikDev/startify/compare/v1.3.6...v1.3.7) (2025-07-11)
 
 
