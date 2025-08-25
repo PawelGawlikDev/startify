@@ -13,7 +13,7 @@ export default function MainSettings() {
   const weather = getSetting("weather");
 
   return (
-    <div className="bg-default-bg flex flex-col gap-4 rounded-md p-4">
+    <div className="bg-default-bg flex flex-col gap-4 rounded-md">
       <SettingRow labelKey="engineSettings">
         <Dropdown title={engine?.name ?? ""} dataTestId="EngineSettings">
           <EngineOptions />
