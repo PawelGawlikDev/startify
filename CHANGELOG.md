@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://github.com/PawelGawlikDev/startify/compare/v1.4.0...v1.5.0) (2025-09-19)
+
+
+### Features
+
+* better weather widget ([#100](https://github.com/PawelGawlikDev/startify/issues/100)) ([e63c97f](https://github.com/PawelGawlikDev/startify/commit/e63c97fd67e70cb47b3dff4686c65c1bb6feacb4))
+
 ## [1.4.0](https://github.com/PawelGawlikDev/startify/compare/v1.3.7...v1.4.0) (2025-08-25)
 
 
