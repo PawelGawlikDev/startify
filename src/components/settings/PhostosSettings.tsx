@@ -5,6 +5,7 @@ import { UserWallpaper } from "@/types";
 import { useWallpaper } from "@/context/BackgroundContext";
 import { FileUpload } from "../FileUpload";
 import { getMessage } from "@/utils/getMessage";
+import { useState, useEffect } from "react";
 
 export default function PhotosSettings() {
   const { setBackgroundImageUrl } = useWallpaper();

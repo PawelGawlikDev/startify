@@ -10,7 +10,7 @@ export const Overlay = ({
   return (
     <motion.div
       data-testid={dataTestId}
-      className="bg-opacity-50 fixed inset-0 z-[999] flex items-center justify-center backdrop-blur-md"
+      className="bg-opacity-50 fixed inset-0 z-[999] flex cursor-default items-center justify-center backdrop-blur-md"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}

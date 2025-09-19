@@ -3,7 +3,7 @@ import { useSettings } from "@/context/SettingsContext";
 import { Engine } from "@/types";
 import { motion } from "motion/react";
 import { getMessage } from "@/utils/getMessage";
-import { ReactNode, useState } from "react";
+import { ReactNode, useState, useRef, useEffect } from "react";
 import { predefinedColors } from "@/constants/colors";
 
 const itemVariants = {
