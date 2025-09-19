@@ -4,9 +4,9 @@ import SearchBox from "@/components/SearchBox";
 import ChromeIcon from "./ChromeIcon";
 import { isFirefox } from "@/constants/browser";
 import Settings from "./Settings";
+import WeatherSection from "./WeatherSection";
 
 const DigitalTime = React.lazy(() => import("./DigitalTime"));
-const WeatherWidget = React.lazy(() => import("./WeatherWidget"));
 const QuickLinkGrid = React.lazy(() => import("./quickLink/QuickLinkGrid"));
 
 export default function Dashboard() {
@@ -18,7 +18,9 @@ export default function Dashboard() {
   if (!isSettingsLoaded) return null;
 
   return (
-    <div className="relative grid h-full [grid-template-columns:70px_minmax(auto,_1fr)_70px] [grid-template-rows:70px_110px_auto] gap-4 pt-2.5 md:[grid-template-columns:170px_minmax(auto,_1fr)_170px]">
+    <div
+      id="mainDiv"
+      className="relative grid h-full [grid-template-columns:70px_minmax(auto,_1fr)_70px] [grid-template-rows:70px_110px_auto] gap-4 pt-2.5 md:[grid-template-columns:170px_minmax(auto,_1fr)_170px]">
       {!isFirefox && (
         <div className="col-span-1 flex items-start pl-2">
           <button
@@ -44,14 +46,7 @@ export default function Dashboard() {
 
       {weather?.enable && (
         <div className="col-start-3 flex items-start justify-end pr-2">
-          <Suspense
-            fallback={
-              <div className="bg-default-bg aspect-[1/1] w-16 animate-pulse rounded-md"></div>
-            }>
-            <div className="aspect-[1/1] w-16">
-              <WeatherWidget localizationType="ip" location="auto:ip" />
-            </div>
-          </Suspense>
+          <WeatherSection />
         </div>
       )}
 

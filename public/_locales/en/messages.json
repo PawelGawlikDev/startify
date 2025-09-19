@@ -29,15 +29,15 @@
   },
   "mainSection": {
     "message": "Main",
-    "description": "Drop custom wallpaper"
+    "description": "Main settings panel"
   },
   "photosSection": {
     "message": "Photos",
-    "description": "Drop custom wallpaper"
+    "description": "Wallpaper settings panel"
   },
   "widgetsSection": {
     "message": "Widgets",
-    "description": "Drop custom wallpaper"
+    "description": "Widgets settings panel"
   },
   "widgetsSettings": {
     "message": "Widgets color",

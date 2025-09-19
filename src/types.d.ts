@@ -91,3 +91,15 @@ export type WeatherDataTypes = {
     gust_kph: number;
   };
 };
+
+export type LocalizationType = "geolocation" | "auto" | "custom";
+
+export type LocationData = {
+  id: number;
+  name: string;
+  region: string;
+  country: string;
+  lat: number;
+  lon: number;
+  url: string;
+};
