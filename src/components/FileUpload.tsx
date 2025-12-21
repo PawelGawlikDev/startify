@@ -91,7 +91,7 @@ export const FileUpload = ({
                 damping: 20
               }}
               className={cn(
-                "bg-surface-500 relative z-40 mx-auto mt-4 flex h-32 w-full max-w-[8rem] items-center justify-center rounded-md group-hover/file:shadow-2xl",
+                "bg-surface-500 relative z-40 mx-auto mt-4 flex h-32 w-full max-w-32 items-center justify-center rounded-md group-hover/file:shadow-2xl",
                 "shadow-[0px_10px_50px_rgba(0,0,0,0.1)]"
               )}
               data-testid="uploadWallpaper">
@@ -110,7 +110,7 @@ export const FileUpload = ({
 
             <motion.div
               variants={secondaryVariant}
-              className="border-secondary-500 absolute inset-0 z-30 mx-auto mt-4 flex h-32 w-full max-w-[8rem] items-center justify-center rounded-md border border-dashed bg-transparent opacity-0"></motion.div>
+              className="border-secondary-500 absolute inset-0 z-30 mx-auto mt-4 flex h-32 w-full max-w-32 items-center justify-center rounded-md border border-dashed bg-transparent opacity-0"></motion.div>
           </div>
         </div>
       </motion.div>

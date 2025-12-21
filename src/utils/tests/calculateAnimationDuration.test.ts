@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 
-import { calculateAnimationDuration } from "../calculateTimeout";
+import { calculateAnimationDuration } from "../calculateAnimationDuration";
 
 describe("Calculate animation duration", () => {
   test("Calculate duration for default speed and fps", () => {

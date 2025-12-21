@@ -9,6 +9,7 @@ export default defineConfig({
     build: {
       assetsInlineLimit: 0,
       cssMinify: "lightningcss",
+      sourcemap: import.meta.env.MODE !== "production",
       emptyOutDir: true,
       target: "esnext",
       rollupOptions: {

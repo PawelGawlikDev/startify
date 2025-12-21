@@ -19,21 +19,21 @@ export default function QuickLinkBackground({
   return (
     <div
       draggable={draggable}
-      className={cn("group relative p-[4px]", containerClassName)}
+      className={cn("group relative p-1", containerClassName)}
       style={{
         backgroundColor: backgroundColor,
         borderRadius: "var(--radius-rounded-md)",
         boxShadow: "0 4px 10px rgba(0, 0, 0, 0.3)"
       }}>
       <div
-        className="absolute inset-0 rounded-[var(--radius-rounded-md)]"
+        className="rounded--(--radius-rounded-md) absolute inset-0"
         style={{
           background:
             "linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0))",
           zIndex: 1
         }}></div>
 
-      <div className={cn("relative z-[1]", className)}>{children}</div>
+      <div className={cn("relative z-1", className)}>{children}</div>
     </div>
   );
 }
