@@ -7,7 +7,7 @@ import React, {
   useMemo
 } from "react";
 import type { Engine, Suggestion } from "@/types";
-import { calculateAnimationDuration } from "@/utils/calculateTimeout";
+import { calculateAnimationDuration } from "@/utils/calculateAnimationDuration";
 import { cn } from "@/utils/cn";
 import debounce from "@/utils/debounce";
 import Suggestions from "./Suggestions";

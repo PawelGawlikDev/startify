@@ -1,4 +1,4 @@
-name: "Lint Check"
+name: "Push Check"
 on:
   push:
     branches-ignore:
@@ -17,3 +17,16 @@ jobs:
         run: pnpm lint
       - name: Lint code
         run: pnpm lint
+
+  vitest:
+    needs: lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Common Setup
+        uses: ./.github/actions/common-setup
+      - name: Install dependencies
+        run: pnpm install
+      - name: Vitest
+        run: pnpm vitest

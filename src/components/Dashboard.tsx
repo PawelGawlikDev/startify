@@ -20,7 +20,7 @@ export default function Dashboard() {
   return (
     <div
       id="mainDiv"
-      className="relative grid h-full [grid-template-columns:70px_minmax(auto,_1fr)_70px] [grid-template-rows:70px_110px_auto] gap-4 pt-2.5 md:[grid-template-columns:170px_minmax(auto,_1fr)_170px]">
+      className="relative grid h-full grid-cols-[70px_minmax(auto,1fr)_70px] grid-rows-[70px_110px_auto] gap-4 pt-2.5 md:grid-cols-[170px_minmax(auto,1fr)_170px]">
       {!isFirefox && (
         <div className="col-span-1 flex items-start pl-2">
           <button

@@ -85,7 +85,7 @@ export function QuickLink(props: QuickLinkProps) {
       layout
       className="group relative z-10 flex flex-col items-center justify-center">
       <a draggable="false" href={url} tabIndex={0} aria-label={pageName}>
-        <QuickLinkBackground className="flex h-[88px] w-[144px] items-center justify-center">
+        <QuickLinkBackground className="flex h-[88px] w-36 items-center justify-center">
           <div
             data-testid="QuickLinkSettingsButton"
             ref={menuRef}
@@ -142,9 +142,7 @@ export function AddQuickLinkButton(props: AddQuickLink) {
       className="group relative flex cursor-pointer items-start justify-center">
       <QuickLinkBackground
         className={
-          quickLinkSettings?.bigQuickLinks
-            ? "h-28 w-[166px]"
-            : "h-[88px] w-[144px]"
+          quickLinkSettings?.bigQuickLinks ? "h-28 w-[166px]" : "h-[88px] w-36"
         }
         draggable={false}>
         <div className="z-10 flex h-full items-center justify-center gap-1">
@@ -207,7 +205,7 @@ export function QuickLinkPreview({ pageName }: { pageName: string }) {
 
 const QuickLinkTitle = ({ pageName }: { pageName: string }) => {
   return (
-    <div className="flex h-[48px] w-full max-w-full items-center justify-center rounded p-2">
+    <div className="flex h-12 w-full max-w-full items-center justify-center rounded p-2">
       <span
         className="truncate text-xl font-bold"
         style={{ color: "var(--color-primary-text)" }}>

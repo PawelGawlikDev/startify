@@ -23,12 +23,12 @@ export default function WeatherSection() {
   return (
     <Suspense
       fallback={
-        <div className="bg-default-bg aspect-[1/1] w-16 animate-pulse rounded-md"></div>
+        <div className="bg-default-bg aspect-square w-16 animate-pulse rounded-md"></div>
       }>
       <div
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
-        className={`group relative aspect-[1/1] cursor-pointer transition-[width] ${
+        className={`group relative aspect-square cursor-pointer transition-[width] ${
           hover || showMenu ? "w-20" : "w-16"
         }`}
         onClick={() => {

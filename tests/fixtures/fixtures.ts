@@ -2,7 +2,7 @@ import { test as base, chromium, type BrowserContext } from "@playwright/test";
 import path from "path";
 import { StartifyStartPage } from "../utils/startifyStartPage";
 
-const pathToExtension = path.resolve(".output/chrome-mv3");
+const pathToExtension = path.resolve(".output/chrome-mv3-testing");
 
 type ExtensionFixtures = {
   context: BrowserContext;
@@ -29,7 +29,7 @@ export const test = base.extend<ExtensionFixtures>({
   extensionId: async ({ context }, use) => {
     let background: { url(): string };
 
-    if (pathToExtension.endsWith("-mv3")) {
+    if (pathToExtension.includes("-mv3")) {
       [background] = context.serviceWorkers();
 
       if (!background) background = await context.waitForEvent("serviceworker");
