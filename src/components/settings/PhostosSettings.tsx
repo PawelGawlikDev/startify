@@ -6,6 +6,12 @@ import { useWallpaper } from "@/context/BackgroundContext";
 import { FileUpload } from "../FileUpload";
 import { getMessage } from "@/utils/getMessage";
 import { useState, useEffect } from "react";
+import { setLocalStorageItem } from "@/utils/storage";
+
+const STORAGE_KEYS = {
+  WALLPAPER: "userWallpaper",
+  WALLPAPER_CUSTOM: "userWallpaperCustom"
+} as const;
 
 export default function PhotosSettings() {
   const { setBackgroundImageUrl } = useWallpaper();
@@ -38,8 +44,8 @@ export default function PhotosSettings() {
 
         if (existingWallpaper.length > 0) {
           await db.wallpaper.delete(existingWallpaper[0].id);
-          localStorage.removeItem("userWallpaper");
-          localStorage.removeItem("userWallpaperCustom");
+          localStorage.removeItem(STORAGE_KEYS.WALLPAPER);
+          localStorage.removeItem(STORAGE_KEYS.WALLPAPER_CUSTOM);
         }
 
         await db.wallpaper.add({
@@ -50,8 +56,8 @@ export default function PhotosSettings() {
         const imageUrl = URL.createObjectURL(blob);
 
         setBackgroundImageUrl(imageUrl);
-        localStorage.setItem("userWallpaper", imageUrl);
-        localStorage.setItem("userWallpaperCustom", "true");
+        setLocalStorageItem(STORAGE_KEYS.WALLPAPER, imageUrl);
+        setLocalStorageItem(STORAGE_KEYS.WALLPAPER_CUSTOM, true);
 
         const wallpapers = await db.wallpaper.toArray();
 
@@ -100,8 +106,10 @@ export default function PhotosSettings() {
                         className="text-primary-text shadow-input bg-error w-fit cursor-pointer rounded-lg px-2 py-1 text-sm"
                         onClick={async () => {
                           await db.wallpaper.delete(file.id);
-                          localStorage.removeItem("userWallpaper");
-                          localStorage.removeItem("userWallpaperCustom");
+                          localStorage.removeItem(STORAGE_KEYS.WALLPAPER);
+                          localStorage.removeItem(
+                            STORAGE_KEYS.WALLPAPER_CUSTOM
+                          );
 
                           const allBackgrounds = backgrounds.backgrounds;
                           const bgIndex = Math.floor(
@@ -110,8 +118,11 @@ export default function PhotosSettings() {
                           const randomBg = allBackgrounds[bgIndex].filename;
 
                           setBackgroundImageUrl(randomBg);
-                          localStorage.setItem("userWallpaper", randomBg);
-                          localStorage.setItem("userWallpaperCustom", "false");
+                          setLocalStorageItem(STORAGE_KEYS.WALLPAPER, randomBg);
+                          setLocalStorageItem(
+                            STORAGE_KEYS.WALLPAPER_CUSTOM,
+                            false
+                          );
 
                           const updatedFiles = await db.wallpaper
                             .filter((wallpaper) => wallpaper.name !== "daily")

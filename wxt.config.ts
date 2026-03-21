@@ -13,9 +13,9 @@ export default defineConfig({
       emptyOutDir: true,
       target: "esnext",
       rollupOptions: {
-        treeshake: "recommended",
-        cache: true
-      }
+        treeshake: true
+      },
+      cache: true
     }
   }),
   srcDir: "src",

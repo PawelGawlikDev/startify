@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useCallback } from "react";
+import { useCallback, useRef } from "react";
 import { SearchEngineEnum } from "@/utils/searchEngine";
 import { Suggestion } from "@/types";
 import { getSuggestUrl } from "@/utils/searchEngine";
@@ -9,15 +9,25 @@ const headers = {
 };
 
 export function useSuggestions() {
+  const abortControllerRef = useRef<AbortController | null>(null);
+
   const fetchSuggestions = useCallback(
     async (query: string, engine: SearchEngineEnum): Promise<Suggestion[]> => {
       if (!query) return [];
+
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+      abortControllerRef.current = new AbortController();
 
       const url = getSuggestUrl(engine, query);
       if (!url) return [];
 
       try {
-        const res = await fetch(url, { headers });
+        const res = await fetch(url, {
+          headers,
+          signal: abortControllerRef.current.signal
+        });
         if (!res.ok) return [];
 
         if (engine === SearchEngineEnum.Google) {
@@ -48,7 +58,10 @@ export function useSuggestions() {
           default:
             return json[1]?.map((t: string) => ({ text: t })) || [];
         }
-      } catch {
+      } catch (error) {
+        if ((error as Error).name === "AbortError") {
+          return [];
+        }
         return [];
       }
     },

@@ -5,6 +5,7 @@ test.describe("Test widgest colors", () => {
   test.beforeEach(async ({ extensionId, dashboard }) => {
     await dashboard.goToExtensionPage(extensionId, dashboard.newTab);
   });
+
   for (const color of predefinedColors.filter((color) => color.value)) {
     test(`Test ${color.name}`, async ({ page, dashboard }) => {
       const settings = await dashboard.openSettings();
@@ -30,6 +31,7 @@ test.describe("Test widgest colors", () => {
       expect(savedColor).toBe(color.value);
     });
   }
+
   test("Custom color after change wallpaper", async ({ dashboard, page }) => {
     const settings = await dashboard.openSettings();
     await settings.getByTestId("Widgets").click();

@@ -10,6 +10,8 @@ type WeatherWidgetProps = {
   hover: boolean;
 };
 
+const GEOLOCATION_STORAGE_KEY = "geolocation_coords";
+
 export default function WeatherWidget({
   localizationType,
   location,
@@ -19,19 +21,20 @@ export default function WeatherWidget({
 
   useEffect(() => {
     if (localizationType === "geolocation") {
-      const localization = localStorage.getItem("geolocalization");
-      if (localization) {
-        setQueryLocation(localization);
+      const savedCoords = localStorage.getItem(GEOLOCATION_STORAGE_KEY);
+      if (savedCoords) {
+        setQueryLocation(savedCoords);
       } else {
-        navigator.geolocation.getCurrentPosition((loc) => {
-          localStorage.setItem(
-            "geolocalization",
-            `${loc.coords.latitude.toFixed(4)},${loc.coords.longitude.toFixed(4)}`
-          );
-          setQueryLocation(
-            `${loc.coords.latitude.toFixed(4)},${loc.coords.longitude.toFixed(4)}`
-          );
-        });
+        navigator.geolocation.getCurrentPosition(
+          (loc) => {
+            const coords = `${loc.coords.latitude.toFixed(4)},${loc.coords.longitude.toFixed(4)}`;
+            localStorage.setItem(GEOLOCATION_STORAGE_KEY, coords);
+            setQueryLocation(coords);
+          },
+          () => {
+            setQueryLocation("auto:ip");
+          }
+        );
       }
     } else if (location) {
       setQueryLocation(location);
