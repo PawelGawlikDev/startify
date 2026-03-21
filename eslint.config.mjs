@@ -22,7 +22,27 @@ export default [
   },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
-  pluginReact.configs.flat.recommended,
+  {
+    plugins: {
+      react: pluginReact
+    },
+    languageOptions: {
+      globals: globals.browser,
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true
+        }
+      }
+    },
+    rules: {
+      ...pluginReact.configs.recommended.rules,
+      "react/jsx-uses-react": "off",
+      "react/react-in-jsx-scope": "off"
+    },
+    settings: {
+      react: { version: "19.2.4" }
+    }
+  },
   {
     languageOptions: {
       globals: globals.browser
@@ -31,11 +51,7 @@ export default [
       unicorn: eslintPluginUnicorn
     },
     rules: {
-      "no-console": "error",
-      "react/react-in-jsx-scope": "off"
-    },
-    settings: {
-      react: { version: "detect" }
+      "no-console": "error"
     }
   },
   {

@@ -1,5 +1,16 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import backgrounds from "~/assets/backgrounds.json";
+import { MS_PER_DAY } from "@/constants/time";
+import { getLocalStorageItem, setLocalStorageItem } from "@/utils/storage";
+
+const STORAGE_KEYS = {
+  WALLPAPER: "userWallpaper",
+  WALLPAPER_CUSTOM: "userWallpaperCustom",
+  WALLPAPER_COLOR: "userWallpaperColor",
+  CUSTOM_COLOR: "customColor",
+  LAST_CHANGE: "wallpaperLastChange",
+  USED_WALLPAPERS: "usedWallpapers"
+} as const;
 
 interface WallpaperContextProps {
   backgroundImageUrl: string | null;
@@ -31,10 +42,12 @@ export const WallpaperProvider = ({
   );
 
   useEffect(() => {
-    const saved = localStorage.getItem("userWallpaper");
-    const isCustom = localStorage.getItem("userWallpaperCustom") === "true";
-    const savedColor = localStorage.getItem("userWallpaperColor");
-    const customColor = localStorage.getItem("customColor") === "true";
+    const saved = localStorage.getItem(STORAGE_KEYS.WALLPAPER);
+    const isCustom =
+      localStorage.getItem(STORAGE_KEYS.WALLPAPER_CUSTOM) === "true";
+    const savedColor = localStorage.getItem(STORAGE_KEYS.WALLPAPER_COLOR);
+    const customColor =
+      localStorage.getItem(STORAGE_KEYS.CUSTOM_COLOR) === "true";
 
     if (saved && isCustom) {
       setBackgroundImageUrl(saved);
@@ -46,17 +59,17 @@ export const WallpaperProvider = ({
       setBackgroundColor(savedColor);
     }
 
-    const lastChange = localStorage.getItem("wallpaperLastChange");
+    const lastChange = localStorage.getItem(STORAGE_KEYS.LAST_CHANGE);
     const now = Date.now();
-    const oneDay = 24 * 60 * 60 * 1000;
 
-    if (!lastChange || now - Number(lastChange) > oneDay) {
+    if (!lastChange || now - Number(lastChange) > MS_PER_DAY) {
       if (!customColor) {
-        localStorage.setItem("customColor", "false");
+        localStorage.setItem(STORAGE_KEYS.CUSTOM_COLOR, "false");
       }
       const allBackgrounds = backgrounds.backgrounds;
-      const usedWallpapers: string[] = JSON.parse(
-        localStorage.getItem("usedWallpapers") || "[]"
+      const usedWallpapers = getLocalStorageItem<string[]>(
+        STORAGE_KEYS.USED_WALLPAPERS,
+        []
       );
       const unusedBackgrounds = allBackgrounds.filter(
         (bg) => !usedWallpapers.includes(bg.filename)
@@ -84,13 +97,13 @@ export const WallpaperProvider = ({
 
       if (!customColor) {
         setBackgroundColor(selectedBgColor);
-        localStorage.setItem("userWallpaperColor", selectedBgColor);
+        setLocalStorageItem(STORAGE_KEYS.WALLPAPER_COLOR, selectedBgColor);
       }
 
-      localStorage.setItem("userWallpaper", selectedBg.filename);
-      localStorage.setItem("userWallpaperCustom", "false");
-      localStorage.setItem("wallpaperLastChange", String(now));
-      localStorage.setItem("usedWallpapers", JSON.stringify(updatedUsed));
+      setLocalStorageItem(STORAGE_KEYS.WALLPAPER, selectedBg.filename);
+      setLocalStorageItem(STORAGE_KEYS.WALLPAPER_CUSTOM, false);
+      setLocalStorageItem(STORAGE_KEYS.LAST_CHANGE, now);
+      setLocalStorageItem(STORAGE_KEYS.USED_WALLPAPERS, updatedUsed);
     } else {
       setBackgroundImageUrl(saved);
       setBackgroundColor(savedColor || "var(--color-surface-900)");
@@ -98,12 +111,13 @@ export const WallpaperProvider = ({
   }, []);
 
   useEffect(() => {
-    const customColor = localStorage.getItem("customColor") === "true";
+    const customColor =
+      localStorage.getItem(STORAGE_KEYS.CUSTOM_COLOR) === "true";
 
     if (backgroundImageUrl) {
-      localStorage.setItem("userWallpaper", backgroundImageUrl);
+      setLocalStorageItem(STORAGE_KEYS.WALLPAPER, backgroundImageUrl);
       if (!customColor) {
-        localStorage.setItem("userWallpaperColor", backgroundColor);
+        setLocalStorageItem(STORAGE_KEYS.WALLPAPER_COLOR, backgroundColor);
       }
     }
   }, [backgroundImageUrl, backgroundColor]);

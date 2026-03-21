@@ -57,7 +57,7 @@ export const SettingsProvider: React.FC<SettingsProviderProps> = ({
         [key]: value
       };
 
-      storage.setItem("local:settings", newSettings).catch(() => {});
+      storage.setItem("local:settings", newSettings);
 
       return newSettings;
     });

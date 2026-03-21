@@ -5,6 +5,7 @@ test.describe("Quick Links tests", () => {
   test.beforeEach(async ({ extensionId, dashboard }) => {
     await dashboard.goToExtensionPage(extensionId, dashboard.newTab);
   });
+
   test("Add and delete quick link test", async ({ page, dashboard }) => {
     let quickLinks: Array<Locator> = [];
 
@@ -441,6 +442,7 @@ test.describe("Quick Links tests", () => {
     await expect(name).toHaveValue("example");
     await expect(url).toHaveValue("https://example.com");
   });
+
   test("Quicklinks sync between tabs", async ({
     dashboard,
     context,

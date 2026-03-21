@@ -1,4 +1,5 @@
 import { useRef, useState, useCallback } from "react";
+import { DRAG_THROTTLE_MS } from "@/constants/time";
 
 export const useDragAndDrop = (
   quickLinkOrder: number[],
@@ -31,7 +32,7 @@ export const useDragAndDrop = (
       if (
         draggingIndex === null ||
         draggingIndex === targetIndex ||
-        now - lastDragTime.current < 200
+        now - lastDragTime.current < DRAG_THROTTLE_MS
       ) {
         return;
       }

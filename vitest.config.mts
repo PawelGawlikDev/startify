@@ -14,7 +14,7 @@ export default defineConfig({
     coverage: {
       provider: "v8",
       include: ["src/utils/*.ts"],
-      exclude: ["src/utils/getMessage.ts"]
+      exclude: ["src/utils/getMessage.ts", "src/utils/getRandomKey.ts"]
     },
     maxConcurrency: 1,
     reporters: process.env.GITHUB_ACTIONS

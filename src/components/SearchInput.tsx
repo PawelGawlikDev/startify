@@ -11,6 +11,11 @@ import { calculateAnimationDuration } from "@/utils/calculateAnimationDuration";
 import { cn } from "@/utils/cn";
 import debounce from "@/utils/debounce";
 import Suggestions from "./Suggestions";
+import {
+  SEARCH_DEBOUNCE_MS,
+  ANIMATION_STEP,
+  PIXEL_RADIUS_DECAY
+} from "@/constants/time";
 
 type PixelData = {
   x: number;
@@ -53,13 +58,19 @@ export default function SearchInput({
   const animationRef = useRef<number>(0);
   const maxXRef = useRef<number>(0);
 
-  const debouncedOnChange = useMemo(() => debounce(onChange, 200), [onChange]);
+  const debouncedOnChange = useMemo(
+    () => debounce(onChange, SEARCH_DEBOUNCE_MS),
+    [onChange]
+  );
 
   useEffect(() => {
     return () => {
       debouncedOnChange.cancel?.();
     };
   }, []);
+
+  const CANVAS_SIZE = 800;
+  const CANVAS_FONT_SCALE = 2;
 
   const draw = useCallback(() => {
     if (!inputRef.current || !canvasRef.current) return;
@@ -69,41 +80,41 @@ export default function SearchInput({
     });
     if (!ctx) return;
 
-    canvasRef.current.width = 800;
-    canvasRef.current.height = 800;
-    ctx.clearRect(0, 0, 800, 800);
+    canvasRef.current.width = CANVAS_SIZE;
+    canvasRef.current.height = CANVAS_SIZE;
+    ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
 
     const computedStyles = getComputedStyle(inputRef.current);
     const fontSize = parseFloat(computedStyles.getPropertyValue("font-size"));
 
-    ctx.font = `${fontSize * 2}px ${computedStyles.fontFamily}`;
+    ctx.font = `${fontSize * CANVAS_FONT_SCALE}px ${computedStyles.fontFamily}`;
     ctx.fillStyle = "#FFF";
     ctx.fillText(value, 16, 40);
 
-    const imageData = ctx.getImageData(0, 0, 800, 800);
+    const imageData = ctx.getImageData(0, 0, CANVAS_SIZE, CANVAS_SIZE);
     const pixelData = imageData.data;
     const newData: NewData[] = [];
+    const pixelCount = CANVAS_SIZE * CANVAS_SIZE;
 
-    for (let t = 0; t < 800; t++) {
-      const i = 4 * t * 800;
-      for (let n = 0; n < 800; n++) {
-        const e = i + 4 * n;
-        if (
-          pixelData[e] !== 0 &&
-          pixelData[e + 1] !== 0 &&
-          pixelData[e + 2] !== 0
-        ) {
-          newData.push({
-            x: n,
-            y: t,
-            color: [
-              pixelData[e],
-              pixelData[e + 1],
-              pixelData[e + 2],
-              pixelData[e + 3]
-            ]
-          });
-        }
+    for (let i = 0; i < pixelCount; i++) {
+      const byteIndex = i * 4;
+      if (
+        pixelData[byteIndex] !== 0 ||
+        pixelData[byteIndex + 1] !== 0 ||
+        pixelData[byteIndex + 2] !== 0
+      ) {
+        const x = i % CANVAS_SIZE;
+        const y = Math.floor(i / CANVAS_SIZE);
+        newData.push({
+          x,
+          y,
+          color: [
+            pixelData[byteIndex],
+            pixelData[byteIndex + 1],
+            pixelData[byteIndex + 2],
+            pixelData[byteIndex + 3]
+          ]
+        });
       }
     }
 
@@ -143,7 +154,7 @@ export default function SearchInput({
 
             current.x += Math.random() > 0.5 ? 1 : -1;
             current.y += Math.random() > 0.5 ? 1 : -1;
-            current.r -= 0.05 * Math.random();
+            current.r -= PIXEL_RADIUS_DECAY * Math.random();
             newArr.push(current);
           }
         }
@@ -153,7 +164,7 @@ export default function SearchInput({
         const ctx = canvasRef.current?.getContext("2d");
 
         if (ctx) {
-          ctx.clearRect(pos, 0, 800, 800);
+          ctx.clearRect(pos, 0, CANVAS_SIZE, CANVAS_SIZE);
           newDataRef.current.forEach(({ x, y, r, color }) => {
             if (x > pos) {
               ctx.beginPath();
@@ -166,9 +177,9 @@ export default function SearchInput({
         }
 
         if (newDataRef.current.length > 0) {
-          animateFrame(pos - 8);
+          animateFrame(pos - ANIMATION_STEP);
         } else {
-          ctx?.clearRect(0, 0, 800, 800);
+          ctx?.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
           newDataRef.current = [];
           setValue("");
           setAnimating(false);

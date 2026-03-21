@@ -1,10 +1,12 @@
+import { ANIMATION_STEP, MS_PER_SECOND } from "@/constants/time";
+
 export const calculateAnimationDuration = (
   maxX: number,
-  speed: number = 8,
+  speed: number = ANIMATION_STEP,
   fps: number = 60
 ): number => {
   const frames = maxX / speed;
-  const duration = (frames / fps) * 1000;
+  const duration = (frames / fps) * MS_PER_SECOND;
 
   return duration;
 };

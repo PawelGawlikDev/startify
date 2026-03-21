@@ -1,9 +1,8 @@
-import { useLiveQuery } from "dexie-react-hooks";
 import { AnimatePresence } from "motion/react";
 import { useEffect, useMemo, useState } from "react";
 
 import { useDragAndDrop } from "@/hooks/useDragAndDrop";
-import { db } from "@/indexdb";
+import { useQuickLinkOrder } from "@/hooks/useQuickLinkOrder";
 import { cn } from "@/utils/cn";
 import { AddQuickLinkButton, QuickLink } from "./QuickLink";
 import QuickLinkModal from "./QuickLinkModal";
@@ -14,43 +13,13 @@ import { Overlay } from "../Overlay";
 export default function QuickLinkGrid() {
   const { getSetting } = useSettings();
   const quickLink = getSetting("quickLink") ?? defaultSettings.quickLink;
-  const [isOrderInitialized, setIsOrderInitialized] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [quickLinkOrder, setQuickLinkOrder] = useState<number[]>([]);
+  const { quickLinkOrder, setQuickLinkOrder, quickLinks } = useQuickLinkOrder();
   const [editingLink, setEditingLink] = useState<{
     name: string;
     url: string;
     id: number;
   } | null>(null);
-  const quickLinks = useLiveQuery(async () => await db.quickLinks.toArray());
-
-  useEffect(() => {
-    if (!quickLinks) return;
-
-    const savedOrder = localStorage.getItem("quickLinkOrder");
-    const allIds = quickLinks.map((link) => link.id);
-    let newOrder: number[] = [];
-
-    if (savedOrder) {
-      const parsedOrder: number[] = JSON.parse(savedOrder);
-      const savedSet = new Set(parsedOrder);
-      const missing = allIds.filter((id) => !savedSet.has(id));
-
-      newOrder = [
-        ...parsedOrder.filter((id) => allIds.includes(id)),
-        ...missing
-      ];
-    } else {
-      newOrder = allIds;
-    }
-
-    setQuickLinkOrder((prev) => {
-      const sameLength = prev.length === newOrder.length;
-      const sameValues = prev.every((id, i) => id === newOrder[i]);
-
-      return sameLength && sameValues ? prev : newOrder;
-    });
-  }, [quickLinks]);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -62,42 +31,6 @@ export default function QuickLinkGrid() {
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [showModal]);
 
-  useEffect(() => {
-    if (!quickLinks || isOrderInitialized) return;
-
-    const savedOrder = localStorage.getItem("quickLinkOrder");
-    const allIds = quickLinks.map((link) => link.id);
-    let newOrder: number[] = [];
-
-    if (savedOrder) {
-      const parsedOrder: number[] = JSON.parse(savedOrder);
-      const savedSet = new Set(parsedOrder);
-      const missing = allIds.filter((id) => !savedSet.has(id));
-
-      newOrder = [
-        ...parsedOrder.filter((id) => allIds.includes(id)),
-        ...missing
-      ];
-    } else {
-      newOrder = allIds;
-    }
-
-    setQuickLinkOrder(newOrder);
-    setIsOrderInitialized(true);
-  }, [quickLinks, isOrderInitialized]);
-
-  useEffect(() => {
-    const handleStorage = (event: StorageEvent) => {
-      if (event.key === "quickLinkOrder") {
-        const newOrder = event.newValue ? JSON.parse(event.newValue) : [];
-        setQuickLinkOrder(newOrder);
-      }
-    };
-
-    window.addEventListener("storage", handleStorage);
-    return () => window.removeEventListener("storage", handleStorage);
-  }, []);
-
   const sortedQuickLinks = useMemo(() => {
     if (!quickLinks) return [];
 
@@ -107,7 +40,10 @@ export default function QuickLinkGrid() {
   }, [quickLinks, quickLinkOrder]);
 
   const { onDragStart, onDragEnter, onDragEnd, onDragOver, onDrop } =
-    useDragAndDrop(quickLinkOrder, setQuickLinkOrder);
+    useDragAndDrop(quickLinkOrder, (order) => {
+      setQuickLinkOrder(order);
+      localStorage.setItem("quickLinkOrder", JSON.stringify(order));
+    });
 
   return (
     <div
@@ -127,15 +63,7 @@ export default function QuickLinkGrid() {
               onAddLink={(id) => {
                 setQuickLinkOrder((prevOrder) => {
                   if (prevOrder.includes(id)) return prevOrder;
-
-                  const newOrder = [...prevOrder, id];
-
-                  localStorage.setItem(
-                    "quickLinkOrder",
-                    JSON.stringify(newOrder)
-                  );
-
-                  return newOrder;
+                  return [...prevOrder, id];
                 });
               }}
             />

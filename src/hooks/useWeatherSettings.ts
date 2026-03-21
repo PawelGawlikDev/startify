@@ -1,15 +1,19 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { LocalizationType } from "@/types";
+import { getLocalStorageItem, setLocalStorageItem } from "@/utils/storage";
+
+const LOCALIZATION_STORAGE_KEY = "localization";
 
 export function useWeatherSettings() {
   const [expanded, setExpanded] = useState(false);
   const [hover, setHover] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [localizationType, setLocalizationType] = useState<LocalizationType>(
-    localStorage.getItem("localization") ? "custom" : "auto"
+    () =>
+      getLocalStorageItem(LOCALIZATION_STORAGE_KEY, "") ? "custom" : "auto"
   );
-  const [location, setLocation] = useState<string | null>(
-    localStorage.getItem("localization")
+  const [location, setLocation] = useState<string | null>(() =>
+    getLocalStorageItem(LOCALIZATION_STORAGE_KEY, null)
   );
 
   const menuRef = useRef<HTMLDivElement>(null);
@@ -32,14 +36,14 @@ export function useWeatherSettings() {
   }, []);
 
   const saveLocation = (loc: string) => {
-    localStorage.setItem("localization", loc);
+    setLocalStorageItem(LOCALIZATION_STORAGE_KEY, loc);
     setLocation(loc);
     setLocalizationType("custom");
     setExpanded(false);
   };
 
   const detectLocation = () => {
-    localStorage.removeItem("localization");
+    localStorage.removeItem(LOCALIZATION_STORAGE_KEY);
     setLocalizationType("geolocation");
   };
 
