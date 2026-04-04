@@ -21,7 +21,10 @@ export default defineConfig({
   srcDir: "src",
   modules: ["@wxt-dev/module-react", "@wxt-dev/auto-icons"],
   manifest: {
-    name: "Startify",
+    name: "Startify – Personalized New Tab with Weather & Quick Links",
+    short_name: "Startify",
+    description:
+      "Upgrade your Chrome start page with beautiful backgrounds, local weather, and fast quick links. A minimalist, privacy-focused dashboard for better productivity.",
     default_locale: "en",
     browser_specific_settings: {
       gecko: {
