@@ -1,12 +1,14 @@
 import { Dropdown, ColorOptions } from "../Dropdown";
-import SettingRow from "./SettingRow";
+import SettingsRow from "./SettingsRow";
 
 export default function WidgetSettings() {
   return (
-    <SettingRow labelKey="widgetsSettings">
-      <Dropdown title="Colors" dataTestId="WidgetSettings">
-        <ColorOptions />
-      </Dropdown>
-    </SettingRow>
+    <div className="flex flex-col gap-3">
+      <SettingsRow labelKey="widgetsSettings">
+        <Dropdown title="Colors" dataTestId="WidgetSettings">
+          <ColorOptions />
+        </Dropdown>
+      </SettingsRow>
+    </div>
   );
 }

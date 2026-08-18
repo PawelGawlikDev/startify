@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useCallback, useRef } from "react";
 import { SearchEngineEnum } from "@/utils/searchEngine";
-import { Suggestion } from "@/types";
+import type { Suggestion } from "@/types";
 import { getSuggestUrl } from "@/utils/searchEngine";
 
 const headers = {

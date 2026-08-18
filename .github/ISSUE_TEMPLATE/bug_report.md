@@ -8,6 +8,7 @@ assignees: ""
 
 - **Startify Version:**
 - **Operating system:**
+
 <!-- e.g. "Windows 10", "macOS 10.14" -->
 
 ## Expected Behavior

@@ -1,10 +1,12 @@
 import path from "path";
 import { defineConfig } from "vitest/config";
 
+const rootDir = import.meta.dirname;
+
 export default defineConfig({
   resolve: {
     alias: {
-      "@/constants": path.resolve(__dirname, "src/constants")
+      "@/constants": path.resolve(rootDir, "src/constants")
     }
   },
   test: {

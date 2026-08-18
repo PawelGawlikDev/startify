@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getWeatherData } from "@/api/getWeatherData";
 import { getRandomKey } from "@/utils/getRandomKey";
 import type { LocalizationType, WeatherDataTypes } from "@/types";
+import { WidgetCard } from "./widgets/WidgetCard";
 
 type WeatherWidgetProps = {
   localizationType: LocalizationType;
@@ -41,18 +42,25 @@ export default function WeatherWidget({
     }
   }, [localizationType, location]);
 
-  const { data: weatherData } = useQuery<WeatherDataTypes>({
+  const { data: weatherData, isLoading } = useQuery<WeatherDataTypes>({
     queryKey: ["weather", queryLocation],
     queryFn: () => getWeatherData(getRandomKey(), queryLocation),
     enabled: !!queryLocation
   });
 
   return (
-    <div
-      className={`${hover ? "bg-surface-900" : ""} flex h-full w-full flex-col items-center justify-center rounded-md transition-colors`}
+    <WidgetCard
+      active={hover}
+      className="min-h-[72px] w-full"
       data-testid="WeatherWidget">
-      {weatherData && <WidgetInfo weatherData={weatherData} />}
-    </div>
+      {weatherData ? (
+        <WidgetInfo weatherData={weatherData} />
+      ) : (
+        <div className="text-primary-text/75 text-xs">
+          {isLoading ? "Loading" : "Weather"}
+        </div>
+      )}
+    </WidgetCard>
   );
 }
 
@@ -62,7 +70,9 @@ const WidgetInfo = ({ weatherData }: { weatherData: WeatherDataTypes }) => {
     <>
       <WeatherImage imageUrl={weatherData.current?.condition.icon} />
       <WeatherTemperature temperature={weatherData.current?.temp_c} />
-      <p className="text-primary-text">{location}</p>
+      <p className="text-primary-text max-w-full truncate text-sm">
+        {location}
+      </p>
     </>
   );
 };
@@ -76,5 +86,5 @@ const WeatherImage = ({ imageUrl }: { imageUrl: string }) => (
 );
 
 const WeatherTemperature = ({ temperature }: { temperature: number }) => (
-  <div className="text-primary-text">{temperature}°C</div>
+  <div className="text-primary-text text-lg font-semibold">{temperature}°C</div>
 );

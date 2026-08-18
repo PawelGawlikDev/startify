@@ -1,9 +1,22 @@
 import { Suspense } from "react";
-import { Overlay } from "./Overlay";
 import WeatherModal from "./WeatherModal";
 import WeatherWidget from "./WeatherWidget";
-import { EditDots } from "./quickLink/QuickLink";
 import { useWeatherSettings } from "@/hooks/useWeatherSettings";
+import { EllipsisIcon } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle
+} from "@/components/ui/dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu";
 
 export default function WeatherSection() {
   const {
@@ -12,8 +25,7 @@ export default function WeatherSection() {
     hover,
     setHover,
     showMenu,
-    menuRef,
-    toggleMenu,
+    setShowMenu,
     localizationType,
     location,
     saveLocation,
@@ -28,51 +40,71 @@ export default function WeatherSection() {
       <div
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
-        className={`group relative aspect-square cursor-pointer transition-[width] ${
-          hover || showMenu ? "w-20" : "w-16"
-        }`}
-        onClick={() => {
-          setExpanded(true);
-          setHover(false);
-        }}>
-        {/* Menu */}
-        <div
-          data-testid="WeatherSettingsButton"
-          className={`absolute top-1 left-0 h-5 w-5 rounded-full p-1 transition-all ${
-            hover || showMenu ? "opacity-100" : "opacity-0"
-          } `}
-          ref={menuRef}
-          onClick={toggleMenu}>
-          <EditDots />
-          {showMenu && (
-            <div
-              data-testid="WeatherMenu"
-              className="bg-dark-bg text-primary-text absolute left-[-100px] z-1 flex flex-col items-center rounded-xl">
-              <span
+        className={`group relative aspect-square transition-[width] ${
+          hover || showMenu ? "w-24" : "w-[72px]"
+        }`}>
+        <DropdownMenu open={showMenu} onOpenChange={setShowMenu}>
+          <DropdownMenuTrigger
+            data-testid="WeatherSettingsButton"
+            onClick={(event) => {
+              event.preventDefault();
+              event.stopPropagation();
+            }}
+            className={`bg-dark-bg/70 focus-visible:ring-primary/70 text-primary-text absolute top-1.5 left-1.5 z-20 flex h-7 w-7 items-center justify-center rounded-full shadow-sm backdrop-blur-md transition-all duration-200 focus-visible:ring-2 focus-visible:outline-none ${
+              hover || showMenu
+                ? "pointer-events-auto scale-100 opacity-100"
+                : "pointer-events-none scale-95 opacity-0 group-hover:pointer-events-auto group-hover:scale-100 group-hover:opacity-100"
+            }`}>
+            <EllipsisIcon className="size-4" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            data-testid="WeatherMenu"
+            align="end"
+            sideOffset={8}
+            className="bg-dark-bg/95 text-primary-text min-w-40 backdrop-blur-xl">
+            <DropdownMenuGroup>
+              <DropdownMenuItem
                 data-testid="EditWeather"
-                className="hover:bg-secondary-900 flex w-full items-center justify-center rounded-xl p-3"
-                onClick={(e) => {
-                  e.stopPropagation();
+                className="text-primary-text focus:bg-surface-900"
+                onClick={() => {
                   detectLocation();
+                  setHover(false);
                 }}>
                 Detect Location
-              </span>
-            </div>
-          )}
-        </div>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
 
-        {/* Modal */}
-        {expanded && (
-          <Overlay>
+        <button
+          type="button"
+          className="absolute inset-0 z-10 cursor-pointer rounded-xl focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:outline-none"
+          aria-label="Open weather details"
+          onClick={() => {
+            setExpanded(true);
+            setHover(false);
+          }}>
+          <span className="sr-only">Open weather details</span>
+        </button>
+
+        <Dialog open={expanded} onOpenChange={setExpanded}>
+          <DialogContent
+            showCloseButton={false}
+            className="max-w-[min(92vw,460px)] border-none bg-transparent p-0 shadow-none ring-0">
+            <DialogHeader className="sr-only">
+              <DialogTitle>Weather settings</DialogTitle>
+              <DialogDescription>
+                Choose how the weather widget gets your location.
+              </DialogDescription>
+            </DialogHeader>
             <WeatherModal
               savedLocation={location}
               onClose={() => setExpanded(false)}
               onSave={saveLocation}
             />
-          </Overlay>
-        )}
+          </DialogContent>
+        </Dialog>
 
-        {/* Widget */}
         <WeatherWidget
           hover={hover || showMenu}
           localizationType={localizationType}

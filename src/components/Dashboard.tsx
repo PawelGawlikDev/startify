@@ -1,13 +1,11 @@
-import React, { Suspense } from "react";
 import { useSettings } from "@/context/SettingsContext";
-import SearchBox from "@/components/SearchBox";
-import ChromeIcon from "./ChromeIcon";
 import { isFirefox } from "@/constants/browser";
-import Settings from "./Settings";
-import WeatherSection from "./WeatherSection";
-
-const DigitalTime = React.lazy(() => import("./DigitalTime"));
-const QuickLinkGrid = React.lazy(() => import("./quickLink/QuickLinkGrid"));
+import { BrowserHomeWidget } from "@/components/widgets/BrowserHomeWidget";
+import { ClockWidget } from "@/components/widgets/ClockWidget";
+import { QuickLinksWidget } from "@/components/widgets/QuickLinksWidget";
+import { SearchWidget } from "@/components/widgets/SearchWidget";
+import { SettingsWidget } from "@/components/widgets/SettingsWidget";
+import { WeatherDashboardWidget } from "@/components/widgets/WeatherDashboardWidget";
 
 export default function Dashboard() {
   const { getSetting, isSettingsLoaded } = useSettings();
@@ -20,50 +18,37 @@ export default function Dashboard() {
   return (
     <div
       id="mainDiv"
-      className="relative grid h-full grid-cols-[70px_minmax(auto,1fr)_70px] grid-rows-[70px_110px_auto] gap-4 pt-2.5 md:grid-cols-[170px_minmax(auto,1fr)_170px]">
+      className="relative grid min-h-full grid-cols-[64px_minmax(0,1fr)_64px] grid-rows-[72px_auto_auto_1fr_72px] gap-4 px-2 pt-2.5 pb-3 sm:grid-cols-[88px_minmax(0,1fr)_88px] md:grid-cols-[170px_minmax(0,1fr)_170px] md:grid-rows-[70px_110px_auto_1fr_72px] md:px-4">
       {!isFirefox && (
-        <div className="col-span-1 flex items-start pl-2">
-          <button
-            className="cursor-pointer"
-            data-testid="ChromeIcon"
-            onClick={async () => {
-              browser.tabs.update({
-                url: "chrome://new-tab-page/"
-              });
-            }}>
-            <ChromeIcon />
-          </button>
+        <div className="col-start-1 row-start-1 flex items-start justify-start">
+          <BrowserHomeWidget />
         </div>
       )}
 
       {showClock && (
-        <Suspense>
-          <div className="col-start-2 flex items-center justify-center">
-            <DigitalTime />
-          </div>
-        </Suspense>
-      )}
-
-      {weather?.enable && (
-        <div className="col-start-3 flex items-start justify-end pr-2">
-          <WeatherSection />
+        <div className="col-start-2 row-start-1 flex items-center justify-center">
+          <ClockWidget />
         </div>
       )}
 
-      <div className="col-span-1 col-start-2 row-start-2 flex items-start md:col-span-1 md:col-start-2">
-        <SearchBox />
+      {weather?.enable && (
+        <div className="col-start-3 row-start-1 flex items-start justify-end">
+          <WeatherDashboardWidget />
+        </div>
+      )}
+
+      <div className="col-start-2 row-start-2 flex items-start">
+        <SearchWidget />
       </div>
 
       {quickLinkGrid && (
-        <Suspense>
-          <div className="col-span-1 col-start-2 row-start-3 flex justify-center md:col-span-3 md:col-start-1">
-            <QuickLinkGrid />
-          </div>
-        </Suspense>
+        <div className="col-start-2 row-start-3 flex justify-center md:col-span-3 md:col-start-1">
+          <QuickLinksWidget />
+        </div>
       )}
 
-      <div className="col-start-1 row-start-5 flex items-end pb-2 pl-2">
-        <Settings />
+      <div className="col-start-1 row-start-5 flex items-end justify-start">
+        <SettingsWidget />
       </div>
     </div>
   );

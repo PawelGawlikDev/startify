@@ -1,8 +1,20 @@
-import { motion } from "motion/react";
 import { useState } from "react";
-import { Button } from "./Button";
 import { useQuery } from "@tanstack/react-query";
+
 import { getWeatherSearch } from "@/api/getWeatherData";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle
+} from "@/components/ui/card";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { getMessage } from "@/utils/getMessage";
+import { getRandomKey } from "@/utils/getRandomKey";
 import type { LocationData } from "@/types";
 
 type WeatherModalProps = {
@@ -25,77 +37,67 @@ const WeatherModal = ({
   });
 
   return (
-    <motion.div
-      className="bg-dark-bg flex flex-col items-center justify-center gap-3 rounded-lg p-6"
-      initial={{ scale: 0.8, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      exit={{ scale: 0.8, opacity: 0 }}
-      transition={{ duration: 0.3 }}>
-      <div className="relative flex w-full flex-col space-y-2">
-        <label
-          className="text-primary-text text-sm font-medium"
-          htmlFor="location">
-          {getMessage("name")}
-        </label>
-        <input
-          id="location"
-          type="text"
-          value={location}
-          placeholder={savedLocation ?? getMessage("name")}
-          className="placeholder-text-neutral-600 text-primary-text bg-secondary-900 flex h-10 w-full rounded-md border-none px-3 py-2 text-sm focus:ring-0 focus:outline-none"
-          onChange={(e) => {
-            setLocation(e.target.value);
-            setShowSuggestions(true);
-          }}
-        />
+    <Card className="bg-dark-bg/96 text-primary-text gap-4 rounded-2xl py-0 shadow-2xl ring-white/10 backdrop-blur-xl">
+      <CardHeader className="border-b border-white/8 pb-4">
+        <CardTitle>Weather</CardTitle>
+        <CardDescription className="text-primary-text/70">
+          Set a custom city or switch back to automatic detection.
+        </CardDescription>
+      </CardHeader>
 
-        {showSuggestions && weatherSearch && weatherSearch.length > 0 && (
-          <ul className="bg-secondary-900 absolute top-full left-0 z-10 w-full rounded-md shadow-lg">
-            {weatherSearch.map((search) => (
-              <li
-                key={search.id}
-                className="text-primary-text hover:bg-secondary-700 cursor-pointer px-3 py-2"
-                onClick={() => {
-                  setShowSuggestions(false);
-                  setLocation(search.name);
-                }}>
-                {search.name}, {search.country}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+      <CardContent>
+        <FieldGroup>
+          <Field className="relative gap-2">
+            <FieldLabel htmlFor="location">{getMessage("name")}</FieldLabel>
+            <Input
+              id="location"
+              type="text"
+              value={location}
+              placeholder={savedLocation ?? getMessage("name")}
+              className="bg-surface-900/95 text-primary-text placeholder:text-primary-text/40"
+              onChange={(event) => {
+                setLocation(event.target.value);
+                setShowSuggestions(true);
+              }}
+            />
 
-      <div className="mt-4 flex gap-3">
+            {showSuggestions && weatherSearch && weatherSearch.length > 0 && (
+              <div className="bg-surface absolute top-full left-0 z-10 mt-1 w-full overflow-hidden rounded-xl shadow-xl ring-1 ring-white/10">
+                {weatherSearch.map((search) => (
+                  <button
+                    key={search.id}
+                    type="button"
+                    className="text-primary-text hover:bg-surface-900 focus-visible:ring-primary/60 flex w-full px-3 py-2 text-left text-sm transition-colors focus-visible:ring-2 focus-visible:outline-none"
+                    onClick={() => {
+                      setShowSuggestions(false);
+                      setLocation(search.name);
+                    }}>
+                    {search.name}, {search.country}
+                  </button>
+                ))}
+              </div>
+            )}
+          </Field>
+        </FieldGroup>
+      </CardContent>
+
+      <CardFooter className="justify-end gap-3 border-white/8 bg-black/10">
         <Button
-          onClick={async (e: MouseEvent) => {
-            e.stopPropagation();
-            onSave(location);
-          }}
-          data-testid="SaveButton"
-          borderRadius="1.75rem"
-          disabled={location === ""}
-          className={cn(
-            "border-surface transition-colors",
-            location === ""
-              ? "bg-surface-100 text-secondary-text cursor-not-allowed"
-              : "hover:bg-surface bg-surface-900 text-primary-text"
-          )}>
-          {getMessage("save")}
-        </Button>
-        <Button
-          onClick={(e: MouseEvent) => {
-            e.stopPropagation();
-            onClose();
-          }}
+          onClick={onClose}
           data-testid="CloseButton"
-          borderRadius="1.75rem"
-          borderClassName="bg-[radial-gradient(#ff5555_40%,transparent_60%)]"
-          className="text-primary-text hover:bg-surface bg-surface-900 border-surface">
+          variant="outline"
+          className="border-border bg-surface-900 text-primary-text hover:bg-surface">
           {getMessage("close")}
         </Button>
-      </div>
-    </motion.div>
+        <Button
+          onClick={() => onSave(location)}
+          data-testid="SaveButton"
+          disabled={location === ""}
+          className="bg-primary text-primary-foreground hover:bg-primary/90">
+          {getMessage("save")}
+        </Button>
+      </CardFooter>
+    </Card>
   );
 };
 

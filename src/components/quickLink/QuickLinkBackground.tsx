@@ -23,13 +23,13 @@ export default function QuickLinkBackground({
       style={{
         backgroundColor: backgroundColor,
         borderRadius: "var(--radius-rounded-md)",
-        boxShadow: "0 4px 10px rgba(0, 0, 0, 0.3)"
+        boxShadow: "0 10px 24px rgba(0, 0, 0, 0.22)"
       }}>
       <div
-        className="rounded--(--radius-rounded-md) absolute inset-0"
+        className="absolute inset-0 rounded-[var(--radius-rounded-md)]"
         style={{
           background:
-            "linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0))",
+            "linear-gradient(to bottom, rgba(0,0,0,0.26), rgba(0,0,0,0.06))",
           zIndex: 1
         }}></div>
 

@@ -80,6 +80,46 @@ export class StartifyStartPage {
     await this.page.waitForLoadState("domcontentloaded");
   }
 
+  async waitForQuickLinkCount(count: number) {
+    let quickLinks: Locator[] = [];
+
+    await expect
+      .poll(async () => {
+        quickLinks = await this.page.getByTestId("QuickLink").all();
+
+        return quickLinks.length;
+      })
+      .toBe(count);
+
+    return quickLinks;
+  }
+
+  async getQuickLinkNames() {
+    const quickLinks = await this.page.getByTestId("QuickLink").all();
+
+    return Promise.all(
+      quickLinks.map((link) => link.getByTestId("QuickLinkName").textContent())
+    );
+  }
+
+  async openQuickLinkMenu(quickLink: Locator) {
+    await quickLink.hover();
+
+    const settingsButton = quickLink.getByTestId("QuickLinkSettingsButton");
+
+    await expect(settingsButton, {
+      message: "Settings button should be visible after hover quick link"
+    }).toBeVisible();
+
+    await settingsButton.click();
+
+    const quickLinkMenu = this.page.getByTestId("QuickLinkMenu");
+
+    await expect(quickLinkMenu).toBeVisible();
+
+    return quickLinkMenu;
+  }
+
   async manualDragAndDropReorder(
     dragged: Locator,
     target: Locator,

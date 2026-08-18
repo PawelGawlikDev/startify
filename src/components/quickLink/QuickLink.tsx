@@ -1,11 +1,19 @@
 import { motion } from "motion/react";
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 
 import { db } from "@/indexdb";
 import type { QuickLinkSettings } from "@/types";
 import { getMessage } from "@/utils/getMessage";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu";
+import { EllipsisIcon, PlusIcon } from "lucide-react";
 
-import QuickLinkBackground from "./QuickLinkBackground";
+import { QuickLinkTile } from "./QuickLinkTile";
 
 type QuickLinkProps = {
   pageName: string;
@@ -34,21 +42,6 @@ export function QuickLink(props: QuickLinkProps) {
   const { pageName, url, id, setShowModal, setEditingLink, setQuickLinkOrder } =
     props;
   const [showMenu, setShowMenu] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setShowMenu(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   const handleEditClick = useCallback(async () => {
     const dialInfo = await db.quickLinks.get(id);
@@ -74,54 +67,60 @@ export function QuickLink(props: QuickLinkProps) {
     });
   }, [id, setQuickLinkOrder]);
 
-  const toggleMenu = useCallback((e: React.MouseEvent) => {
-    e.preventDefault();
-    setShowMenu((prev) => !prev);
-  }, []);
-
   return (
     <motion.div
       data-testid="QuickLink"
       layout
       className="group relative z-10 flex flex-col items-center justify-center">
       <a draggable="false" href={url} tabIndex={0} aria-label={pageName}>
-        <QuickLinkBackground className="flex h-[88px] w-36 items-center justify-center">
-          <div
-            data-testid="QuickLinkSettingsButton"
-            ref={menuRef}
-            className={`absolute top-1 h-5 w-5 ${
-              showMenu ? "opacity-100" : "opacity-0"
-            } hover:bg-dark-bg/75 right-2 rounded-full p-1 transition-all group-hover:opacity-100`}
-            onClick={toggleMenu}>
-            <EditDots />
-            {showMenu && (
-              <div
-                data-testid="QuickLinkMenu"
-                className="bg-dark-bg text-primary-text absolute z-1 flex flex-col items-center rounded-xl">
-                <span
+        <QuickLinkTile pageName={pageName}>
+          <DropdownMenu open={showMenu} onOpenChange={setShowMenu}>
+            <DropdownMenuTrigger
+              data-testid="QuickLinkSettingsButton"
+              onClick={(event) => {
+                event.preventDefault();
+                event.stopPropagation();
+              }}
+              className={`bg-dark-bg/70 focus-visible:ring-primary/70 text-primary-text absolute top-2 right-2 z-20 flex h-7 w-7 items-center justify-center rounded-full shadow-sm backdrop-blur-md transition-all duration-200 focus-visible:ring-2 focus-visible:outline-none ${
+                showMenu
+                  ? "pointer-events-auto scale-100 opacity-100"
+                  : "pointer-events-none scale-95 opacity-0 group-hover:pointer-events-auto group-hover:scale-100 group-hover:opacity-100"
+              }`}>
+              <EllipsisIcon className="size-4" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              data-testid="QuickLinkMenu"
+              align="end"
+              sideOffset={8}
+              className="bg-dark-bg/95 text-primary-text min-w-40 backdrop-blur-xl">
+              <DropdownMenuGroup>
+                <DropdownMenuItem
                   data-testid="EditQuickLink"
-                  className="hover:bg-secondary-900 flex w-full items-center justify-center rounded-t-xl p-3"
-                  onClick={handleEditClick}>
+                  className="text-primary-text focus:bg-surface-900"
+                  onClick={() => {
+                    void handleEditClick();
+                  }}>
                   Edit
-                </span>
-                <span
+                </DropdownMenuItem>
+                <DropdownMenuItem
                   data-testid="DeleteQuickLink"
-                  className="hover:bg-secondary-900 flex w-full items-center justify-center rounded-b-xl p-3"
-                  onClick={handleDeleteClick}>
+                  variant="destructive"
+                  onClick={() => {
+                    void handleDeleteClick();
+                  }}>
                   {getMessage("delete")}
-                </span>
-              </div>
-            )}
-          </div>
-          <QuickLinkTitle pageName={pageName} />
-        </QuickLinkBackground>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </QuickLinkTile>
       </a>
       <motion.p
         initial={{ scale: 0.1, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.3 }}
         data-testid="QuickLinkName"
-        className="text-primary-text max-w-[60%] truncate">
+        className="text-primary-text/95 mt-2 max-w-[75%] truncate text-sm">
         {pageName}
       </motion.p>
     </motion.div>
@@ -132,85 +131,42 @@ export function AddQuickLinkButton(props: AddQuickLink) {
   const { setShowModal, setEditingLink, quickLinkSettings } = props;
 
   return (
-    <motion.div
+    <motion.button
+      type="button"
       layout
       data-testid="AddQuickLink"
       onClick={() => {
         setShowModal(true);
         setEditingLink({ name: "", url: "", id: 0 });
       }}
-      className="group relative flex cursor-pointer items-start justify-center">
-      <QuickLinkBackground
-        className={
-          quickLinkSettings?.bigQuickLinks ? "h-28 w-[166px]" : "h-[88px] w-36"
-        }
-        draggable={false}>
+      className="group relative flex items-start justify-center">
+      <QuickLinkTile big={quickLinkSettings?.bigQuickLinks}>
         <div className="z-10 flex h-full items-center justify-center gap-1">
           <AddButton />
           <p className="inline-block max-w-0 overflow-hidden text-nowrap text-white opacity-0 transition-all duration-500 group-hover:max-w-full group-hover:opacity-100">
             {getMessage("addQuickLink")}
           </p>
         </div>
-      </QuickLinkBackground>
-    </motion.div>
+      </QuickLinkTile>
+    </motion.button>
   );
 }
 
 function AddButton() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className="shrink-0"
-      width="30"
-      height="30"
-      viewBox="0 0 24 24"
-      fill="none">
-      <path
-        d="M3.75 12H20.25"
-        stroke="#ffffff"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M12 3.75V20.25"
-        stroke="#ffffff"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-export function EditDots() {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13 13">
-      <g fill="white">
-        <circle cx="1.5" cy="6.5" r="1.5" />
-        <circle cx="6.5" cy="6.5" r="1.5" />
-        <circle cx="11.5" cy="6.5" r="1.5" />
-      </g>
-    </svg>
-  );
+  return <PlusIcon className="shrink-0 text-white" />;
 }
 
 export function QuickLinkPreview({ pageName }: { pageName: string }) {
-  return (
-    <QuickLinkBackground className="flex h-28 w-[166px] items-center justify-center">
-      <QuickLinkTitle pageName={pageName} />
-    </QuickLinkBackground>
-  );
+  return <QuickLinkTile pageName={pageName} big />;
 }
 
-const QuickLinkTitle = ({ pageName }: { pageName: string }) => {
+export function QuickLinkDragOverlay({ pageName }: { pageName: string }) {
   return (
-    <div className="flex h-12 w-full max-w-full items-center justify-center rounded p-2">
-      <span
-        className="truncate text-xl font-bold"
-        style={{ color: "var(--color-primary-text)" }}>
-        {pageName.toUpperCase()}
-      </span>
+    <div className="flex flex-col items-center justify-center opacity-95 drop-shadow-2xl">
+      <QuickLinkTile pageName={pageName} />
+      <p className="text-primary-text/95 mt-2 max-w-[75%] truncate text-sm">
+        {pageName}
+      </p>
     </div>
   );
-};
+}

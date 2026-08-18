@@ -9,3 +9,4 @@ CHANGELOG.md
 playwright/.cache
 public/
 chrome/
+.agents/

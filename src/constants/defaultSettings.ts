@@ -1,4 +1,5 @@
-import { Settings } from "@/types";
+import type { Settings } from "@/types";
+import { SearchEngineEnum, searchEngines } from "@/utils/searchEngine";
 
 export const defaultSettings: Settings = {
   searchEngine: searchEngines[SearchEngineEnum.Google],

@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 
-import { Settings } from "@/types";
+import type { Settings } from "@/types";
 import { storage } from "wxt/utils/storage";
 import { defaultSettings } from "@/constants/defaultSettings";
 
