@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect, useCallback } from "react";
-import { LocalizationType } from "@/types";
+import { useState } from "react";
+import type { LocalizationType } from "@/types";
 import { getLocalStorageItem, setLocalStorageItem } from "@/utils/storage";
 
 const LOCALIZATION_STORAGE_KEY = "localization";
@@ -16,25 +16,6 @@ export function useWeatherSettings() {
     getLocalStorageItem(LOCALIZATION_STORAGE_KEY, null)
   );
 
-  const menuRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setShowMenu(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  const toggleMenu = useCallback((e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setShowMenu((prev) => !prev);
-  }, []);
-
   const saveLocation = (loc: string) => {
     setLocalStorageItem(LOCALIZATION_STORAGE_KEY, loc);
     setLocation(loc);
@@ -45,6 +26,7 @@ export function useWeatherSettings() {
   const detectLocation = () => {
     localStorage.removeItem(LOCALIZATION_STORAGE_KEY);
     setLocalizationType("geolocation");
+    setShowMenu(false);
   };
 
   return {
@@ -54,8 +36,6 @@ export function useWeatherSettings() {
     setHover,
     showMenu,
     setShowMenu,
-    menuRef,
-    toggleMenu,
     localizationType,
     location,
     saveLocation,

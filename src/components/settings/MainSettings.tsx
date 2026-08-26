@@ -1,7 +1,7 @@
 import { Dropdown, EngineOptions } from "../Dropdown";
 import { useSettings } from "@/context/SettingsContext";
 import Toggle from "../Toggle";
-import SettingRow from "./SettingRow";
+import SettingsRow from "./SettingsRow";
 
 export default function MainSettings() {
   const { getSetting, updateSetting } = useSettings();
@@ -13,24 +13,24 @@ export default function MainSettings() {
   const weather = getSetting("weather");
 
   return (
-    <div className="bg-default-bg flex flex-col gap-4 rounded-md">
-      <SettingRow labelKey="engineSettings">
+    <div className="bg-default-bg flex flex-col gap-3 rounded-md">
+      <SettingsRow labelKey="engineSettings">
         <Dropdown title={engine?.name ?? ""} dataTestId="EngineSettings">
           <EngineOptions />
         </Dropdown>
-      </SettingRow>
+      </SettingsRow>
 
       {vanishAnimation !== undefined && (
-        <SettingRow labelKey="vanishAnimation">
+        <SettingsRow labelKey="vanishAnimation">
           <Toggle
             toggled={vanishAnimation}
             onToggle={() => updateSetting("vanishAnimation", !vanishAnimation)}
           />
-        </SettingRow>
+        </SettingsRow>
       )}
 
       {weather !== undefined && (
-        <SettingRow labelKey="weatherWidget">
+        <SettingsRow labelKey="weatherWidget">
           <Toggle
             dataTestId="Warther"
             toggled={weather.enable}
@@ -38,20 +38,20 @@ export default function MainSettings() {
               updateSetting("weather", { ...weather, enable: !weather.enable })
             }
           />
-        </SettingRow>
+        </SettingsRow>
       )}
 
       {showClock !== undefined && (
-        <SettingRow labelKey="showClock">
+        <SettingsRow labelKey="showClock">
           <Toggle
             toggled={showClock}
             onToggle={() => updateSetting("showClock", !showClock)}
           />
-        </SettingRow>
+        </SettingsRow>
       )}
 
       {quickLink?.enable !== undefined && (
-        <SettingRow labelKey="quickLinks">
+        <SettingsRow labelKey="quickLinks">
           <Toggle
             toggled={quickLink.enable}
             onToggle={() =>
@@ -61,7 +61,7 @@ export default function MainSettings() {
               })
             }
           />
-        </SettingRow>
+        </SettingsRow>
       )}
     </div>
   );

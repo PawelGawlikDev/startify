@@ -1,7 +1,8 @@
 import backgrounds from "~/assets/backgrounds.json";
 import { motion } from "motion/react";
+import { DownloadIcon } from "lucide-react";
 import { db } from "@/indexdb";
-import { UserWallpaper } from "@/types";
+import type { UserWallpaper } from "@/types";
 import { useWallpaper } from "@/context/BackgroundContext";
 import { FileUpload } from "../FileUpload";
 import { getMessage } from "@/utils/getMessage";
@@ -41,9 +42,10 @@ export default function PhotosSettings() {
 
       try {
         const existingWallpaper = await db.wallpaper.toArray();
+        const currentWallpaper = existingWallpaper[0];
 
-        if (existingWallpaper.length > 0) {
-          await db.wallpaper.delete(existingWallpaper[0].id);
+        if (currentWallpaper) {
+          await db.wallpaper.delete(currentWallpaper.id);
           localStorage.removeItem(STORAGE_KEYS.WALLPAPER);
           localStorage.removeItem(STORAGE_KEYS.WALLPAPER_CUSTOM);
         }
@@ -69,8 +71,9 @@ export default function PhotosSettings() {
   };
 
   return (
-    <>
+    <div className="w-full">
       <motion.div
+        className="w-full"
         initial={{ opacity: 0 }}
         animate={{
           opacity: 1,
@@ -115,7 +118,9 @@ export default function PhotosSettings() {
                           const bgIndex = Math.floor(
                             Math.random() * allBackgrounds.length
                           );
-                          const randomBg = allBackgrounds[bgIndex].filename;
+                          const randomBg = allBackgrounds[bgIndex]?.filename;
+
+                          if (!randomBg) return;
 
                           setBackgroundImageUrl(randomBg);
                           setLocalStorageItem(STORAGE_KEYS.WALLPAPER, randomBg);
@@ -142,15 +147,7 @@ export default function PhotosSettings() {
                             url: URL.createObjectURL(file.imageBlob)
                           });
                         }}>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width={16}
-                          height={16}
-                          viewBox="0 0 24 24">
-                          <path
-                            fill="currentColor"
-                            d="m12 16l-5-5l1.4-1.45l2.6 2.6V4h2v8.15l2.6-2.6L17 11zm-6 4q-.825 0-1.412-.587T4 18v-3h2v3h12v-3h2v3q0 .825-.587 1.413T18 20z"></path>
-                        </svg>
+                        <DownloadIcon className="size-4" />
                       </motion.button>
                     </div>
                   </div>
@@ -164,6 +161,6 @@ export default function PhotosSettings() {
           )}
         </div>
       )}
-    </>
+    </div>
   );
 }

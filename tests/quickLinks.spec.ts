@@ -1,366 +1,145 @@
-import { Locator } from "@playwright/test";
+import type { Locator } from "@playwright/test";
+
 import { expect, test } from "./fixtures/fixtures";
+
+async function reorderQuickLinks(
+  dashboard: {
+    manualDragAndDropReorder: (
+      dragged: Locator,
+      target: Locator,
+      position?: { x: number; y: number }
+    ) => Promise<void>;
+    waitForQuickLinkCount: (count: number) => Promise<Locator[]>;
+    getQuickLinkNames: () => Promise<Array<string | null>>;
+  },
+  quickLinks: Locator[]
+) {
+  const currentOrder = await dashboard.getQuickLinkNames();
+
+  await dashboard.manualDragAndDropReorder(quickLinks[0]!, quickLinks[1]!, {
+    x: 40,
+    y: 40
+  });
+
+  await expect
+    .poll(() => dashboard.getQuickLinkNames())
+    .toStrictEqual([
+      currentOrder[1],
+      currentOrder[0],
+      ...currentOrder.slice(2)
+    ]);
+}
 
 test.describe("Quick Links tests", () => {
   test.beforeEach(async ({ extensionId, dashboard }) => {
     await dashboard.goToExtensionPage(extensionId, dashboard.newTab);
   });
 
-  test("Add and delete quick link test", async ({ page, dashboard }) => {
-    let quickLinks: Array<Locator> = [];
-
-    await expect
-      .poll(async () => {
-        quickLinks = await page.getByTestId("QuickLink").all();
-
-        return quickLinks.length;
-      })
-      .toBe(0);
+  test("Add and delete quick link test", async ({ dashboard }) => {
+    let quickLinks = await dashboard.waitForQuickLinkCount(0);
+    expect(quickLinks).toHaveLength(0);
 
     await dashboard.addQuickLink("example", "https://example.com");
 
-    await expect
-      .poll(async () => {
-        quickLinks = await page.getByTestId("QuickLink").all();
+    quickLinks = await dashboard.waitForQuickLinkCount(1);
+    expect(quickLinks).toHaveLength(1);
+    const quickLinkMenu = await dashboard.openQuickLinkMenu(quickLinks[0]!);
 
-        return quickLinks.length;
-      })
-      .toBe(1);
+    await quickLinkMenu.getByTestId("DeleteQuickLink").click();
 
-    await quickLinks[0].hover();
-    await expect(quickLinks[0].getByTestId("QuickLinkSettingsButton"), {
-      message: "Settings button should be visible after hover quick link"
-    }).toBeVisible();
-
-    await quickLinks[0].getByTestId("QuickLinkSettingsButton").click();
-    await expect(page.getByTestId("QuickLinkMenu")).toBeVisible();
-    await page
-      .getByTestId("QuickLinkMenu")
-      .getByTestId("DeleteQuickLink")
-      .click();
-
-    await expect
-      .poll(async () => {
-        quickLinks = await page.getByTestId("QuickLink").all();
-
-        return quickLinks.length;
-      })
-      .toBe(0);
+    quickLinks = await dashboard.waitForQuickLinkCount(0);
+    expect(quickLinks).toHaveLength(0);
   });
 
-  test("Add quick link test", async ({ page, dashboard }) => {
-    let quickLinks: Array<Locator> = [];
-
-    await expect
-      .poll(async () => {
-        quickLinks = await page.getByTestId("QuickLink").all();
-
-        return quickLinks.length;
-      })
-      .toBe(0);
+  test("Add quick link test", async ({ dashboard }) => {
+    let quickLinks = await dashboard.waitForQuickLinkCount(0);
+    expect(quickLinks).toHaveLength(0);
 
     await dashboard.addQuickLink("example", "https://example.com");
 
-    await expect
-      .poll(async () => {
-        quickLinks = await page.getByTestId("QuickLink").all();
-
-        return quickLinks.length;
-      })
-      .toBe(1);
+    quickLinks = await dashboard.waitForQuickLinkCount(1);
+    expect(quickLinks).toHaveLength(1);
   });
 
-  test("Reorder Quick links", async ({ page, dashboard }) => {
-    let quickLinks: Array<Locator> = [];
-
-    await expect
-      .poll(async () => {
-        quickLinks = await page.getByTestId("QuickLink").all();
-
-        return quickLinks.length;
-      })
-      .toBe(0);
+  test("Reorder Quick links", async ({ dashboard }) => {
+    let quickLinks = await dashboard.waitForQuickLinkCount(0);
+    expect(quickLinks).toHaveLength(0);
 
     await dashboard.addQuickLink("example", "https://example.com");
     await dashboard.addQuickLink("example2", "https://example.com");
 
-    await expect
-      .poll(async () => {
-        quickLinks = await page.getByTestId("QuickLink").all();
+    quickLinks = await dashboard.waitForQuickLinkCount(2);
+    expect(quickLinks).toHaveLength(2);
 
-        return quickLinks.length;
-      })
-      .toBe(2);
-
-    const quickLinksOrder = [];
-
-    for (const quickLink of quickLinks) {
-      quickLinksOrder.push(
-        await quickLink.getByTestId("QuickLinkName").textContent()
-      );
-    }
-
-    await dashboard.manualDragAndDropReorder(quickLinks[0], quickLinks[1], {
-      x: 40,
-      y: 40
-    });
-
-    await expect
-      .poll(async () => {
-        const newOrder = [];
-
-        quickLinks = await page.getByTestId("QuickLink").all();
-        for (const quickLink of quickLinks) {
-          await quickLink.waitFor({ timeout: 2000 });
-        }
-
-        for (const quickLink of quickLinks) {
-          newOrder.push(
-            await quickLink.getByTestId("QuickLinkName").textContent()
-          );
-        }
-
-        return newOrder;
-      })
-      .toStrictEqual(quickLinksOrder.reverse());
+    await reorderQuickLinks(dashboard, quickLinks);
   });
 
-  test("Drag quick link without change order", async ({ page, dashboard }) => {
-    let quickLinks: Array<Locator> = [];
-
-    await expect
-      .poll(async () => {
-        quickLinks = await page.getByTestId("QuickLink").all();
-
-        return quickLinks.length;
-      })
-      .toBe(0);
+  test("Drag quick link without change order", async ({ dashboard }) => {
+    await dashboard.waitForQuickLinkCount(0);
 
     await dashboard.addQuickLink("example", "https://example.com");
     await dashboard.addQuickLink("example2", "https://example.com");
 
-    await expect
-      .poll(async () => {
-        quickLinks = await page.getByTestId("QuickLink").all();
+    const quickLinks = await dashboard.waitForQuickLinkCount(2);
+    const quickLinksOrder = await dashboard.getQuickLinkNames();
 
-        return quickLinks.length;
-      })
-      .toBe(2);
-
-    const quickLinksOrder = [];
-
-    for (const quickLink of quickLinks) {
-      quickLinksOrder.push(
-        await quickLink.getByTestId("QuickLinkName").textContent()
-      );
-    }
-
-    await dashboard.manualDragAndDropWithNoReorder(quickLinks[0]);
+    await dashboard.manualDragAndDropWithNoReorder(quickLinks[0]!);
 
     await expect
-      .poll(async () => {
-        const newOrder = [];
-
-        quickLinks = await page.getByTestId("QuickLink").all();
-        for (const quickLink of quickLinks) {
-          await quickLink.waitFor({ timeout: 2000 });
-        }
-
-        for (const quickLink of quickLinks) {
-          newOrder.push(
-            await quickLink.getByTestId("QuickLinkName").textContent()
-          );
-        }
-
-        return newOrder;
-      })
+      .poll(() => dashboard.getQuickLinkNames())
       .toStrictEqual(quickLinksOrder);
   });
 
-  test("Delete quick link and reorder", async ({
-    dashboard,
-
-    page
-  }) => {
-    let quickLinks: Array<Locator> = [];
-
-    await expect
-      .poll(async () => {
-        quickLinks = await page.getByTestId("QuickLink").all();
-
-        return quickLinks.length;
-      })
-      .toBe(0);
+  test("Delete quick link and reorder", async ({ dashboard }) => {
+    let quickLinks = await dashboard.waitForQuickLinkCount(0);
+    expect(quickLinks).toHaveLength(0);
 
     await dashboard.addQuickLink("example", "https://example.com");
     await dashboard.addQuickLink("example2", "https://example.com");
     await dashboard.addQuickLink("example3", "https://example.com");
 
-    await expect
-      .poll(async () => {
-        quickLinks = await page.getByTestId("QuickLink").all();
+    quickLinks = await dashboard.waitForQuickLinkCount(3);
+    expect(quickLinks).toHaveLength(3);
+    const quickLinkMenu = await dashboard.openQuickLinkMenu(quickLinks[0]!);
 
-        return quickLinks.length;
-      })
-      .toBe(3);
+    await quickLinkMenu.getByTestId("DeleteQuickLink").click();
 
-    await quickLinks[0].hover();
-    await expect(quickLinks[0].getByTestId("QuickLinkSettingsButton"), {
-      message: "Settings button should be visible after hover quick link"
-    }).toBeVisible();
+    quickLinks = await dashboard.waitForQuickLinkCount(2);
+    expect(quickLinks).toHaveLength(2);
 
-    await quickLinks[0].getByTestId("QuickLinkSettingsButton").click();
-    await expect(page.getByTestId("QuickLinkMenu")).toBeVisible();
-    await page
-      .getByTestId("QuickLinkMenu")
-      .getByTestId("DeleteQuickLink")
-      .click();
-
-    await expect
-      .poll(async () => {
-        quickLinks = await page.getByTestId("QuickLink").all();
-
-        return quickLinks.length;
-      })
-      .toBe(2);
-
-    const quickLinksOrder = [];
-
-    for (const quickLink of quickLinks) {
-      quickLinksOrder.push(
-        await quickLink.getByTestId("QuickLinkName").textContent()
-      );
-    }
-
-    await dashboard.manualDragAndDropReorder(quickLinks[0], quickLinks[1], {
-      x: 40,
-      y: 40
-    });
-
-    await expect
-      .poll(async () => {
-        const newOrder = [];
-
-        quickLinks = await page.getByTestId("QuickLink").all();
-        for (const quickLink of quickLinks) {
-          await quickLink.waitFor({ timeout: 2000 });
-        }
-
-        for (const quickLink of quickLinks) {
-          newOrder.push(
-            await quickLink.getByTestId("QuickLinkName").textContent()
-          );
-        }
-
-        return newOrder;
-      })
-      .toStrictEqual(quickLinksOrder.reverse());
+    await reorderQuickLinks(dashboard, quickLinks);
   });
 
-  test("Reorder and delete quick link", async ({
-    dashboard,
-
-    page
-  }) => {
-    let quickLinks: Array<Locator> = [];
-
-    await expect
-      .poll(async () => {
-        quickLinks = await page.getByTestId("QuickLink").all();
-
-        return quickLinks.length;
-      })
-      .toBe(0);
+  test("Reorder and delete quick link", async ({ dashboard }) => {
+    let quickLinks = await dashboard.waitForQuickLinkCount(0);
+    expect(quickLinks).toHaveLength(0);
 
     await dashboard.addQuickLink("example", "https://example.com");
     await dashboard.addQuickLink("example2", "https://example.com");
     await dashboard.addQuickLink("example3", "https://example.com");
 
-    await expect
-      .poll(async () => {
-        quickLinks = await page.getByTestId("QuickLink").all();
+    quickLinks = await dashboard.waitForQuickLinkCount(3);
+    expect(quickLinks).toHaveLength(3);
 
-        return quickLinks.length;
-      })
-      .toBe(3);
+    await reorderQuickLinks(dashboard, quickLinks);
 
-    const quickLinksOrder = [];
+    const reorderedLinks = await dashboard.waitForQuickLinkCount(3);
+    expect(reorderedLinks).toHaveLength(3);
+    const quickLinkMenu = await dashboard.openQuickLinkMenu(reorderedLinks[0]!);
 
-    for (const quickLink of quickLinks) {
-      quickLinksOrder.push(
-        await quickLink.getByTestId("QuickLinkName").textContent()
-      );
-    }
+    await quickLinkMenu.getByTestId("DeleteQuickLink").click();
 
-    await dashboard.manualDragAndDropReorder(quickLinks[0], quickLinks[1], {
-      x: 40,
-      y: 40
-    });
-
-    await expect
-      .poll(async () => {
-        const newOrder = [];
-
-        quickLinks = await page.getByTestId("QuickLink").all();
-        for (const quickLink of quickLinks) {
-          await quickLink.waitFor({ timeout: 2000 });
-        }
-
-        for (const quickLink of quickLinks) {
-          newOrder.push(
-            await quickLink.getByTestId("QuickLinkName").textContent()
-          );
-        }
-
-        return newOrder;
-      })
-      .toEqual([quickLinksOrder[1], quickLinksOrder[0], quickLinksOrder[2]]);
-
-    await quickLinks[0].hover();
-    await expect(quickLinks[0].getByTestId("QuickLinkSettingsButton"), {
-      message: "Settings button should be visible after hover quick link"
-    }).toBeVisible();
-
-    await quickLinks[0].getByTestId("QuickLinkSettingsButton").click();
-    await expect(page.getByTestId("QuickLinkMenu")).toBeVisible();
-    await page
-      .getByTestId("QuickLinkMenu")
-      .getByTestId("DeleteQuickLink")
-      .click();
-
-    await expect
-      .poll(async () => {
-        quickLinks = await page.getByTestId("QuickLink").all();
-
-        return quickLinks.length;
-      })
-      .toBe(2);
+    quickLinks = await dashboard.waitForQuickLinkCount(2);
+    expect(quickLinks).toHaveLength(2);
   });
 
   test("Edit quick link name", async ({ dashboard, page }) => {
     await dashboard.addQuickLink("example", "https://example.com");
 
-    let quickLinks: Array<Locator> = [];
+    const quickLinks = await dashboard.waitForQuickLinkCount(1);
+    let quickLinkMenu = await dashboard.openQuickLinkMenu(quickLinks[0]!);
 
-    await expect
-      .poll(async () => {
-        quickLinks = await page.getByTestId("QuickLink").all();
-
-        return quickLinks.length;
-      })
-      .toBe(1);
-
-    await quickLinks[0].hover();
-    await expect(quickLinks[0].getByTestId("QuickLinkSettingsButton"), {
-      message: "Settings button should be visible after hover quick link"
-    }).toBeVisible();
-
-    await quickLinks[0].getByTestId("QuickLinkSettingsButton").click();
-    await expect(page.getByTestId("QuickLinkMenu")).toBeVisible();
-    await page
-      .getByTestId("QuickLinkMenu")
-      .getByTestId("EditQuickLink")
-      .click();
+    await quickLinkMenu.getByTestId("EditQuickLink").click();
 
     const editModal = page.getByTestId("QuickLinkModal");
 
@@ -373,17 +152,12 @@ test.describe("Quick Links tests", () => {
     await expect(url).toHaveValue("https://example.com");
 
     await name.fill("newExample");
-
     await url.fill("https://newExample.com");
 
     await editModal.getByTestId("SaveButton").click();
 
-    await quickLinks[0].getByTestId("QuickLinkSettingsButton").click();
-    await expect(page.getByTestId("QuickLinkMenu")).toBeVisible();
-    await page
-      .getByTestId("QuickLinkMenu")
-      .getByTestId("EditQuickLink")
-      .click();
+    quickLinkMenu = await dashboard.openQuickLinkMenu(quickLinks[0]!);
+    await quickLinkMenu.getByTestId("EditQuickLink").click();
 
     name = editModal.locator("#name");
     url = editModal.locator("#url");
@@ -395,27 +169,10 @@ test.describe("Quick Links tests", () => {
   test("Open and colse edit modal", async ({ dashboard, page }) => {
     await dashboard.addQuickLink("example", "https://example.com");
 
-    let quickLinks: Array<Locator> = [];
+    const quickLinks = await dashboard.waitForQuickLinkCount(1);
+    let quickLinkMenu = await dashboard.openQuickLinkMenu(quickLinks[0]!);
 
-    await expect
-      .poll(async () => {
-        quickLinks = await page.getByTestId("QuickLink").all();
-
-        return quickLinks.length;
-      })
-      .toBe(1);
-
-    await quickLinks[0].hover();
-    await expect(quickLinks[0].getByTestId("QuickLinkSettingsButton"), {
-      message: "Settings button should be visible after hover quick link"
-    }).toBeVisible();
-
-    await quickLinks[0].getByTestId("QuickLinkSettingsButton").click();
-    await expect(page.getByTestId("QuickLinkMenu")).toBeVisible();
-    await page
-      .getByTestId("QuickLinkMenu")
-      .getByTestId("EditQuickLink")
-      .click();
+    await quickLinkMenu.getByTestId("EditQuickLink").click();
 
     const editModal = page.getByTestId("QuickLinkModal");
 
@@ -429,12 +186,8 @@ test.describe("Quick Links tests", () => {
 
     await editModal.getByTestId("CloseButton").click();
 
-    await quickLinks[0].getByTestId("QuickLinkSettingsButton").click();
-    await expect(page.getByTestId("QuickLinkMenu")).toBeVisible();
-    await page
-      .getByTestId("QuickLinkMenu")
-      .getByTestId("EditQuickLink")
-      .click();
+    quickLinkMenu = await dashboard.openQuickLinkMenu(quickLinks[0]!);
+    await quickLinkMenu.getByTestId("EditQuickLink").click();
 
     name = editModal.locator("#name");
     url = editModal.locator("#url");
@@ -453,17 +206,8 @@ test.describe("Quick Links tests", () => {
     await dashboard.addQuickLink("2", "https://2");
     await dashboard.addQuickLink("3", "https://3");
 
-    await expect
-      .poll(async () => {
-        const quickLinks: string[] = [];
-        const links = await page.getByTestId("QuickLink").all();
-        for (const link of links) {
-          const text = await link.getByTestId("QuickLinkName").textContent();
-          quickLinks.push(text!);
-        }
-        return quickLinks.length;
-      })
-      .toBe(3);
+    await dashboard.waitForQuickLinkCount(3);
+
     const pagePromise = context.waitForEvent("page");
     await context.newPage();
     const newPage = await pagePromise;
@@ -472,24 +216,20 @@ test.describe("Quick Links tests", () => {
 
     await expect
       .poll(async () => {
-        const newPageQuickLinks: string[] = [];
-        const links = await newPage.getByTestId("QuickLink").all();
-        for (const link of links) {
-          const text = await link.getByTestId("QuickLinkName").textContent();
-          newPageQuickLinks.push(text!);
-        }
+        const newPageQuickLinks = await newPage.getByTestId("QuickLink").all();
+
         return newPageQuickLinks.length;
       })
       .toBe(3);
 
-    const pageLinks = await page.getByTestId("QuickLink").all();
     const pageLinkNames = await Promise.all(
-      pageLinks.map((link) => link.getByTestId("QuickLinkName").textContent())
+      (await page.getByTestId("QuickLink").all()).map((link) =>
+        link.getByTestId("QuickLinkName").textContent()
+      )
     );
 
-    const newPageLinks = await newPage.getByTestId("QuickLink").all();
     const newPageLinkNames = await Promise.all(
-      newPageLinks.map((link) =>
+      (await newPage.getByTestId("QuickLink").all()).map((link) =>
         link.getByTestId("QuickLinkName").textContent()
       )
     );

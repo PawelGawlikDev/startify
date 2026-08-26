@@ -2,10 +2,11 @@
 
 @theme {
   --color-default-bg: #282a36;
-  --color-font-family-base: "system-ui";
-  --color-font-family-heading: "system-ui";
+  --font-sans:
+    "Inter", "system-ui", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
   --color-primary-text: #f8f8f2;
-  --color-secondary-text: #44475a;
+  --color-secondary-text: #9aa3c7;
   --color-dark-bg: hsl(0 0% 6% / 0.925);
   --color-transparent: #0006;
 
@@ -52,4 +53,31 @@
   --color-surface-100: #c7c7c7;
   --color-surface-500: #44475a;
   --color-surface-900: #2e303a;
+
+  --color-background: #282a36;
+  --color-foreground: #f8f8f2;
+  --color-card: rgb(46 48 58 / 0.9);
+  --color-card-foreground: #f8f8f2;
+  --color-popover: rgb(40 42 54 / 0.96);
+  --color-popover-foreground: #f8f8f2;
+  --color-primary-foreground: #0f1117;
+  --color-secondary-foreground: #f8f8f2;
+  --color-muted: rgb(68 71 90 / 0.65);
+  --color-muted-foreground: #9aa3c7;
+  --color-accent: rgb(98 114 164 / 0.22);
+  --color-accent-foreground: #f8f8f2;
+  --color-border: rgb(98 114 164 / 0.35);
+  --color-input: rgb(46 48 58 / 0.92);
+  --color-ring: rgb(163 190 140 / 0.45);
+  --color-destructive: #ff5555;
+  --color-destructive-foreground: #fff1ee;
+
+  --radius-md: 8px;
+}
+
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
 }

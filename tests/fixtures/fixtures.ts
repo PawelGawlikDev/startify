@@ -27,7 +27,7 @@ export const test = base.extend<ExtensionFixtures>({
     await context.close();
   },
   extensionId: async ({ context }, use) => {
-    let background: { url(): string };
+    let background: { url(): string } | undefined;
 
     if (pathToExtension.includes("-mv3")) {
       [background] = context.serviceWorkers();
@@ -40,7 +40,11 @@ export const test = base.extend<ExtensionFixtures>({
         background = await context.waitForEvent("backgroundpage");
     }
 
-    const extensionId = background.url().split("/")[2];
+    const extensionId = background?.url().split("/")[2];
+
+    if (!extensionId) {
+      throw new Error("Unable to resolve extension id");
+    }
 
     await use(extensionId);
   },

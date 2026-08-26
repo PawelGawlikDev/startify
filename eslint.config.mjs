@@ -12,12 +12,13 @@ export default [
       ".wxt/",
       ".output/",
       "node_modules/",
-      "pnpm-lock.yaml",
+      "bun.lock",
       "CHANGELOG.md",
       "coverage/",
       "playwright-report/",
       "playwright/.cache",
-      "chrome"
+      "chrome",
+      ".agents/"
     ]
   },
   pluginJs.configs.recommended,

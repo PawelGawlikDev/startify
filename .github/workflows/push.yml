@@ -12,11 +12,11 @@ jobs:
       - name: Common Setup
         uses: ./.github/actions/common-setup
       - name: Install dependencies
-        run: pnpm install
+        run: bun install --frozen-lockfile
       - name: Check code
-        run: pnpm lint
+        run: bun run lint
       - name: Lint code
-        run: pnpm lint
+        run: bun run lint
 
   vitest:
     needs: lint
@@ -27,6 +27,6 @@ jobs:
       - name: Common Setup
         uses: ./.github/actions/common-setup
       - name: Install dependencies
-        run: pnpm install
+        run: bun install --frozen-lockfile
       - name: Vitest
-        run: pnpm vitest
+        run: bun run test

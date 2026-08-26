@@ -75,20 +75,30 @@ export const WallpaperProvider = ({
         (bg) => !usedWallpapers.includes(bg.filename)
       );
 
-      let selectedBg;
       let updatedUsed = [...usedWallpapers];
+      let selectedBg: (typeof allBackgrounds)[number] | undefined;
 
       if (unusedBackgrounds.length === 0) {
-        selectedBg =
+        const nextBackground =
           allBackgrounds[Math.floor(Math.random() * allBackgrounds.length)];
+
+        if (!nextBackground) return;
+
+        selectedBg = nextBackground;
         updatedUsed = [selectedBg.filename];
       } else {
-        selectedBg =
+        const nextBackground =
           unusedBackgrounds[
             Math.floor(Math.random() * unusedBackgrounds.length)
           ];
+
+        if (!nextBackground) return;
+
+        selectedBg = nextBackground;
         updatedUsed.push(selectedBg.filename);
       }
+
+      if (!selectedBg) return;
 
       const selectedBgColor =
         selectedBg.colors?.backgroundColor || "var(--color-surface-900)";

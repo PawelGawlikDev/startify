@@ -1,5 +1,5 @@
 import { isFirefox, getUserLang } from "@/constants/browser";
-import { Engine } from "@/types";
+import type { Engine } from "@/types";
 
 export enum SearchEngineEnum {
   DuckDuckGo = "DuckDuckGo",
@@ -19,61 +19,61 @@ export const searchEngines = {
     name: "DuckDuckGo",
     searchURL: `https://duckduckgo.com/?q=%s&t=${isFirefox ? "firefox" : "chrome"}`,
     queryParam: "q",
-    favicon: "https://duckduckgo.com/favicon.ico"
+    favicon: "/icons/search-engines/duckduckgo.ico"
   },
   [SearchEngineEnum.Google]: {
     name: "Google",
     searchURL: "https://www.google.com/search?q=%s",
     queryParam: "q",
-    favicon: "https://www.google.com/favicon.ico"
+    favicon: "/icons/search-engines/google.ico"
   },
   [SearchEngineEnum.Bing]: {
     name: "Bing",
     searchURL: "https://www.bing.com/search?q=%s",
     queryParam: "q",
-    favicon: "https://www.bing.com/favicon.ico"
+    favicon: "/icons/search-engines/bing.png"
   },
   [SearchEngineEnum.Yahoo]: {
     name: "Yahoo",
     searchURL: "https://search.yahoo.com/yhs/search?p=%s",
     queryParam: "p",
-    favicon: "https://www.yahoo.com/favicon.ico"
+    favicon: "/icons/search-engines/yahoo.ico"
   },
   [SearchEngineEnum.Ecosia]: {
     name: "Ecosia",
     searchURL: "https://www.ecosia.org/search?q=%s",
     queryParam: "q",
-    favicon: "https://www.ecosia.org/favicon.ico"
+    favicon: "/icons/search-engines/ecosia.ico"
   },
   [SearchEngineEnum.Qwant]: {
     name: "Qwant",
     searchURL: "https://www.qwant.com/?q=%s",
     queryParam: "q",
-    favicon: "https://www.qwant.com/favicon.ico"
+    favicon: "/icons/search-engines/qwant.ico"
   },
   [SearchEngineEnum.Yandex]: {
     name: "Yandex",
     searchURL: "https://yandex.com/search/?text=%s",
     queryParam: "text",
-    favicon: "https://www.yandex.com/favicon.ico"
+    favicon: "/icons/search-engines/yandex.ico"
   },
   [SearchEngineEnum.Brave]: {
     name: "Brave",
     searchURL: "https://search.brave.com/search?q=%s",
     queryParam: "q",
-    favicon: "https://brave.com/static-assets/images/brave-favicon.png"
+    favicon: "/icons/search-engines/brave.svg"
   },
   [SearchEngineEnum.PrivacyWall]: {
     name: "PrivacyWall",
     searchURL: `https://www.privacywall.org/search/secure?q=%s&cc=${getUserLang()}`,
     queryParam: "q",
-    favicon: "https://external.privacywall.org/images/favicon_hi.ico"
+    favicon: "/icons/search-engines/privacywall.ico"
   },
   [SearchEngineEnum.Ghostery]: {
     name: "Ghostery",
     searchURL: `https://ghosterysearch.com/search?q=%s`,
     queryParam: "q",
-    favicon: "https://ghosterysearch.com/favicon.ico"
+    favicon: "/icons/search-engines/ghostery.svg"
   }
 };
 

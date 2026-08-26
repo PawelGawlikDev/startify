@@ -14,18 +14,18 @@ jobs:
       - name: Common Setup
         uses: ./.github/actions/common-setup
       - name: Install dependencies
-        run: pnpm install
+        run: bun install --frozen-lockfile
       - name: Install Playwright Browsers
-        run: pnpm playwright install --with-deps chromium
+        run: bunx playwright install --with-deps chromium
       - name: Setup env
         uses: ./.github/actions/setup-env
         env:
           VITE_WEATHER_KEYS: ${{ secrets.VITE_WEATHER_KEYS }}
           VITE_WEATHER_API: ${{ secrets.VITE_WEATHER_API }}
       - name: Build extension for tests
-        run: pnpm build:e2e
+        run: bun run build:e2e
       - name: Run Playwright tests
-        run: pnpm e2e
+        run: bun run e2e
       - uses: actions/upload-artifact@v7
         if: ${{ !cancelled() }}
         with:

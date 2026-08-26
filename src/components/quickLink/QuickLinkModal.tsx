@@ -1,13 +1,21 @@
-import { motion } from "motion/react";
 import React, { useState } from "react";
 
 import { db } from "@/indexdb/index";
-import { cn } from "@/utils/cn";
 import isValidUrl from "@/utils/validUrl";
 import { getMessage } from "@/utils/getMessage";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle
+} from "@/components/ui/card";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 
 import { QuickLinkPreview } from "./QuickLink";
-import { Button } from "../Button";
 
 type ModalProps = {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -24,11 +32,7 @@ const QuickLinkModal = (props: ModalProps) => {
   const [url, setUrl] = useState<string>(dialUrl ?? "");
 
   async function addQuickLink() {
-    if (!name || !url) {
-      alert("Both Name and URL are required!");
-
-      return;
-    }
+    if (!name || !url) return;
 
     try {
       let updatedUrl = url;
@@ -43,9 +47,7 @@ const QuickLinkModal = (props: ModalProps) => {
       } else {
         const newId = await db.quickLinks.add({ name, url: updatedUrl });
 
-        if (props.onAddLink) {
-          props.onAddLink(newId);
-        }
+        props.onAddLink?.(newId);
       }
 
       setShowModal(false);
@@ -54,72 +56,70 @@ const QuickLinkModal = (props: ModalProps) => {
     }
   }
 
+  const isSaveDisabled = name === "" || url === "";
+  const modalTitle = id ? "Edit quick link" : getMessage("addQuickLink");
+  const modalDescription = id
+    ? "Update the name and address for this tile."
+    : "Create a new shortcut for your dashboard.";
+
   return (
-    <motion.div
-      className="bg-dark-bg flex flex-col items-center justify-center gap-3 rounded-lg p-6"
-      initial={{ scale: 0.8, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      exit={{ scale: 0.8, opacity: 0 }}
-      transition={{ duration: 0.3 }}>
-      <QuickLinkPreview pageName={name ?? ""} />
-      <div className={"flex w-full flex-col space-y-2"}>
-        <label
-          className={
-            "text-primary-text text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-          }
-          htmlFor="name">
-          {getMessage("name")}
-        </label>
-        <input
-          id="name"
-          type="text"
-          value={name}
-          placeholder={getMessage("name")}
-          className="placeholder-text-neutral-600 text-primary-text bg-secondary-900 flex h-10 w-full rounded-md border-none px-3 py-2 text-sm focus:ring-0 focus:outline-none"
-          onChange={(e) => setName(e.target.value)}
-        />
-      </div>
-      <div className={"flex w-full flex-col space-y-2"}>
-        <label
-          className={
-            "text-primary-text text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-          }
-          htmlFor="url">
-          {getMessage("address")}
-        </label>
-        <input
-          id="url"
-          type="text"
-          value={url}
-          placeholder={getMessage("address")}
-          className="placeholder-text-neutral-600 text-primary-text bg-secondary-900 flex h-10 w-full rounded-md border-none px-3 py-2 text-sm focus:ring-0 focus:outline-none"
-          onChange={(e) => setUrl(e.target.value)}
-        />
-      </div>
-      <div className="mt-4 flex gap-3">
-        <Button
-          onClick={addQuickLink}
-          data-testid={"SaveButton"}
-          borderRadius="1.75rem"
-          disabled={name === "" || url === ""}
-          className={cn(
-            "border-surface transition-colors",
-            name === "" || url === ""
-              ? "bg-surface-100 text-secondary-text cursor-not-allowed"
-              : "hover:bg-surface bg-surface-900 text-primary-text"
-          )}>
-          {getMessage("save")}
-        </Button>
+    <Card className="bg-dark-bg/96 text-primary-text gap-4 rounded-2xl py-0 shadow-2xl ring-white/10 backdrop-blur-xl">
+      <CardHeader className="gap-4 border-b border-white/8 pb-4">
+        <div className="space-y-1 text-center sm:text-left">
+          <CardTitle className="text-xl font-semibold tracking-[0.01em]">
+            {modalTitle}
+          </CardTitle>
+          <CardDescription className="text-primary-text/65">
+            {modalDescription}
+          </CardDescription>
+        </div>
+        <div className="flex justify-center pt-1">
+          <QuickLinkPreview pageName={name || "Link"} />
+        </div>
+      </CardHeader>
+      <CardContent>
+        <FieldGroup className="gap-4">
+          <Field>
+            <FieldLabel htmlFor="name">{getMessage("name")}</FieldLabel>
+            <Input
+              id="name"
+              type="text"
+              value={name}
+              placeholder={getMessage("name")}
+              className="bg-surface-900/95 text-primary-text placeholder:text-primary-text/40"
+              onChange={(event) => setName(event.target.value)}
+            />
+          </Field>
+          <Field>
+            <FieldLabel htmlFor="url">{getMessage("address")}</FieldLabel>
+            <Input
+              id="url"
+              type="text"
+              value={url}
+              placeholder={getMessage("address")}
+              className="bg-surface-900/95 text-primary-text placeholder:text-primary-text/40"
+              onChange={(event) => setUrl(event.target.value)}
+            />
+          </Field>
+        </FieldGroup>
+      </CardContent>
+      <CardFooter className="justify-end gap-3 border-white/8 bg-black/10">
         <Button
           onClick={() => setShowModal(false)}
-          data-testid={"CloseButton"}
-          borderRadius="1.75rem"
-          borderClassName="bg-[radial-gradient(#ff5555_40%,transparent_60%)]"
-          className="text-primary-text hover:bg-surface bg-surface-900 border-surface">
+          data-testid="CloseButton"
+          variant="outline"
+          className="border-border bg-surface-900 text-primary-text hover:bg-surface">
           {getMessage("close")}
         </Button>
-      </div>
-    </motion.div>
+        <Button
+          onClick={addQuickLink}
+          data-testid="SaveButton"
+          disabled={isSaveDisabled}
+          className="bg-primary text-primary-foreground hover:bg-primary/90">
+          {getMessage("save")}
+        </Button>
+      </CardFooter>
+    </Card>
   );
 };
 

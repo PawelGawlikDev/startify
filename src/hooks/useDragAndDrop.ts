@@ -1,75 +1,90 @@
-import { useRef, useState, useCallback } from "react";
-import { DRAG_THROTTLE_MS } from "@/constants/time";
+import { useMemo, useState, useCallback, useEffect } from "react";
+
+import {
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+  type DragStartEvent
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  rectSortingStrategy,
+  sortableKeyboardCoordinates
+} from "@dnd-kit/sortable";
 
 export const useDragAndDrop = (
   quickLinkOrder: number[],
   updateOrder: (order: number[]) => void
 ) => {
-  const [draggingIndex, setDraggingIndex] = useState<number | null>(null);
-  const lastDragTime = useRef<number>(0);
+  const [activeId, setActiveId] = useState<number | null>(null);
 
-  const updateLocalStorage = useCallback(
-    (order: number[]) => {
-      updateOrder(order);
-      localStorage.setItem("quickLinkOrder", JSON.stringify(order));
-    },
-    [updateOrder]
-  );
-
-  const onDragStart = useCallback(
-    (event: React.DragEvent<HTMLDivElement>, index: number) => {
-      setDraggingIndex(index);
-      event.dataTransfer.effectAllowed = "move";
-      event.currentTarget.classList.add("dragging");
-    },
-    []
-  );
-
-  const onDragEnter = useCallback(
-    (event: React.DragEvent<HTMLDivElement>, targetIndex: number) => {
-      const now = Date.now();
-
-      if (
-        draggingIndex === null ||
-        draggingIndex === targetIndex ||
-        now - lastDragTime.current < DRAG_THROTTLE_MS
-      ) {
-        return;
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8
       }
-
-      const updatedOrder = [...quickLinkOrder];
-      const [movedItem] = updatedOrder.splice(draggingIndex, 1);
-
-      updatedOrder.splice(targetIndex, 0, movedItem);
-
-      updateLocalStorage(updatedOrder);
-      setDraggingIndex(targetIndex);
-
-      lastDragTime.current = now;
-    },
-    [draggingIndex, quickLinkOrder, updateLocalStorage]
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates
+    })
   );
 
-  const onDragEnd = useCallback((event: React.DragEvent<HTMLDivElement>) => {
-    event.currentTarget.classList.remove("dragging");
-    setDraggingIndex(null);
+  const handleDragStart = useCallback((event: DragStartEvent) => {
+    setActiveId(Number(event.active.id));
   }, []);
 
-  const onDragOver = useCallback((event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
+  const handleDragEnd = useCallback(
+    (event: DragEndEvent) => {
+      const { active, over } = event;
+
+      setActiveId(null);
+
+      if (!over || active.id === over.id) return;
+
+      const oldIndex = quickLinkOrder.indexOf(Number(active.id));
+      const newIndex = quickLinkOrder.indexOf(Number(over.id));
+
+      if (oldIndex < 0 || newIndex < 0) return;
+
+      const updatedOrder = arrayMove(quickLinkOrder, oldIndex, newIndex);
+
+      updateOrder(updatedOrder);
+      localStorage.setItem("quickLinkOrder", JSON.stringify(updatedOrder));
+    },
+    [quickLinkOrder, updateOrder]
+  );
+
+  const handleDragCancel = useCallback(() => {
+    setActiveId(null);
   }, []);
 
-  const onDrop = useCallback((event: React.DragEvent<HTMLDivElement>) => {
-    event.currentTarget.classList.remove("dragging");
-    setDraggingIndex(null);
-  }, []);
+  const activeIndex = useMemo(
+    () => (activeId === null ? null : quickLinkOrder.indexOf(activeId)),
+    [activeId, quickLinkOrder]
+  );
+
+  useEffect(() => {
+    if (activeId === null) return;
+
+    const previousCursor = document.body.style.cursor;
+    document.body.style.cursor = "grabbing";
+
+    return () => {
+      document.body.style.cursor = previousCursor;
+    };
+  }, [activeId]);
 
   return {
-    onDragStart,
-    onDragEnter,
-    onDragEnd,
-    onDragOver,
-    onDrop,
-    draggingIndex
+    activeId,
+    activeIndex,
+    collisionDetection: closestCenter,
+    handleDragCancel,
+    handleDragEnd,
+    handleDragStart,
+    sensors,
+    sortingStrategy: rectSortingStrategy
   };
 };

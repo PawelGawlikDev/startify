@@ -1,3 +1,4 @@
+@import "./fonts.css";
 @import "./tailwind.css";
 
 .dragging {
@@ -19,4 +20,5 @@ body {
   height: 100%;
   overflow: hidden;
   background-color: var(--color-dark-bg);
+  font-family: var(--font-sans);
 }

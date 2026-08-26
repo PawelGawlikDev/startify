@@ -16,6 +16,28 @@ export default function SearchBox() {
     return () => setSuggestions([]);
   }, []);
 
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      const target = event.target;
+
+      if (
+        event.key !== "/" ||
+        target instanceof HTMLInputElement ||
+        target instanceof HTMLTextAreaElement ||
+        target instanceof HTMLButtonElement
+      ) {
+        return;
+      }
+
+      event.preventDefault();
+      document.getElementById("SearchBox")?.focus();
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
   const handleChange = async (query: string) => {
     if (!query || !engine?.name) return setSuggestions([]);
 

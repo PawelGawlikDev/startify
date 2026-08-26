@@ -1,104 +1,81 @@
+import { useEffect, useRef, useState } from "react";
+import { CheckIcon, ChevronDownIcon } from "lucide-react";
+
 import { useWallpaper } from "@/context/BackgroundContext";
 import { useSettings } from "@/context/SettingsContext";
-import { Engine } from "@/types";
-import { motion } from "motion/react";
-import { getMessage } from "@/utils/getMessage";
-import { ReactNode, useState, useRef, useEffect } from "react";
 import { predefinedColors } from "@/constants/colors";
+import { cn } from "@/utils/cn";
+import { getMessage } from "@/utils/getMessage";
+import { searchEngines } from "@/utils/searchEngine";
+import type { Engine } from "@/types";
 
-const itemVariants = {
-  open: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      when: "beforeChildren"
-    }
-  },
-  closed: {
-    opacity: 0,
-    y: -15,
-    transition: {
-      when: "afterChildren"
-    }
-  }
-};
-
-const Arrow = () => {
+function Arrow({ open }: { open: boolean }) {
   return (
-    <svg
-      className="color-primary-text"
-      stroke="currentColor"
-      fill="none"
-      strokeWidth="2"
-      viewBox="0 0 24 24"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      height="16px"
-      width="16px"
-      xmlns="http://www.w3.org/2000/svg">
-      <polyline points="6 9 12 15 18 9"></polyline>
-    </svg>
+    <ChevronDownIcon
+      className={cn(
+        "text-primary-text transition-transform duration-200",
+        open && "rotate-180"
+      )}
+    />
   );
-};
+}
 
-export const Dropdown = ({
-  children,
-  dataTestId,
-  title
-}: {
-  children: ReactNode;
+type DropdownProps = {
+  children: React.ReactNode;
   dataTestId?: string;
   title: string;
-}) => {
+};
+
+export function Dropdown({ children, dataTestId, title }: DropdownProps) {
   const [open, setOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleOutsideClick = (event: MouseEvent) => {
+    const handleClickOutside = (event: MouseEvent) => {
       if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
       ) {
         setOpen(false);
       }
     };
 
-    document.addEventListener("mousedown", handleOutsideClick);
-
-    return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
-    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   return (
-    <div ref={dropdownRef} className="relative inline-block">
+    <div
+      ref={containerRef}
+      data-open={open ? "true" : "false"}
+      className={cn("relative inline-block", open && "z-[60]")}>
       <button
+        type="button"
+        data-testid={dataTestId}
+        className="text-primary-text hover:bg-surface-900/80 focus-visible:ring-primary/70 flex min-w-32 items-center justify-between gap-2 rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none"
         onClick={(event) => {
+          event.preventDefault();
           event.stopPropagation();
-          setOpen((prevOpen) => !prevOpen);
-        }}
-        className="text-primaty-text flex items-center gap-2 rounded-md px-3 py-2 transition-colors"
-        data-testid={dataTestId}>
-        <span className="truncate text-sm font-medium">{title}</span>
-        <span
-          className={`transition-transform duration-200 ${
-            open ? "rotate-180" : ""
-          }`}>
-          <Arrow />
-        </span>
+          setOpen((prev) => !prev);
+        }}>
+        <span className="truncate">{title}</span>
+        <Arrow open={open} />
       </button>
+
       {open && (
-        <ul
+        <div
           data-testid="Dropdown"
-          className="bg-surface absolute top-full left-1/2 z-50 mt-2 min-w-20 -translate-x-1/2 overflow-hidden rounded-md shadow-xl">
-          {children}
-        </ul>
+          className="bg-surface text-primary-text absolute top-full right-0 z-[70] mt-2 min-w-44 overflow-hidden rounded-xl p-1 shadow-xl ring-1 ring-white/10">
+          <div className="hide-scrollbar flex max-h-64 flex-col gap-1 overflow-y-auto">
+            {children}
+          </div>
+        </div>
       )}
     </div>
   );
-};
+}
 
-export const EngineOptions = () => {
+export function EngineOptions() {
   const { updateSetting } = useSettings();
 
   const handleEngineClick = (newEngine: Engine) => {
@@ -106,59 +83,55 @@ export const EngineOptions = () => {
   };
 
   return Object.entries(searchEngines).map(([key, engine]) => (
-    <motion.li
+    <button
       key={key}
-      variants={itemVariants}
-      onClick={() => handleEngineClick(engine)}
-      className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-md p-2 text-xs font-medium whitespace-nowrap text-black">
-      <span>
-        <img
-          className="h-4 w-4"
-          data-testid={engine.name}
-          src={engine.favicon}
-        />
-      </span>
-    </motion.li>
+      type="button"
+      data-testid={engine.name}
+      className="text-primary-text hover:bg-surface-900 focus-visible:ring-primary/60 flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm transition-colors focus-visible:ring-2 focus-visible:outline-none"
+      onClick={() => handleEngineClick(engine)}>
+      <img
+        className="pointer-events-none size-4"
+        src={engine.favicon}
+        alt={engine.name}
+      />
+      <span>{engine.name}</span>
+    </button>
   ));
-};
+}
 
-export const ColorOptions = () => {
-  const { setBackgroundColor, defaultBgColor } = useWallpaper();
+export function ColorOptions() {
+  const { backgroundColor, defaultBgColor, setBackgroundColor } =
+    useWallpaper();
+  const currentColor =
+    localStorage.getItem("userWallpaperColor") ?? backgroundColor;
 
   const handleColorChange = (color: string | null) => {
     if (color) {
       setBackgroundColor(color);
       localStorage.setItem("userWallpaperColor", color);
       localStorage.setItem("customColor", "true");
-    } else if (defaultBgColor) {
-      localStorage.setItem("customColor", "false");
-      localStorage.setItem("userWallpaperColor", defaultBgColor);
-      setBackgroundColor(defaultBgColor);
+      return;
     }
+
+    const wallpaperColor = defaultBgColor ?? backgroundColor;
+
+    localStorage.setItem("customColor", "false");
+    localStorage.setItem("userWallpaperColor", wallpaperColor);
+    setBackgroundColor(wallpaperColor);
   };
 
-  const currentColor = localStorage.getItem("userWallpaperColor");
-
-  return (
-    <>
-      {predefinedColors.map((color) => (
-        <motion.li
-          key={color.value}
-          variants={itemVariants}
-          data-testid={color.name}
-          onClick={() => handleColorChange(color.value)}
-          className={
-            "flex w-full cursor-pointer items-center justify-center gap-2 rounded-md p-2 text-xs font-medium whitespace-nowrap"
-          }
-          style={{
-            backgroundColor:
-              currentColor === color.value && color.value
-                ? color.value
-                : "Transparent"
-          }}>
-          <p>{getMessage(color.name.toLowerCase())}</p>
-        </motion.li>
-      ))}
-    </>
-  );
-};
+  return predefinedColors.map((color) => (
+    <button
+      key={color.name}
+      type="button"
+      data-testid={color.name}
+      onClick={() => handleColorChange(color.value)}
+      className={cn(
+        "text-primary-text hover:bg-surface-900 focus-visible:ring-primary/60 flex w-full items-center justify-between gap-3 rounded-lg px-3 py-2 text-left text-sm transition-colors focus-visible:ring-2 focus-visible:outline-none",
+        currentColor === color.value && "bg-surface-900/70"
+      )}>
+      <span>{getMessage(color.name.toLowerCase())}</span>
+      {currentColor === color.value ? <CheckIcon className="size-4" /> : null}
+    </button>
+  ));
+}

@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import { useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { UploadIcon } from "lucide-react";
 import { cn } from "@/utils/cn";
 import { getMessage } from "@/utils/getMessage";
 
@@ -23,21 +24,6 @@ const secondaryVariant = {
   animate: {
     opacity: 1
   }
-};
-
-const IconUpload = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      viewBox="0 0 24 24">
-      <path
-        fill="currentColor"
-        d="M11 16V7.85l-2.6 2.6L7 9l5-5l5 5l-1.4 1.45l-2.6-2.6V16zm-5 4q-.825 0-1.412-.587T4 18v-3h2v3h12v-3h2v3q0 .825-.587 1.413T18 20z"
-      />
-    </svg>
-  );
 };
 
 export const FileUpload = ({
@@ -69,7 +55,7 @@ export const FileUpload = ({
       <motion.div
         onClick={handleClick}
         whileHover="animate"
-        className="group/file relative block w-full cursor-pointer overflow-hidden rounded-lg pb-3">
+        className="group/file relative block w-full cursor-pointer overflow-visible rounded-xl pb-8">
         <input
           ref={fileInputRef}
           id="file-upload-handle"
@@ -81,7 +67,7 @@ export const FileUpload = ({
           <p className="text-primary-text relative z-20 font-sans text-base font-bold">
             {getMessage("uploadWallpaper")}
           </p>
-          <div className="relative mx-auto mt-6 w-full max-w-xl">
+          <div className="relative mx-auto mt-6 aspect-square w-full max-w-36">
             <motion.div
               layoutId="file-upload"
               variants={mainVariant}
@@ -91,7 +77,7 @@ export const FileUpload = ({
                 damping: 20
               }}
               className={cn(
-                "bg-surface-500 relative z-40 mx-auto mt-4 flex h-32 w-full max-w-32 items-center justify-center rounded-md group-hover/file:shadow-2xl",
+                "bg-surface-500 relative z-40 mx-auto mt-4 flex aspect-square w-full items-center justify-center rounded-xl group-hover/file:shadow-2xl",
                 "shadow-[0px_10px_50px_rgba(0,0,0,0.1)]"
               )}
               data-testid="uploadWallpaper">
@@ -101,16 +87,16 @@ export const FileUpload = ({
                   animate={{ opacity: 1 }}
                   className="text-primary-text flex flex-col items-center">
                   {getMessage("dropIt")}
-                  <IconUpload />
+                  <UploadIcon className="size-4" />
                 </motion.p>
               ) : (
-                <IconUpload />
+                <UploadIcon className="size-4" />
               )}
             </motion.div>
 
             <motion.div
               variants={secondaryVariant}
-              className="border-secondary-500 absolute inset-0 z-30 mx-auto mt-4 flex h-32 w-full max-w-32 items-center justify-center rounded-md border border-dashed bg-transparent opacity-0"></motion.div>
+              className="border-secondary-500 absolute inset-0 z-30 mx-auto mt-4 flex aspect-square w-full items-center justify-center rounded-xl border border-dashed bg-transparent opacity-0"></motion.div>
           </div>
         </div>
       </motion.div>
