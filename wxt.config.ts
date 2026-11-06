@@ -24,7 +24,7 @@ export default defineConfig({
     name: "Startify – Personalized New Tab & Quick Links",
     short_name: "Startify",
     description:
-      "Upgrade your Chrome start page with beautiful backgrounds and fast quick links. A minimalist, privacy-focused dashboard for better productivity.",
+      "A minimalist, privacy-focused new tab with beautiful backgrounds, quick links, and customizable widgets.",
     default_locale: "en",
     browser_specific_settings: {
       gecko: {
