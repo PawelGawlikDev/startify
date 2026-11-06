@@ -77,7 +77,7 @@ export class StartifyStartPage {
 
     await addModal.getByTestId("SaveButton").click();
 
-    await this.page.waitForLoadState("domcontentloaded");
+    await expect(addModal).toBeHidden();
   }
 
   async waitForQuickLinkCount(count: number) {
@@ -132,18 +132,38 @@ export class StartifyStartPage {
       message: "Target nedd to be in vievport"
     }).toBeInViewport();
 
-    await dragged.hover({ position: position });
-    await this.page.mouse.down();
-
+    await expect(this.page.getByTestId("QuickLinkMenu")).toBeHidden();
+    // Motion can move a tile again after hover's two-frame stability check.
+    await expect(dragged).toHaveCSS("transform", "none");
+    await expect(target).toHaveCSS("transform", "none");
+    await target.hover();
+    await dragged.hover({ position });
+    const startPosition = await dragged.evaluate((element) => {
+      const { x, y, width, height } = element.getBoundingClientRect();
+      return { x, y, width, height };
+    });
     const targetPosition = await target.evaluate((element) => {
-      return element.getBoundingClientRect();
+      const { x, y, width, height } = element.getBoundingClientRect();
+      return { x: x + width / 2, y: y + height / 2 };
     });
 
-    await this.page.mouse.move(targetPosition.x, targetPosition.y, {
-      steps: 200
-    });
+    await this.page.mouse.down();
+    try {
+      // Cross the sensor's 8px activation threshold before moving to the target.
+      await this.page.mouse.move(
+        startPosition.x + (position?.x ?? startPosition.width / 2) + 30,
+        startPosition.y + (position?.y ?? startPosition.height / 2)
+      );
+      await expect(dragged.locator("..")).toHaveClass(/opacity-0/);
 
-    await this.page.mouse.up();
+      await this.page.mouse.move(targetPosition.x, targetPosition.y, {
+        steps: 20
+      });
+      // The target shifts only after dnd-kit has processed the new collision.
+      await expect(target.locator("..")).not.toHaveCSS("transform", "none");
+    } finally {
+      await this.page.mouse.up();
+    }
   }
 
   async manualDragAndDropWithNoReorder(dragged: Locator) {

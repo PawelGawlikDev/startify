@@ -84,7 +84,7 @@ export function QuickLink(props: QuickLinkProps) {
               className={`bg-dark-bg/70 focus-visible:ring-primary/70 text-primary-text absolute top-2 right-2 z-20 flex h-7 w-7 items-center justify-center rounded-full shadow-sm backdrop-blur-md transition-all duration-200 focus-visible:ring-2 focus-visible:outline-none ${
                 showMenu
                   ? "pointer-events-auto scale-100 opacity-100"
-                  : "pointer-events-none scale-95 opacity-0 group-hover:pointer-events-auto group-hover:scale-100 group-hover:opacity-100"
+                  : "pointer-events-none scale-95 opacity-0 group-hover:pointer-events-auto group-hover:scale-100 group-hover:opacity-100 focus-visible:pointer-events-auto focus-visible:scale-100 focus-visible:opacity-100 [@media(hover:none)]:pointer-events-auto [@media(hover:none)]:scale-100 [@media(hover:none)]:opacity-100"
               }`}>
               <EllipsisIcon className="size-4" />
             </DropdownMenuTrigger>

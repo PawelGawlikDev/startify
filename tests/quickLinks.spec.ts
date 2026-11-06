@@ -30,6 +30,32 @@ async function reorderQuickLinks(
     ]);
 }
 
+test.describe("Quick links without hover support", () => {
+  test.use({ hasTouch: true });
+
+  test("Open the menu and delete a quick link without hovering", async ({
+    extensionId,
+    dashboard,
+    page
+  }) => {
+    await dashboard.goToExtensionPage(extensionId, dashboard.newTab);
+    expect(await page.evaluate(() => matchMedia("(hover: none)").matches)).toBe(
+      true
+    );
+
+    await dashboard.addQuickLink("example", "https://example.com");
+    const [quickLink] = await dashboard.waitForQuickLinkCount(1);
+    const settingsButton = quickLink!.getByTestId("QuickLinkSettingsButton");
+
+    await expect(settingsButton).toHaveCSS("opacity", "1");
+    await expect(settingsButton).toHaveCSS("pointer-events", "auto");
+    await settingsButton.tap();
+    await page.getByTestId("DeleteQuickLink").tap();
+
+    await dashboard.waitForQuickLinkCount(0);
+  });
+});
+
 test.describe("Quick Links tests", () => {
   test.beforeEach(async ({ extensionId, dashboard }) => {
     await dashboard.goToExtensionPage(extensionId, dashboard.newTab);
