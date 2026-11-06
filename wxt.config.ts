@@ -21,21 +21,17 @@ export default defineConfig({
   srcDir: "src",
   modules: ["@wxt-dev/module-react", "@wxt-dev/auto-icons"],
   manifest: {
-    name: "Startify – Personalized New Tab with Weather & Quick Links",
+    name: "Startify – Personalized New Tab & Quick Links",
     short_name: "Startify",
     description:
-      "Upgrade your Chrome start page with beautiful backgrounds, local weather, and fast quick links. A minimalist, privacy-focused dashboard for better productivity.",
+      "Upgrade your Chrome start page with beautiful backgrounds and fast quick links. A minimalist, privacy-focused dashboard for better productivity.",
     default_locale: "en",
     browser_specific_settings: {
       gecko: {
         id: "{d5e5fe42-da08-4573-8ffd-6075ae68c834}"
       }
     },
-    host_permissions: [
-      "https://*/*",
-      "http://*/*",
-      "https://api.weatherapi.com/"
-    ],
+    host_permissions: ["https://*/*", "http://*/*"],
     permissions: ["storage", "unlimitedStorage", "activeTab", "downloads"]
   }
 });

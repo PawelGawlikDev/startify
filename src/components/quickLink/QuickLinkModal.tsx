@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { LoaderCircleIcon } from "lucide-react";
 
 import { db } from "@/indexdb/index";
 import isValidUrl from "@/utils/validUrl";
@@ -6,14 +7,16 @@ import { getMessage } from "@/utils/getMessage";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle
-} from "@/components/ui/card";
-import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
+  DialogDescription,
+  DialogHeader,
+  DialogTitle
+} from "@/components/ui/dialog";
+import {
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel
+} from "@/components/ui/field";
 
 import { QuickLinkPreview } from "./QuickLink";
 
@@ -30,55 +33,66 @@ const QuickLinkModal = (props: ModalProps) => {
 
   const [name, setName] = useState<string>(dialName ?? "");
   const [url, setUrl] = useState<string>(dialUrl ?? "");
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveError, setSaveError] = useState(false);
 
   async function addQuickLink() {
-    if (!name || !url) return;
+    if (!name.trim() || !url.trim() || isSaving) return;
+
+    setIsSaving(true);
+    setSaveError(false);
 
     try {
-      let updatedUrl = url;
+      let updatedUrl = url.trim();
 
-      if (!isValidUrl(url)) {
-        updatedUrl = `https://${url}`;
+      if (!isValidUrl(updatedUrl)) {
+        updatedUrl = `https://${updatedUrl}`;
         setUrl(updatedUrl);
       }
 
       if (id && (await db.quickLinks.get(id))) {
-        await db.quickLinks.update(id, { name, url: updatedUrl });
+        await db.quickLinks.update(id, { name: name.trim(), url: updatedUrl });
       } else {
-        const newId = await db.quickLinks.add({ name, url: updatedUrl });
+        const newId = await db.quickLinks.add({
+          name: name.trim(),
+          url: updatedUrl
+        });
 
         props.onAddLink?.(newId);
       }
 
       setShowModal(false);
     } catch {
-      return;
+      setSaveError(true);
+    } finally {
+      setIsSaving(false);
     }
   }
 
-  const isSaveDisabled = name === "" || url === "";
-  const modalTitle = id ? "Edit quick link" : getMessage("addQuickLink");
+  const isSaveDisabled = !name.trim() || !url.trim() || isSaving;
+  const modalTitle = getMessage(id ? "editQuickLink" : "addQuickLink");
   const modalDescription = id
-    ? "Update the name and address for this tile."
-    : "Create a new shortcut for your dashboard.";
+    ? getMessage("editQuickLinkDescription")
+    : getMessage("addQuickLinkDescription");
 
   return (
-    <Card className="bg-dark-bg/96 text-primary-text gap-4 rounded-2xl py-0 shadow-2xl ring-white/10 backdrop-blur-xl">
-      <CardHeader className="gap-4 border-b border-white/8 pb-4">
-        <div className="space-y-1 text-center sm:text-left">
-          <CardTitle className="text-xl font-semibold tracking-[0.01em]">
-            {modalTitle}
-          </CardTitle>
-          <CardDescription className="text-primary-text/65">
-            {modalDescription}
-          </CardDescription>
-        </div>
-        <div className="flex justify-center pt-1">
-          <QuickLinkPreview pageName={name || "Link"} />
-        </div>
-      </CardHeader>
-      <CardContent>
-        <FieldGroup className="gap-4">
+    <form
+      className="min-w-0"
+      onSubmit={(event) => {
+        event.preventDefault();
+        void addQuickLink();
+      }}>
+      <DialogHeader className="gap-2 px-6 pt-7 pr-16 pb-5">
+        <DialogTitle>{modalTitle}</DialogTitle>
+        <DialogDescription>{modalDescription}</DialogDescription>
+      </DialogHeader>
+
+      <div aria-hidden="true" className="flex justify-center px-6 pt-1 pb-6">
+        <QuickLinkPreview pageName={name.trim() || "Link"} />
+      </div>
+
+      <div className="border-border/50 border-t px-6 py-6">
+        <FieldGroup className="gap-5">
           <Field>
             <FieldLabel htmlFor="name">{getMessage("name")}</FieldLabel>
             <Input
@@ -86,7 +100,8 @@ const QuickLinkModal = (props: ModalProps) => {
               type="text"
               value={name}
               placeholder={getMessage("name")}
-              className="bg-surface-900/95 text-primary-text placeholder:text-primary-text/40"
+              autoComplete="off"
+              variant="dialog"
               onChange={(event) => setName(event.target.value)}
             />
           </Field>
@@ -97,29 +112,46 @@ const QuickLinkModal = (props: ModalProps) => {
               type="text"
               value={url}
               placeholder={getMessage("address")}
-              className="bg-surface-900/95 text-primary-text placeholder:text-primary-text/40"
+              autoComplete="url"
+              autoCapitalize="none"
+              spellCheck={false}
+              variant="dialog"
               onChange={(event) => setUrl(event.target.value)}
             />
           </Field>
         </FieldGroup>
-      </CardContent>
-      <CardFooter className="justify-end gap-3 border-white/8 bg-black/10">
+        {saveError && (
+          <FieldError className="mt-4">
+            {getMessage("saveQuickLinkError")}
+          </FieldError>
+        )}
+      </div>
+      <div className="border-border/50 flex justify-end gap-2 border-t px-6 py-4">
         <Button
+          type="button"
           onClick={() => setShowModal(false)}
           data-testid="CloseButton"
-          variant="outline"
-          className="border-border bg-surface-900 text-primary-text hover:bg-surface">
+          variant="ghost"
+          size="lg"
+          className="min-w-20">
           {getMessage("close")}
         </Button>
         <Button
-          onClick={addQuickLink}
+          type="submit"
           data-testid="SaveButton"
           disabled={isSaveDisabled}
-          className="bg-primary text-primary-foreground hover:bg-primary/90">
+          size="lg"
+          className="min-w-24">
+          {isSaving && (
+            <LoaderCircleIcon
+              data-icon="inline-start"
+              className="animate-spin"
+            />
+          )}
           {getMessage("save")}
         </Button>
-      </CardFooter>
-    </Card>
+      </div>
+    </form>
   );
 };
 

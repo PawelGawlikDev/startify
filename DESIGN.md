@@ -114,7 +114,6 @@ Rows:      [70px] [110px] [auto]
 - Quick links → row 3, centered
 - Settings gear → bottom-left
 - Chrome icon → top-left
-- Weather widget → top-right
 
 ### Quick Link Grid
 
@@ -208,18 +207,18 @@ clip-path: polygon(
 - Inner button has `backdrop-blur-xl` glass effect
 - Used for Save / Close in modals
 
-### Modals (`Overlay.tsx`)
+### Modals (`ui/dialog.tsx`)
 
-- Full-screen fixed overlay
-- `backdrop-blur-md` glass effect
-- Fade in/out with `motion` (0.3s duration)
-- Child content scales in (0.8 → 1.0)
+- Base UI dialog primitives with focus trapping and Escape/outside-click dismissal
+- Shared `panel` variant: dark popover surface, 16px corners, viewport-bounded scrolling
+- 24px horizontal padding, generous header space, and a top-right close control
+- Quick-link editor: darker surface, centered full-size live tile preview, labeled fields, and separated footer actions
 
 ### Settings Panel (`Settings.tsx`)
 
-- 550px wide, 500px tall flyout
-- Sidebar navigation (Main / Photos / Widgets)
-- Section content animates with opacity crossfade
+- Up to 580px wide, with a viewport-bounded scrollable content area
+- Horizontal segmented tabs with icons (Main / Photos / Widgets)
+- Flat settings rows with subtle separators rather than nested cards
 - Opens from the gear icon in bottom-left
 - Closes on outside click
 
@@ -229,14 +228,6 @@ clip-path: polygon(
 - Centered below the trigger with `-translate-x-1/2`
 - Arrow icon rotates 180° on open
 - Closes on outside click
-
-### Weather Widget (`WeatherSection.tsx`)
-
-- Square aspect ratio widget
-- Expands from 64px → 80px on hover
-- Shows icon, temperature, and location name
-- Context menu for "Detect Location"
-- Modal for custom location search
 
 ### File Upload (`FileUpload.tsx`)
 
@@ -264,7 +255,6 @@ clip-path: polygon(
 | Quick link title     | Scale (0.1→1) + opacity | 300ms     | default          |
 | Search bar           | Scale (1→1.05)          | 200ms     | default          |
 | Toggle knob          | Translate X             | —         | CSS transition   |
-| Weather widget       | Width (64px→80px)       | 200ms     | CSS transition   |
 | Moving border        | SVG rect path traversal | 2000ms    | linear           |
 | File upload          | Icon offset + opacity   | spring    | spring (300, 20) |
 | Search vanish        | Canvas pixel scatter    | dynamic   | N/A              |
@@ -275,9 +265,6 @@ clip-path: polygon(
 ANIMATION_STEP = 8; // Vanish animation pixel scan speed
 PIXEL_RADIUS_DECAY = 0.05; // Particle shrink rate
 SEARCH_DEBOUNCE_MS = 200; // Suggestion debounce
-DRAG_THROTTLE_MS = 200; // Drag reorder throttle
-MODAL_TRANSITION_DELAY = 300; // Modal enter delay
-MODAL_TRANSITION_DURATION = 500;
 ```
 
 ### Canvas Vanish Effect
