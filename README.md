@@ -8,15 +8,6 @@ A fast, open and free-to-use browser extension that gives a new, fresh and custo
 
 Preferred package manager is [Bun](https://bun.sh)
 
-Create .env file in root of project with variables.
-
-```
-VITE_WEATHER_KEYS=<Array or sinle weather API key>
-VITE_WEATHER_API=<Weather API endpoint>
-```
-
-By default Startify use [WeatherAPI](https://www.weatherapi.com) to as weather service.
-
 Install dependency
 
 ```bash

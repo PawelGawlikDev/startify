@@ -1,5 +1,4 @@
 import { expect, test } from "./fixtures/fixtures";
-import weatherMock from "./mocks/weatherMock.json" with { type: "json" };
 
 test.describe("Dashboard elements tests", () => {
   test.beforeEach(async ({ extensionId, dashboard }) => {
@@ -76,37 +75,6 @@ test.describe("Dashboard elements tests", () => {
     await expect
       .poll(async () => {
         return await chromeIcon.isVisible();
-      })
-      .toBeTruthy();
-  });
-
-  test("Weather widget visible", async ({ page, dashboard }) => {
-    const settings = await dashboard.openSettings();
-    const weatherToggle = settings.getByTestId("Warther");
-
-    await expect
-      .poll(async () => {
-        await expect(weatherToggle).toBeVisible();
-
-        return await weatherToggle.isChecked();
-      })
-      .toBeFalsy();
-
-    await page.route("https://api.weatherapi.com/v1/*", async (route) => {
-      await route.fulfill({
-        status: 200,
-        contentType: "application/json",
-        body: JSON.stringify(weatherMock)
-      });
-    });
-
-    await settings.getByTestId("WartherToggle").click();
-
-    const weatherWidget = page.getByTestId("WeatherWidget");
-
-    await expect
-      .poll(async () => {
-        return await weatherWidget.isVisible();
       })
       .toBeTruthy();
   });

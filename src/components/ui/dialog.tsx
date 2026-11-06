@@ -43,9 +43,11 @@ function DialogContent({
   className,
   children,
   showCloseButton = true,
+  variant = "default",
   ...props
 }: DialogPrimitive.Popup.Props & {
   showCloseButton?: boolean;
+  variant?: "default" | "panel" | "editor";
 }) {
   return (
     <DialogPortal>
@@ -54,6 +56,9 @@ function DialogContent({
         data-slot="dialog-content"
         className={cn(
           "bg-popover text-popover-foreground ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95 fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-4 rounded-xl p-4 text-sm ring-1 duration-100 outline-none sm:max-w-sm",
+          variant !== "default" &&
+            "flex max-h-[calc(100dvh-2rem)] flex-col gap-0 overflow-y-auto rounded-2xl p-0 shadow-2xl sm:max-w-lg",
+          variant === "editor" && "bg-dark-bg/96 backdrop-blur-xl",
           className
         )}
         {...props}>
@@ -64,7 +69,10 @@ function DialogContent({
             render={
               <Button
                 variant="ghost"
-                className="absolute top-2 right-2"
+                className={cn(
+                  "absolute top-2 right-2",
+                  variant !== "default" && "top-5 right-5"
+                )}
                 size="icon-sm"
               />
             }>

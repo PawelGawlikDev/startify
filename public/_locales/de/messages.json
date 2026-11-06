@@ -1,4 +1,18 @@
 {
+  "editQuickLink": { "message": "Verknüpfung bearbeiten" },
+  "addQuickLinkDescription": {
+    "message": "Erstelle eine neue Verknüpfung für deine Startseite."
+  },
+  "editQuickLinkDescription": {
+    "message": "Ändere den Namen und die Adresse dieser Kachel."
+  },
+  "saveQuickLinkError": {
+    "message": "Die Verknüpfung konnte nicht gespeichert werden. Bitte versuche es erneut."
+  },
+  "settingsTitle": { "message": "Einstellungen" },
+  "settingsDescription": {
+    "message": "Gestalte deinen neuen Tab ganz nach deinen Wünschen."
+  },
   "addQuickLink": {
     "message": "Schnellverbindung hinzufügen",
     "description": "Button or label for adding a new quick link on the start page"
@@ -42,10 +56,6 @@
   "widgetsSettings": {
     "message": "Widgets-Farbe",
     "description": "Label for widgets color settings"
-  },
-  "weatherWidget": {
-    "message": "Wetter",
-    "description": "Header or label related to weather features in the app"
   },
   "imagePreview": {
     "message": "Bildvorschau",

@@ -2,6 +2,10 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import backgrounds from "~/assets/backgrounds.json";
 import { MS_PER_DAY } from "@/constants/time";
 import { getLocalStorageItem, setLocalStorageItem } from "@/utils/storage";
+import {
+  FALLBACK_WALLPAPER_COLOR,
+  getWallpaperColor
+} from "@/utils/wallpaperColor";
 
 const STORAGE_KEYS = {
   WALLPAPER: "userWallpaper",
@@ -15,15 +19,15 @@ const STORAGE_KEYS = {
 interface WallpaperContextProps {
   backgroundImageUrl: string | null;
   backgroundColor: string;
-  defaultBgColor: string | null;
+  isCustomColor: boolean;
   setBackgroundImageUrl: (url: string | null) => void;
-  setBackgroundColor: (color: string) => void;
+  setBackgroundColor: (color: string | null) => void;
 }
 
 const WallpaperContext = createContext<WallpaperContextProps>({
   backgroundImageUrl: null,
-  backgroundColor: "var(--color-surface-900)",
-  defaultBgColor: null,
+  backgroundColor: FALLBACK_WALLPAPER_COLOR,
+  isCustomColor: false,
   setBackgroundImageUrl: () => {},
   setBackgroundColor: () => {}
 });
@@ -36,10 +40,20 @@ export const WallpaperProvider = ({
   const [backgroundImageUrl, setBackgroundImageUrl] = useState<string | null>(
     null
   );
-  const [defaultBgColor, setDefaultBgColor] = useState<string | null>(null);
-  const [backgroundColor, setBackgroundColor] = useState<string>(
-    "var(--color-surface-900)"
-  );
+  const [customBackgroundColor, setCustomBackgroundColor] = useState<
+    string | null
+  >(null);
+  const backgroundColor =
+    customBackgroundColor ?? getWallpaperColor(backgroundImageUrl);
+
+  const setBackgroundColor = (color: string | null) => {
+    setCustomBackgroundColor(color);
+    setLocalStorageItem(STORAGE_KEYS.CUSTOM_COLOR, color !== null);
+    setLocalStorageItem(
+      STORAGE_KEYS.WALLPAPER_COLOR,
+      color ?? getWallpaperColor(backgroundImageUrl)
+    );
+  };
 
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEYS.WALLPAPER);
@@ -49,14 +63,13 @@ export const WallpaperProvider = ({
     const customColor =
       localStorage.getItem(STORAGE_KEYS.CUSTOM_COLOR) === "true";
 
-    if (saved && isCustom) {
-      setBackgroundImageUrl(saved);
-      if (savedColor) setBackgroundColor(savedColor);
-      return;
+    if (customColor && savedColor) {
+      setCustomBackgroundColor(savedColor);
     }
 
-    if (customColor && savedColor) {
-      setBackgroundColor(savedColor);
+    if (saved && isCustom) {
+      setBackgroundImageUrl(saved);
+      return;
     }
 
     const lastChange = localStorage.getItem(STORAGE_KEYS.LAST_CHANGE);
@@ -100,15 +113,7 @@ export const WallpaperProvider = ({
 
       if (!selectedBg) return;
 
-      const selectedBgColor =
-        selectedBg.colors?.backgroundColor || "var(--color-surface-900)";
       setBackgroundImageUrl(selectedBg.filename);
-      setDefaultBgColor(selectedBgColor);
-
-      if (!customColor) {
-        setBackgroundColor(selectedBgColor);
-        setLocalStorageItem(STORAGE_KEYS.WALLPAPER_COLOR, selectedBgColor);
-      }
 
       setLocalStorageItem(STORAGE_KEYS.WALLPAPER, selectedBg.filename);
       setLocalStorageItem(STORAGE_KEYS.WALLPAPER_CUSTOM, false);
@@ -116,19 +121,13 @@ export const WallpaperProvider = ({
       setLocalStorageItem(STORAGE_KEYS.USED_WALLPAPERS, updatedUsed);
     } else {
       setBackgroundImageUrl(saved);
-      setBackgroundColor(savedColor || "var(--color-surface-900)");
     }
   }, []);
 
   useEffect(() => {
-    const customColor =
-      localStorage.getItem(STORAGE_KEYS.CUSTOM_COLOR) === "true";
-
     if (backgroundImageUrl) {
       setLocalStorageItem(STORAGE_KEYS.WALLPAPER, backgroundImageUrl);
-      if (!customColor) {
-        setLocalStorageItem(STORAGE_KEYS.WALLPAPER_COLOR, backgroundColor);
-      }
+      setLocalStorageItem(STORAGE_KEYS.WALLPAPER_COLOR, backgroundColor);
     }
   }, [backgroundImageUrl, backgroundColor]);
 
@@ -137,7 +136,7 @@ export const WallpaperProvider = ({
       value={{
         backgroundImageUrl,
         backgroundColor,
-        defaultBgColor,
+        isCustomColor: customBackgroundColor !== null,
         setBackgroundImageUrl,
         setBackgroundColor
       }}>

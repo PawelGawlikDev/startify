@@ -5,12 +5,10 @@ import { ClockWidget } from "@/components/widgets/ClockWidget";
 import { QuickLinksWidget } from "@/components/widgets/QuickLinksWidget";
 import { SearchWidget } from "@/components/widgets/SearchWidget";
 import { SettingsWidget } from "@/components/widgets/SettingsWidget";
-import { WeatherDashboardWidget } from "@/components/widgets/WeatherDashboardWidget";
 
 export default function Dashboard() {
   const { getSetting, isSettingsLoaded } = useSettings();
   const showClock = getSetting("showClock");
-  const weather = getSetting("weather");
   const quickLinkGrid = getSetting("quickLink")?.enable;
 
   if (!isSettingsLoaded) return null;
@@ -28,12 +26,6 @@ export default function Dashboard() {
       {showClock && (
         <div className="col-start-2 row-start-1 flex items-center justify-center">
           <ClockWidget />
-        </div>
-      )}
-
-      {weather?.enable && (
-        <div className="col-start-3 row-start-1 flex items-start justify-end">
-          <WeatherDashboardWidget />
         </div>
       )}
 

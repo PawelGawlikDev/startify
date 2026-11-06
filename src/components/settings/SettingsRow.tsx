@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 
-import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/utils/cn";
 import { getMessage } from "@/utils/getMessage";
 
@@ -18,22 +17,20 @@ export default function SettingsRow({
   className
 }: SettingsRowProps) {
   return (
-    <Card
+    <div
       className={cn(
-        "bg-surface/85 ring-secondary/35 overflow-visible py-0 shadow-sm backdrop-blur-sm has-[div[data-open='true']]:relative has-[div[data-open='true']]:z-[80]",
+        "border-border/50 flex items-center justify-between gap-4 border-b py-4 first:pt-1 last:border-b-0",
         className
       )}>
-      <CardContent className="flex items-center justify-between gap-4 px-3 py-3">
-        <div className="min-w-0 flex-1">
-          <p className="text-primary-text text-sm font-medium">
-            {getMessage(labelKey)}
-          </p>
-          {description ? (
-            <p className="text-secondary-text mt-1 text-xs">{description}</p>
-          ) : null}
-        </div>
-        <div className="shrink-0">{children}</div>
-      </CardContent>
-    </Card>
+      <div className="min-w-0 flex-1">
+        <p className="text-foreground text-sm font-medium">
+          {getMessage(labelKey)}
+        </p>
+        {description ? (
+          <p className="text-muted-foreground mt-1 text-xs">{description}</p>
+        ) : null}
+      </div>
+      <div className="shrink-0">{children}</div>
+    </div>
   );
 }

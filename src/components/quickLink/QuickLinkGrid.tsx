@@ -14,13 +14,7 @@ import {
 import QuickLinkModal from "./QuickLinkModal";
 import { useSettings } from "@/context/SettingsContext";
 import { defaultSettings } from "@/constants/defaultSettings";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 export default function QuickLinkGrid() {
   const { getSetting } = useSettings();
@@ -74,12 +68,8 @@ export default function QuickLinkGrid() {
       <Dialog open={showModal} onOpenChange={setShowModal}>
         <DialogContent
           data-testid="QuickLinkModal"
-          showCloseButton={false}
-          className="max-w-[min(92vw,480px)] border-none bg-transparent p-0 shadow-none ring-0">
-          <DialogHeader className="sr-only">
-            <DialogTitle>Quick Link</DialogTitle>
-            <DialogDescription>Add or edit a quick link.</DialogDescription>
-          </DialogHeader>
+          variant="editor"
+          className="sm:max-w-[460px]">
           <QuickLinkModal
             setShowModal={setShowModal}
             id={editingLink?.id}

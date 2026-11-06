@@ -1,9 +1,0 @@
-name: "Setup Production Env"
-description: "Writes out the .env.production file from secrets"
-runs:
-  using: "composite"
-  steps:
-    - run: |
-        echo "VITE_WEATHER_KEYS=${{ env.VITE_WEATHER_KEYS }}" >> .env.production
-        echo "VITE_WEATHER_API=${{ env.VITE_WEATHER_API }}" >> .env.production
-      shell: bash

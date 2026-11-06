@@ -100,38 +100,28 @@ export function EngineOptions() {
 }
 
 export function ColorOptions() {
-  const { backgroundColor, defaultBgColor, setBackgroundColor } =
-    useWallpaper();
-  const currentColor =
-    localStorage.getItem("userWallpaperColor") ?? backgroundColor;
+  const { backgroundColor, isCustomColor, setBackgroundColor } = useWallpaper();
 
-  const handleColorChange = (color: string | null) => {
-    if (color) {
-      setBackgroundColor(color);
-      localStorage.setItem("userWallpaperColor", color);
-      localStorage.setItem("customColor", "true");
-      return;
-    }
+  return predefinedColors.map((color) => {
+    const isSelected =
+      color.value === null
+        ? !isCustomColor
+        : isCustomColor && backgroundColor === color.value;
 
-    const wallpaperColor = defaultBgColor ?? backgroundColor;
-
-    localStorage.setItem("customColor", "false");
-    localStorage.setItem("userWallpaperColor", wallpaperColor);
-    setBackgroundColor(wallpaperColor);
-  };
-
-  return predefinedColors.map((color) => (
-    <button
-      key={color.name}
-      type="button"
-      data-testid={color.name}
-      onClick={() => handleColorChange(color.value)}
-      className={cn(
-        "text-primary-text hover:bg-surface-900 focus-visible:ring-primary/60 flex w-full items-center justify-between gap-3 rounded-lg px-3 py-2 text-left text-sm transition-colors focus-visible:ring-2 focus-visible:outline-none",
-        currentColor === color.value && "bg-surface-900/70"
-      )}>
-      <span>{getMessage(color.name.toLowerCase())}</span>
-      {currentColor === color.value ? <CheckIcon className="size-4" /> : null}
-    </button>
-  ));
+    return (
+      <button
+        key={color.name}
+        type="button"
+        data-testid={color.name}
+        aria-pressed={isSelected}
+        onClick={() => setBackgroundColor(color.value)}
+        className={cn(
+          "text-primary-text hover:bg-surface-900 focus-visible:ring-primary/60 flex w-full items-center justify-between gap-3 rounded-lg px-3 py-2 text-left text-sm transition-colors focus-visible:ring-2 focus-visible:outline-none",
+          isSelected && "bg-surface-900/70"
+        )}>
+        <span>{getMessage(color.name.toLowerCase())}</span>
+        {isSelected ? <CheckIcon className="size-4" /> : null}
+      </button>
+    );
+  });
 }

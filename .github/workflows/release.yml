@@ -46,11 +46,6 @@ jobs:
         run: bun install --frozen-lockfile
       - name: Install Playwright Browsers
         run: bunx playwright install --with-deps chromium
-      - name: Setup env
-        uses: ./.github/actions/setup-env
-        env:
-          VITE_WEATHER_KEYS: ${{ secrets.VITE_WEATHER_KEYS }}
-          VITE_WEATHER_API: ${{ secrets.VITE_WEATHER_API }}
       - name: Build extension for tests
         run: bun run build:e2e
       - name: Run Playwright tests
@@ -71,11 +66,6 @@ jobs:
         uses: ./.github/actions/common-setup
       - name: Install dependencies
         run: bun install --frozen-lockfile
-      - name: Setup env
-        uses: ./.github/actions/setup-env
-        env:
-          VITE_WEATHER_KEYS: ${{ secrets.VITE_WEATHER_KEYS }}
-          VITE_WEATHER_API: ${{ secrets.VITE_WEATHER_API }}
       - name: Zip extensions
         run: |
           bun run zip
@@ -86,10 +76,11 @@ jobs:
             --chrome-zip .output/*-chrome.zip \
             --firefox-zip .output/*-firefox.zip --firefox-sources-zip .output/*-sources.zip
         env:
+          CHROME_API_VERSION: "v2"
           CHROME_EXTENSION_ID: ${{ secrets.CHROME_EXTENSION_ID }}
-          CHROME_CLIENT_ID: ${{ secrets.CHROME_CLIENT_ID }}
-          CHROME_CLIENT_SECRET: ${{ secrets.CHROME_CLIENT_SECTER }}
-          CHROME_REFRESH_TOKEN: ${{ secrets.CHROME_REFRESH_TOKEN }}
+          CHROME_PUBLISHER_ID: ${{ secrets.CHROME_PUBLISHER_ID }}
+          CHROME_SERVICE_ACCOUNT_CLIENT_EMAIL: ${{ secrets.CHROME_SERVICE_ACCOUNT_CLIENT_EMAIL }}
+          CHROME_SERVICE_ACCOUNT_PRIVATE_KEY: ${{ secrets.CHROME_SERVICE_ACCOUNT_PRIVATE_KEY }}
           FIREFOX_EXTENSION_ID: ${{ secrets.FIREFOX_EXTENSION_ID }}
           FIREFOX_JWT_ISSUER: ${{ secrets.FIREFOX_API_KEY }}
           FIREFOX_JWT_SECRET: ${{ secrets.FIREFOX_API_SECRET }}

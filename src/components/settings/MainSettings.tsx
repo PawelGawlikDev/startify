@@ -10,10 +10,9 @@ export default function MainSettings() {
   const vanishAnimation = getSetting("vanishAnimation");
   const showClock = getSetting("showClock");
   const quickLink = getSetting("quickLink");
-  const weather = getSetting("weather");
 
   return (
-    <div className="bg-default-bg flex flex-col gap-3 rounded-md">
+    <div className="flex flex-col">
       <SettingsRow labelKey="engineSettings">
         <Dropdown title={engine?.name ?? ""} dataTestId="EngineSettings">
           <EngineOptions />
@@ -25,18 +24,6 @@ export default function MainSettings() {
           <Toggle
             toggled={vanishAnimation}
             onToggle={() => updateSetting("vanishAnimation", !vanishAnimation)}
-          />
-        </SettingsRow>
-      )}
-
-      {weather !== undefined && (
-        <SettingsRow labelKey="weatherWidget">
-          <Toggle
-            dataTestId="Warther"
-            toggled={weather.enable}
-            onToggle={() =>
-              updateSetting("weather", { ...weather, enable: !weather.enable })
-            }
           />
         </SettingsRow>
       )}

@@ -1,4 +1,18 @@
 {
+  "editQuickLink": { "message": "Editar acceso directo" },
+  "addQuickLinkDescription": {
+    "message": "Crea un nuevo acceso directo para tu página de inicio."
+  },
+  "editQuickLinkDescription": {
+    "message": "Actualiza el nombre y la dirección de este acceso directo."
+  },
+  "saveQuickLinkError": {
+    "message": "No se pudo guardar el acceso directo. Inténtalo de nuevo."
+  },
+  "settingsTitle": { "message": "Ajustes" },
+  "settingsDescription": {
+    "message": "Personaliza tu nueva pestaña a tu gusto."
+  },
   "addQuickLink": {
     "message": "Añadir enlace rápido",
     "description": "Button or label for adding a new quick link on the start page"
@@ -42,10 +56,6 @@
   "widgetsSettings": {
     "message": "Color de los widgets",
     "description": "Label for widgets color settings"
-  },
-  "weatherWidget": {
-    "message": "Tiempo",
-    "description": "Header or label related to weather features in the app"
   },
   "imagePreview": {
     "message": "Vista previa de la imagen",

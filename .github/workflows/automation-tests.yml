@@ -17,11 +17,6 @@ jobs:
         run: bun install --frozen-lockfile
       - name: Install Playwright Browsers
         run: bunx playwright install --with-deps chromium
-      - name: Setup env
-        uses: ./.github/actions/setup-env
-        env:
-          VITE_WEATHER_KEYS: ${{ secrets.VITE_WEATHER_KEYS }}
-          VITE_WEATHER_API: ${{ secrets.VITE_WEATHER_API }}
       - name: Build extension for tests
         run: bun run build:e2e
       - name: Run Playwright tests
