@@ -13,9 +13,10 @@ type ExtensionFixtures = {
 const isDebug = process.env.DEBUG === "true";
 
 export const test = base.extend<ExtensionFixtures>({
-  context: async ({}, use) => {
+  context: async ({ hasTouch }, use) => {
     const context = await chromium.launchPersistentContext("", {
       headless: false,
+      hasTouch,
       args: [
         ...(isDebug ? [] : [`--headless=new`]),
         `--disable-extensions-except=${pathToExtension}`,
