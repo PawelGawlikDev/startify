@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.3](https://github.com/PawelGawlikDev/startify/compare/v1.6.2...v1.6.3) (2026-11-06)
+
+
+### Bug Fixes
+
+* fix description ([#108](https://github.com/PawelGawlikDev/startify/issues/108)) ([a513098](https://github.com/PawelGawlikDev/startify/commit/a51309857f775951e3e0fd8045d91f5204c67a16))
+
 ### [1.6.2](https://github.com/PawelGawlikDev/startify/compare/v1.6.1...v1.6.2) (2026-11-06)
 
 ### [1.6.1](https://github.com/PawelGawlikDev/startify/compare/v1.6.0...v1.6.1) (2026-11-06)
