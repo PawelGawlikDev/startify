@@ -32,6 +32,6 @@ export default defineConfig({
       }
     },
     host_permissions: ["https://*/*", "http://*/*"],
-    permissions: ["storage", "unlimitedStorage", "activeTab", "downloads"]
+    permissions: ["storage", "unlimitedStorage", "downloads"]
   }
 });
