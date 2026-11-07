@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.4](https://github.com/PawelGawlikDev/startify/compare/v1.6.3...v1.6.4) (2026-11-07)
+
+
+### Bug Fixes
+
+* fix fields in manifest ([#109](https://github.com/PawelGawlikDev/startify/issues/109)) ([e4c90f5](https://github.com/PawelGawlikDev/startify/commit/e4c90f54d351e09273f4dece51c9a9232d07e251))
+
 ### [1.6.3](https://github.com/PawelGawlikDev/startify/compare/v1.6.2...v1.6.3) (2026-11-06)
 
 
